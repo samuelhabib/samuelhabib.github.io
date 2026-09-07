@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://samuelhabib.github.io/sitemap.xml

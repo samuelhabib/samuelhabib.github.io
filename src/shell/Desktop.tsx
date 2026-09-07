@@ -1,9 +1,10 @@
-import { useReducer, useState, type ReactNode } from 'react'
-import { windowsReducer, initialDesktop, type WindowId } from './windows'
+import { useReducer, useState, useCallback, type ReactNode } from 'react'
+import { windowsReducer, initialDesktop, frontWindow, type WindowId } from './windows'
 import Window from './Window'
 import ZoomRect from './ZoomRectLayer'
 import MenuBar from './MenuBar'
 import DesktopIcons from './DesktopIcons'
+import { useWindowKeys } from './useWindowKeys'
 import ResumeWindow from '../windows/ResumeWindow'
 import ReadMeWindow from '../windows/ReadMeWindow'
 import styles from './Desktop.module.css'
@@ -22,6 +23,10 @@ const CONTENT: Partial<Record<WindowId, ReactNode>> = {
   readme: <ReadMeWindow />,
 }
 
+function focusIcon(id: WindowId) {
+  document.querySelector<HTMLElement>(`[data-window="${id}"]`)?.focus()
+}
+
 export default function Desktop() {
   const [state, dispatch] = useReducer(windowsReducer, initialDesktop, (s) => ({
     ...s,
@@ -33,6 +38,7 @@ export default function Desktop() {
     nextZ: 3,
   }))
   const [zoom, setZoom] = useState<{ id: WindowId; from: { x: number; y: number } } | null>(null)
+  const [justOpened, setJustOpened] = useState<WindowId | null>(null)
 
   const open = (id: WindowId, from: { x: number; y: number }) => {
     if (state.windows[id].open) {
@@ -44,8 +50,17 @@ export default function Desktop() {
   const commitOpen = () => {
     if (!zoom) return
     dispatch({ type: 'open', id: zoom.id, from: zoom.from })
+    setJustOpened(zoom.id)
     setZoom(null)
   }
+
+  const close = useCallback((id: WindowId) => {
+    dispatch({ type: 'close', id })
+    focusIcon(id)
+  }, [])
+
+  const front = frontWindow(state)
+  useWindowKeys(front, close)
 
   const openWindows = (Object.keys(CONTENT) as WindowId[]).filter((id) => state.windows[id].open)
 
@@ -70,8 +85,9 @@ export default function Desktop() {
           key={id}
           state={state.windows[id]}
           title={TITLES[id]}
+          autoFocus={justOpened === id}
           onFocus={() => dispatch({ type: 'focus', id })}
-          onClose={() => dispatch({ type: 'close', id })}
+          onClose={() => close(id)}
           onMove={(x, y) => dispatch({ type: 'move', id, x, y })}
           onResize={(w, h) => dispatch({ type: 'resize', id, w, h })}
           onToggleShade={() => dispatch({ type: 'toggleShade', id })}
