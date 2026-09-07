@@ -1,0 +1,38 @@
+/*
+ * Self-hosted type. See src/fonts.licenses.md for sources and licenses.
+ * Only Chicago is a period-accurate clone; Geneva falls back to the platform
+ * UI sans, and NewYork / Monaco are open-license stand-ins (PT Serif, IBM Plex
+ * Mono) chosen because no clean-license clone of the originals exists.
+ */
+
+@font-face {
+  font-family: 'Chicago';
+  src: url('/fonts/chicago.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NewYork';
+  src: url('/fonts/newyork.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NewYork';
+  src: url('/fonts/newyork-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Monaco';
+  src: url('/fonts/monaco.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
