@@ -18,8 +18,8 @@ export interface DesktopState {
 }
 
 const DEFAULTS: Record<WindowId, Pick<WindowState, 'x' | 'y' | 'w' | 'h'>> = {
-  resume: { x: 80, y: 44, w: 560, h: 620 },
-  readme: { x: 120, y: 24, w: 420, h: 260 },
+  resume: { x: 64, y: 40, w: 560, h: 600 },
+  readme: { x: 420, y: 300, w: 400, h: 300 },
   terminal: { x: 220, y: 120, w: 620, h: 380 },
   projects: { x: 160, y: 60, w: 700, h: 520 },
   puzzle: { x: 300, y: 140, w: 240, h: 280 },

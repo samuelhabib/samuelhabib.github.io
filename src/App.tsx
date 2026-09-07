@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { resume } from './content/resume'
 import { ResumeArticle } from './windows/resumeContent'
+import { ReadMeArticle } from './windows/readmeContent'
 import Desktop from './shell/Desktop'
 import Boot from './shell/Boot'
 import { useBoot } from './shell/useBoot'
@@ -32,6 +33,7 @@ function AppInner() {
       {/* Always in the DOM and in the SSG output — the no-JS / screen-reader / ATS view */}
       <main id="main" className="doc-fallback" hidden={hydrated}>
         <ResumeArticle data={resume} />
+        <ReadMeArticle />
       </main>
 
       {/* Enhancement: the classic-Mac desktop, only after hydration */}

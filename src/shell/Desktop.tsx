@@ -1,10 +1,11 @@
-import { useReducer, useState } from 'react'
+import { useReducer, useState, type ReactNode } from 'react'
 import { windowsReducer, initialDesktop, type WindowId } from './windows'
 import Window from './Window'
 import ZoomRect from './ZoomRectLayer'
 import MenuBar from './MenuBar'
 import DesktopIcons from './DesktopIcons'
 import ResumeWindow from '../windows/ResumeWindow'
+import ReadMeWindow from '../windows/ReadMeWindow'
 import styles from './Desktop.module.css'
 
 const TITLES: Record<WindowId, string> = {
@@ -16,11 +17,20 @@ const TITLES: Record<WindowId, string> = {
   about: 'About This Portfolio',
 }
 
+const CONTENT: Partial<Record<WindowId, ReactNode>> = {
+  resume: <ResumeWindow />,
+  readme: <ReadMeWindow />,
+}
+
 export default function Desktop() {
   const [state, dispatch] = useReducer(windowsReducer, initialDesktop, (s) => ({
     ...s,
-    windows: { ...s.windows, resume: { ...s.windows.resume, open: true, z: 1 } },
-    nextZ: 2,
+    windows: {
+      ...s.windows,
+      resume: { ...s.windows.resume, open: true, z: 1 },
+      readme: { ...s.windows.readme, open: true, z: 2 },
+    },
+    nextZ: 3,
   }))
   const [zoom, setZoom] = useState<{ id: WindowId; from: { x: number; y: number } } | null>(null)
 
@@ -36,6 +46,8 @@ export default function Desktop() {
     dispatch({ type: 'open', id: zoom.id, from: zoom.from })
     setZoom(null)
   }
+
+  const openWindows = (Object.keys(CONTENT) as WindowId[]).filter((id) => state.windows[id].open)
 
   return (
     <div className={styles.desktop}>
@@ -53,19 +65,20 @@ export default function Desktop() {
           onDone={commitOpen}
         />
       )}
-      {state.windows.resume.open && (
+      {openWindows.map((id) => (
         <Window
-          state={state.windows.resume}
-          title={TITLES.resume}
-          onFocus={() => dispatch({ type: 'focus', id: 'resume' })}
-          onClose={() => dispatch({ type: 'close', id: 'resume' })}
-          onMove={(x, y) => dispatch({ type: 'move', id: 'resume', x, y })}
-          onResize={(w, h) => dispatch({ type: 'resize', id: 'resume', w, h })}
-          onToggleShade={() => dispatch({ type: 'toggleShade', id: 'resume' })}
+          key={id}
+          state={state.windows[id]}
+          title={TITLES[id]}
+          onFocus={() => dispatch({ type: 'focus', id })}
+          onClose={() => dispatch({ type: 'close', id })}
+          onMove={(x, y) => dispatch({ type: 'move', id, x, y })}
+          onResize={(w, h) => dispatch({ type: 'resize', id, w, h })}
+          onToggleShade={() => dispatch({ type: 'toggleShade', id })}
         >
-          <ResumeWindow />
+          {CONTENT[id]}
         </Window>
-      )}
+      ))}
     </div>
   )
 }
