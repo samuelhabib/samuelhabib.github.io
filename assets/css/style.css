@@ -189,3 +189,14 @@ a{color:var(--accent);text-decoration:none;}
 .const-stage{position:relative;background:var(--night);border-radius:20px;padding:clamp(24px,4vw,36px);}
 #constCanvas{width:100%;height:360px;display:block;}
 @media (max-width:680px){#constCanvas{height:280px;}}
+
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px;}
+.proj-card{background:var(--night);border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(10,12,30,.12);}
+.proj-viz{background:#06070d;}
+.proj-viz svg{display:block;width:100%;height:auto;}
+.proj-body{padding:clamp(22px,3vw,32px);color:#f5f5f7;}
+.proj-body h3{font-size:clamp(1.3rem,3vw,1.6rem);font-weight:700;letter-spacing:-0.02em;margin:0;}
+.proj-body p{font-size:1rem;line-height:1.56;margin:14px 0 0;color:#d7e0ea;}
+.proj-body .proj-tech{color:#8a93a3;font-size:0.875rem;margin:16px 0 0;}
+.proj-body a{color:#7fb3ff;}
+.proj-more{margin:40px 0 0;color:var(--slate);font-size:1.0625rem;}
