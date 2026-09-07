@@ -1,0 +1,28 @@
+.bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--menubar-h);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 10px;
+  background: var(--white);
+  border-bottom: 1px solid var(--black);
+  font-family: var(--font-chrome);
+  font-size: 12px;
+  z-index: 1000;
+}
+.apple {
+  width: 14px;
+  height: 14px;
+  background: var(--black);
+  -webkit-mask: radial-gradient(circle at 50% 55%, #000 42%, transparent 43%);
+  mask: radial-gradient(circle at 50% 55%, #000 42%, transparent 43%);
+}
+.clock {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+.item {
+  user-select: none;
+}

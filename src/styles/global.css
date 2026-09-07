@@ -3,6 +3,21 @@
 @import './reset.css';
 @import './dither.css';
 
+.doc-fallback {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  font-family: var(--font-read);
+  font-size: var(--fs-read);
+  line-height: 1.6;
+}
+.doc-fallback h1 {
+  font-family: var(--font-chrome);
+}
+.doc-fallback[hidden] {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
