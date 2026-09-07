@@ -61,19 +61,19 @@ Corollaries:
   `.dither-75` utility set.
 - Selection / hover / active / focus = full invert of the element's fill and text.
 
-### Typography
-- **Display / chrome** (menu bar, window titles, buttons, labels): a Chicago-style
-  bitmap-flavoured webfont. Candidates: "ChiKareGo2", "Sysfont", "Pixel Chicago",
-  or a modern Charcoal-alike. Rendered at sizes that keep it crisp
-  (`image-rendering` handling for true bitmap faces). Pick in the plan after
-  seeing them in the chrome.
-- **Body** (résumé prose, About text, HyperCard cards): a readable face that holds
-  the b&w world together — either a clean geometric/grotesque (e.g. a Geneva-alike
-  such as "FindersKeepers"/"Geneva9" scaled up, or a neutral sans) or a crisp
-  serif for long reading. One body face only.
-- **Monospace** (Terminal, code): Monaco or a Monaco-alike.
-- Rigid type scale: one body size, ~two heading sizes, one meta size. No `clamp()`
-  soup.
+### Typography — authentic Macintosh families (free lookalikes)
+Use the real Mac font families via free webfont clones:
+- **Display / chrome** (menu bar, window titles, buttons, labels): **Chicago** —
+  a free clone such as "ChiKareGo2" or "Chicago FLF". Crisp bitmap handling.
+- **UI / short body** (labels, résumé fields, card text): **Geneva** — a
+  Geneva-alike webfont.
+- **Long-form reading** (Read Me, résumé prose): **New York** — the Mac's serif —
+  via a New-York-style webfont clone, or the closest free serif if no good clone
+  exists. This is the "whatever is Macintosh" answer for reading text.
+- **Monospace** (Terminal, code): **Monaco** or a Monaco-alike.
+- Rigid type scale: one long-body size, one UI size, ~two heading sizes, one meta
+  size. No `clamp()` soup. Final clone choices land in the plan after seeing them
+  in the chrome.
 
 ### Window chrome
 - Title bar: horizontal pinstripe lines (`repeating-linear-gradient`), centred
@@ -130,8 +130,16 @@ Happy-Mac icon, "Welcome to Macintosh", a marching-striped progress bar,
 extension icons marching along the bottom (a few as a nod: a Claude icon, a
 coffee cup, a `git` icon). ~1.5s total. Skippable with any key/click/tap. Plays
 once per tab (`sessionStorage`). `aria-hidden`; real content already in the DOM
-behind it. Optional startup chime, **muted by default**, only ever plays on an
-explicit user gesture.
+behind it.
+
+**Startup chime — included.** A short major-chord chime. Do NOT ship Apple's
+actual recorded chime sample (trademark/copyright); use a CC0/public-domain
+"startup chime"-style sound or synthesize one with the Web Audio API (a soft
+strummed Cmaj). Browsers block autoplay, so it fires on the first user gesture
+(the skip-boot click, or first interaction). A **Sound on/off** toggle lives in
+the menu bar; default is **on**, but the chime only ever plays after that first
+user gesture, so no one is ambushed on page load. The toggle also governs the
+system beep (`sysbeep`, error alerts, the Trash crumple).
 
 ### Terminal
 Custom React shell — **not xterm.js** (wrong tool for clickable, component-rich
@@ -163,6 +171,9 @@ output). Architecture follows the sajeth.dev teardown's recommended pattern:
   required.
 
 ### Résumé window
+- **Opens automatically on first load**, cascaded just under a small "Read Me"
+  note window, so a recruiter reaches the content in zero clicks. The bare
+  desktop is one click away (close it) and deep links (`?open=…`) override.
 - The visual CV. Rendered from `content/resume.md` (front-matter + markdown,
   parsed at build to structured data).
 - Sections: header (name, title, location, links), Experience, Skills, Education,
@@ -178,20 +189,27 @@ output). Architecture follows the sajeth.dev teardown's recommended pattern:
   categorised as search not AI; drop "fine-tuned" before RoBERTa unless confirmed;
   include the 2B+ records/hr figure.
 
-### Projects — HyperCard stacks
-- One stack per project, opened from the `Projects` folder window or the Terminal.
-- **Card model:** Title → Problem → Approach → Result → Tech/Links. Black-and-white
-  card art (simple 1-bit diagrams, dithered fills).
+### Projects — HyperCard stacks + Keynote-style dividers
+- The `Projects` window opens as one guided **deck** that can also be entered per
+  project. Order:
+  1. A **title slide** — big bold word(s) on a plain field, e.g. "Work", slow
+     dithered push transition (Apple-Keynote-esque, rendered 1-bit).
+  2. **Work project** stacks: Provider Directory, Referral Outbound Center (and
+     any other resume-backed work worth a stack). Keep to public-safe detail;
+     nothing confidential.
+  3. A **divider slide** — "Outside of Work Projects", same big-word treatment.
+  4. **Side project** stacks: Mental Health Crisis Detection (real content); AI
+     Fitness / Calorie bot (**placeholder content, flagged as such** — do not
+     invent specifics).
+- **Card model per stack:** Title → Problem → Approach → Result → Tech/Links.
+  Black-and-white card art (simple 1-bit diagrams, dithered fills).
 - **Navigation:** on-card buttons (`◀ Prev`, `Next ▶`, `Home`), keyboard
-  arrows, a "card N of M" indicator. HyperCard-style **visual transitions**
-  between cards (dissolve, wipe left/right, iris, barn door) implemented with
-  dithered masks.
-- **Projects:** Mental Health Crisis Detection (real content); AI Fitness /
-  Calorie bot (**placeholder content, flagged as such** — do not invent
-  specifics). Open question below on whether to add ExaCare work (Provider
-  Directory, Referral Outbound Center) as stacks.
+  arrows, a "card N of M" indicator, and a way to jump straight to a stack from
+  the Terminal (`projects crisis`) or a contents card. HyperCard-style **visual
+  transitions** (dissolve, wipe left/right, iris, barn door) via dithered masks;
+  the Keynote divider slides get the slow push.
 - Content from `content/projects/<slug>.md` with a light card-delimiter
-  convention.
+  convention; group membership (work / side) and order in front-matter.
 
 ### Read Me (About)
 - A `SimpleText`-style document window. First-person, personality-forward — the
@@ -214,8 +232,9 @@ output). Architecture follows the sajeth.dev teardown's recommended pattern:
 
 ### Easter eggs (small, curated)
 1. A working **desk accessory** in the Apple menu — the authentic 15-tile
-   sliding **Puzzle** that shipped on every Mac, or a tiny playable game
-   (meowni.ca ships Snake in ~120 lines). One, not several.
+   sliding **Puzzle** that shipped on every Mac (period-perfect, ~50 lines, no
+   dependency). If an existing MIT/CC0 implementation is cleaner to drop in,
+   that's fine; otherwise hand-roll it. One game, not several.
 2. **"About This Portfolio"** — the classic "About This Macintosh" dialog
    reworked: a version line, a built date, and a "Total Memory" bar with a joke
    allocation (e.g. "Coffee", "Side projects", "Sleep") as dithered bar segments.
@@ -319,19 +338,16 @@ Not reused: aurora hero, gradient text, constellation, the chat-demo components.
 - Merging to `main` / going live — this spec covers building on
   `new-and-improved`.
 
-## Open questions for user review
+## Resolved (user review, 2026-09-07)
 
-1. **First load:** just the bare desktop, or does the **Résumé window open
-   automatically** (cascaded under a small "Read Me" note)? The latter gets a
-   recruiter to the content in zero clicks; the former is more authentic.
-2. **Projects scope:** keep Projects to the two side projects (matches the
-   résumé), or also build **ExaCare work** (Provider Directory, Referral Outbound
-   Center) as HyperCard stacks? Work stacks show the day-job impact visually but
-   need care with anything non-public.
-3. **Easter-egg game:** the authentic 15-tile **Puzzle** desk accessory, or
-   something more fun (Snake, a tiny asteroids)?
-4. **Startup chime:** OK to include (muted by default, user-triggered only)?
-5. **Custom domain** ever (e.g. `samuelhabib.com`), or staying on
-   `samuelhabib.github.io`? Affects canonical/OG URLs and the deploy config.
-6. **Body typeface direction:** clean sans (more "cleaned-up/modern") or a crisp
-   serif for long reading (warmer, more editorial)? I can show both in the plan.
+1. **First load:** Résumé window auto-opens (cascaded under a small Read Me note).
+2. **Projects scope:** all projects, **including ExaCare work**, presented as one
+   Keynote-style deck with big-word divider slides ("Work", then "Outside of Work
+   Projects") between the groups. Public-safe detail only on the work stacks.
+3. **Easter-egg game:** the authentic 15-tile Puzzle (use an existing MIT/CC0
+   impl if cleaner, else hand-roll).
+4. **Startup chime:** included. Synthesized or CC0, never Apple's actual sample.
+   Menu-bar Sound toggle, default on, only fires after first user gesture.
+5. **Domain:** staying `samuelhabib.github.io` for now.
+6. **Typeface:** authentic Mac families — Chicago (chrome), Geneva (UI), New York
+   (long-form reading), Monaco (terminal), via free webfont clones.
