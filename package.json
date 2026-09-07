@@ -12,6 +12,8 @@
     "prerender:assert": "node scripts/assert-prerendered.mjs"
   },
   "dependencies": {
+    "js-yaml": "^5.4.1",
+    "marked": "^18.0.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2"
@@ -22,6 +24,7 @@
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
+    "@types/js-yaml": "^4.0.9",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
