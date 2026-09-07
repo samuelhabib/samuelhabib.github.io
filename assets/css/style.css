@@ -138,3 +138,24 @@ a{color:var(--accent);text-decoration:none;}
   .flag-grid .flag-media,.flag-grid--rev .flag-media{order:2;}
   .team ul{grid-template-columns:1fr;}
 }
+
+.map-stage{position:relative;background:var(--night);border-radius:20px;padding:clamp(24px,5vw,48px);overflow:hidden;}
+.map-stage::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 60% at 55% 45%,rgba(43,92,255,.13),transparent 70%);pointer-events:none;}
+#mapSvg{position:relative;z-index:1;width:100%;height:auto;display:block;max-width:680px;margin:0 auto;}
+.map-land{fill:#0e1626;stroke:#2a3a5c;stroke-width:1.1;stroke-linejoin:round;}
+.map-landmark{color:#8fbcff;opacity:.16;transform:scale(.5);transform-box:fill-box;transform-origin:50% 100%;
+  transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1),filter .6s ease;filter:drop-shadow(0 0 0 rgba(107,190,255,0));}
+.map-landmark.lit{opacity:1;transform:scale(1);filter:drop-shadow(0 0 8px rgba(107,190,255,.6));}
+.map-city{fill:#d7e0ea;font-size:9.5px;font-weight:600;letter-spacing:.02em;opacity:.4;transition:opacity .5s ease;}
+.map-city.lit{opacity:1;}
+.map-chapter{fill:#7a8394;font-size:7px;opacity:0;transition:opacity .5s ease .1s;}
+.map-chapter.lit{opacity:1;}
+.map-years{fill:#4a5568;font-size:6.5px;font-variant-numeric:tabular-nums;opacity:0;transition:opacity .5s ease .18s;}
+.map-years.lit{opacity:1;}
+.map-pin-ring{fill:none;stroke:#3d8bff;stroke-width:1;opacity:0;}
+.map-pin-ring.lit{opacity:0.55;animation:mapPing 2.4s ease-out infinite;}
+@keyframes mapPing{0%{r:3;opacity:.6;}100%{r:13;opacity:0;}}
+
+@media (prefers-reduced-motion:reduce){
+  .map-pin-ring.lit{animation:none;}
+}

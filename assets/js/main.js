@@ -142,4 +142,60 @@
     } else { visible=true; raf=requestAnimationFrame(frame); }
   }
   initRouteViz();
+
+  function initMapJourney(){
+    var path = document.getElementById('mapPath');
+    var dot = document.getElementById('mapDot');
+    if(!path || !dot) return;
+    var trails = [document.getElementById('mapTrail0'), document.getElementById('mapTrail1'), document.getElementById('mapTrail2')];
+    var stops = [
+      {x:262.2,y:72.3, els:['mapTor','mapTorCity','mapTorCh','mapTorYr'], ring:'mapTorRing'},
+      {x:157.1,y:159.5, els:['mapAus','mapAusCity','mapAusCh','mapAusYr'], ring:'mapAusRing'},
+      {x:293.9,y:92.3, els:['mapNyc','mapNycCity','mapNycCh','mapNycYr'], ring:'mapNycRing'}
+    ];
+    var len = path.getTotalLength(), samples = 500;
+    stops.forEach(function(s){
+      var bestD=Infinity, bestL=0;
+      for(var i=0;i<=samples;i++){
+        var l=len*i/samples, pt=path.getPointAtLength(l), d=Math.hypot(pt.x-s.x,pt.y-s.y);
+        if(d<bestD){bestD=d;bestL=l;}
+      }
+      s.frac = bestL/len; s.lit = false;
+    });
+    function lightAll(){
+      stops.forEach(function(s){
+        s.lit = true;
+        s.els.forEach(function(id){ document.getElementById(id).classList.add('lit'); });
+        document.getElementById(s.ring).classList.add('lit');
+      });
+      var end = path.getPointAtLength(len);
+      dot.setAttribute('cx', end.x); dot.setAttribute('cy', end.y);
+    }
+    if(reduce){ lightAll(); return; }
+    var visible = false, raf = null, start = null, dur = 4600, trailGap = 0.018;
+    function resetLights(){
+      stops.forEach(function(s){ s.lit=false; s.els.forEach(function(id){ document.getElementById(id).classList.remove('lit'); }); document.getElementById(s.ring).classList.remove('lit'); });
+    }
+    function frame(ts){
+      if(!start) start = ts;
+      var raw = (ts-start)/dur, p = raw % 1;
+      if(raw>=1 && p<0.015){ resetLights(); }
+      var pt = path.getPointAtLength(len*p);
+      dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+      trails.forEach(function(t,i){ var tp=Math.max(0,p-trailGap*(i+1)), pos=path.getPointAtLength(len*tp); t.setAttribute('cx',pos.x); t.setAttribute('cy',pos.y); });
+      stops.forEach(function(s){
+        if(!s.lit && p >= s.frac-0.004){
+          s.lit=true;
+          s.els.forEach(function(id){ document.getElementById(id).classList.add('lit'); });
+          document.getElementById(s.ring).classList.add('lit');
+        }
+      });
+      if(visible) raf = requestAnimationFrame(frame);
+    }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ visible = e.isIntersecting;
+        if(visible){ start=null; raf=requestAnimationFrame(frame); } else if(raf){ cancelAnimationFrame(raf); } }); }, {threshold:0.2}).observe(path.closest('svg'));
+    } else { visible = true; raf = requestAnimationFrame(frame); }
+  }
+  initMapJourney();
 })();
