@@ -159,3 +159,17 @@ a{color:var(--accent);text-decoration:none;}
 @media (prefers-reduced-motion:reduce){
   .map-pin-ring.lit{animation:none;}
 }
+
+.xp{border-top:1px solid var(--line);}
+.xp-row{display:grid;grid-template-columns:160px 1fr;gap:36px;padding:clamp(34px,5vw,56px) 0;border-bottom:1px solid var(--line);}
+.xp-when{color:var(--slate);font-size:1rem;font-variant-numeric:tabular-nums;padding-top:8px;}
+.xp-co{font-size:clamp(1.6rem,3.6vw,2.3rem);font-weight:700;letter-spacing:-0.02em;margin:0;line-height:1.06;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.xp-role{color:var(--slate);font-size:1rem;margin:9px 0 0;}
+.xp-notes{margin:22px 0 0;display:grid;gap:15px;}
+.xp-notes p{margin:0;font-size:1.0625rem;line-height:1.52;max-width:64ch;}
+.badge{font-size:0.6875rem;font-weight:600;letter-spacing:.02em;color:var(--slate);background:var(--mist);border:1px solid var(--line);border-radius:980px;padding:4px 12px;vertical-align:middle;}
+
+@media (max-width:680px){
+  .xp-row{grid-template-columns:1fr;gap:12px;}
+  .xp-when{padding-top:0;}
+}
