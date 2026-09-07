@@ -4,11 +4,28 @@ import { ResumeArticle } from './windows/resumeContent'
 import Desktop from './shell/Desktop'
 import Boot from './shell/Boot'
 import { useBoot } from './shell/useBoot'
+import { SoundProvider, useSound } from './shell/useSound'
 
-export default function App() {
+function AppInner() {
   const [hydrated, setHydrated] = useState(false)
   useEffect(() => setHydrated(true), [])
   const { booting, skip } = useBoot()
+  const sound = useSound()
+
+  // Play the startup chime on the first user gesture (autoplay policy), once.
+  useEffect(() => {
+    const once = () => {
+      sound.chime()
+      window.removeEventListener('pointerdown', once)
+      window.removeEventListener('keydown', once)
+    }
+    window.addEventListener('pointerdown', once)
+    window.addEventListener('keydown', once)
+    return () => {
+      window.removeEventListener('pointerdown', once)
+      window.removeEventListener('keydown', once)
+    }
+  }, [sound])
 
   return (
     <>
@@ -25,5 +42,13 @@ export default function App() {
         </>
       )}
     </>
+  )
+}
+
+export default function App() {
+  return (
+    <SoundProvider>
+      <AppInner />
+    </SoundProvider>
   )
 }

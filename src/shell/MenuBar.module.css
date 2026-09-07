@@ -26,3 +26,12 @@
 .item {
   user-select: none;
 }
+.toggle {
+  font-family: var(--font-chrome);
+  font-size: 12px;
+  padding: 0 4px;
+}
+.toggle:active {
+  background: var(--black);
+  color: var(--white);
+}
