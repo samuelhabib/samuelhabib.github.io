@@ -222,4 +222,39 @@
     } else { startCounts(); }
   }
   initStatCounts();
+
+  function initSkillConstellation(){
+    var canvas = document.getElementById('constCanvas'); if(!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d'), dpr = Math.min(window.devicePixelRatio||1, 2);
+    var labels = ['Python','Java','TypeScript','Ruby','SQL','AWS','Spring Boot','React','Docker','LLM','Solr','CI/CD'];
+    var nodes = [], W = 0, H = 0, visible = false, raf = null;
+    function resize(){
+      var rc = canvas.getBoundingClientRect(); W = rc.width; H = rc.height;
+      canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+      nodes = labels.map(function(l){ return { label:l, x:Math.random()*W, y:20+Math.random()*(H-40), vx:(Math.random()-0.5)*0.2, vy:(Math.random()-0.5)*0.2 }; });
+    }
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      if(!reduce){
+        nodes.forEach(function(n){ n.x+=n.vx; n.y+=n.vy; if(n.x<24||n.x>W-24)n.vx*=-1; if(n.y<16||n.y>H-16)n.vy*=-1; });
+      }
+      for(var i=0;i<nodes.length;i++) for(var j=i+1;j<nodes.length;j++){
+        var a=nodes[i], b=nodes[j], d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<130){ ctx.strokeStyle='rgba(90,170,255,'+(0.3*(1-d/130))+')'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+      }
+      nodes.forEach(function(n){
+        ctx.fillStyle='#0071e3'; ctx.beginPath(); ctx.arc(n.x,n.y,3.5,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle='#c7cdd8'; ctx.font='12px -apple-system,sans-serif'; ctx.fillText(n.label, n.x+8, n.y+4);
+      });
+    }
+    function loop(){ draw(); if(visible && !reduce) raf = requestAnimationFrame(loop); }
+    resize(); draw();
+    window.addEventListener('resize', function(){ resize(); draw(); });
+    if(reduce) return;
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ visible = e.isIntersecting;
+        if(visible){ raf = requestAnimationFrame(loop); } else if(raf){ cancelAnimationFrame(raf); } }); }, {threshold:0.2}).observe(canvas);
+    } else { visible = true; raf = requestAnimationFrame(loop); }
+  }
+  initSkillConstellation();
 })();

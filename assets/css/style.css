@@ -185,3 +185,7 @@ a{color:var(--accent);text-decoration:none;}
 .stat-src{color:#7d818c;font-size:0.8125rem;margin:6px 0 0;}
 
 @media (max-width:900px){.stat-grid{grid-template-columns:1fr 1fr;gap:36px 28px;}}
+
+.const-stage{position:relative;background:var(--night);border-radius:20px;padding:clamp(24px,4vw,36px);}
+#constCanvas{width:100%;height:360px;display:block;}
+@media (max-width:680px){#constCanvas{height:280px;}}
