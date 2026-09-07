@@ -242,9 +242,12 @@
     var CATS = { lang:'#3d8bff', infra:'#2dd4dd', ai:'#6be89a' };
     var skills = [
       {label:'Python', cat:'lang'}, {label:'Java', cat:'lang'}, {label:'TypeScript', cat:'lang'},
-      {label:'Ruby', cat:'lang'}, {label:'React', cat:'lang'}, {label:'Spring Boot', cat:'lang'},
-      {label:'SQL', cat:'infra'}, {label:'AWS', cat:'infra'}, {label:'Docker', cat:'infra'},
-      {label:'CI/CD', cat:'infra'}, {label:'Solr', cat:'infra'}, {label:'LLM', cat:'ai'}
+      {label:'JavaScript', cat:'lang'}, {label:'Ruby', cat:'lang'}, {label:'C++', cat:'lang'},
+      {label:'C#', cat:'lang'}, {label:'PHP', cat:'lang'}, {label:'SQL', cat:'lang'},
+      {label:'AWS', cat:'infra'}, {label:'GCP', cat:'infra'}, {label:'Docker', cat:'infra'},
+      {label:'React', cat:'infra'}, {label:'Node.js', cat:'infra'}, {label:'Spring Boot', cat:'infra'},
+      {label:'Jenkins', cat:'infra'}, {label:'CI/CD', cat:'infra'}, {label:'Git', cat:'infra'},
+      {label:'LLM', cat:'ai'}, {label:'NLP', cat:'ai'}, {label:'Solr', cat:'ai'}
     ];
     var nodes = [], W = 0, H = 0, visible = false, raf = null, FONT = '12px -apple-system,sans-serif', t0 = null;
     var mouse = {x:-9999, y:-9999, active:false};
@@ -267,6 +270,19 @@
           var dx=n.x-mouse.x, dy=n.y-mouse.y, d=Math.hypot(dx,dy), rad=100;
           if(d<rad && d>0.01){ var f=(1-d/rad)*0.9; n.x += (dx/d)*f; n.y += (dy/d)*f; }
         }
+      });
+      for(var i=0;i<nodes.length;i++){
+        for(var j=i+1;j<nodes.length;j++){
+          var a=nodes[i], b=nodes[j];
+          var dx2=a.x-b.x, dy2=a.y-b.y, d2=Math.hypot(dx2,dy2), minD=44;
+          if(d2<minD && d2>0.01){
+            var push=(minD-d2)/minD*0.6;
+            a.x += (dx2/d2)*push; a.y += (dy2/d2)*push;
+            b.x -= (dx2/d2)*push; b.y -= (dy2/d2)*push;
+          }
+        }
+      }
+      nodes.forEach(function(n){
         var minX=24, maxX=Math.max(minX, W-4-8-n.lw);
         if(n.x<minX){ n.x=minX; n.vx=Math.abs(n.vx); } else if(n.x>maxX){ n.x=maxX; n.vx=-Math.abs(n.vx); }
         var minY=16, maxY=Math.max(minY, H-16);
@@ -300,8 +316,10 @@
       });
     }
     function loop(ts){ if(!reduce) step(); render(ts); if(visible && !reduce) raf = requestAnimationFrame(loop); }
-    resize(); render(0);
-    window.addEventListener('resize', function(){ resize(); render(0); });
+    resize();
+    for(var relax=0; relax<40; relax++) step();
+    render(0);
+    window.addEventListener('resize', function(){ resize(); for(var k=0;k<40;k++) step(); render(0); });
     canvas.addEventListener('mousemove', function(e){
       var r = canvas.getBoundingClientRect();
       mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.active = true;

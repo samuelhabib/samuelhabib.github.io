@@ -181,8 +181,8 @@ a{color:var(--accent);text-decoration:none;}
 @media (max-width:900px){.stat-grid{grid-template-columns:1fr 1fr;gap:36px 28px;}}
 
 .const-stage{position:relative;background:var(--night);border-radius:20px;padding:clamp(24px,4vw,36px);}
-#constCanvas{width:100%;height:400px;display:block;}
-@media (max-width:680px){#constCanvas{height:300px;}}
+#constCanvas{width:100%;height:440px;display:block;}
+@media (max-width:680px){#constCanvas{height:340px;}}
 
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px;}
 .proj-card{background:var(--night);border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(10,12,30,.12);}
