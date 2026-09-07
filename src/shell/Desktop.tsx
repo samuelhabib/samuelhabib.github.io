@@ -65,7 +65,7 @@ export default function Desktop() {
   const openWindows = (Object.keys(CONTENT) as WindowId[]).filter((id) => state.windows[id].open)
 
   return (
-    <div className={styles.desktop}>
+    <div className={`${styles.desktop} desktop`}>
       <MenuBar />
       <DesktopIcons onOpen={open} />
       {zoom && (

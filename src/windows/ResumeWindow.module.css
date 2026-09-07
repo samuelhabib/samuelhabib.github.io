@@ -27,3 +27,13 @@
   margin: 6px 0;
   padding-left: 20px;
 }
+.pdfBtn {
+  font-family: var(--font-chrome);
+  border: 1px solid var(--black);
+  padding: 3px 10px;
+  margin-bottom: 12px;
+}
+.pdfBtn:active {
+  background: var(--black);
+  color: var(--white);
+}
