@@ -1,0 +1,10 @@
+import { readFileSync } from 'node:fs'
+
+const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8')
+const needles = ['<h1', 'Samuel Habib']
+const missing = needles.filter((n) => !html.includes(n))
+if (missing.length) {
+  console.error('dist/index.html missing pre-rendered content:', missing)
+  process.exit(1)
+}
+console.log('OK: dist/index.html contains pre-rendered content')
