@@ -211,3 +211,24 @@ a{color:var(--accent);text-decoration:none;}
 @media (prefers-reduced-motion:reduce){
   .chat-dots span{animation:none;}
 }
+
+.edu{display:grid;grid-template-columns:160px 1fr;gap:36px;max-width:780px;}
+.edu-when{color:var(--slate);font-size:1rem;padding-top:8px;}
+.edu-school{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:700;letter-spacing:-0.018em;margin:0;line-height:1.1;}
+.edu-deg{color:var(--slate);font-size:1.0625rem;margin:11px 0 0;}
+
+.contact{position:relative;background:var(--night);color:#f5f5f7;overflow:hidden;padding:clamp(100px,15vh,170px) 0;}
+.contact .aurora{filter:blur(80px);opacity:.7;}
+.contact-inner{position:relative;z-index:3;}
+.contact h2{font-size:clamp(2.4rem,6.5vw,4rem);font-weight:700;letter-spacing:-0.03em;line-height:1.02;margin:0;max-width:15ch;color:#fff;}
+.contact-mail{display:inline-block;margin:36px 0 0;font-size:clamp(1.3rem,3vw,1.9rem);font-weight:500;color:#fff;letter-spacing:-0.01em;transition:color .25s ease;}
+.contact-mail:hover{color:#8fbcff;}
+.contact-links{margin:44px 0 0;display:flex;gap:30px;flex-wrap:wrap;}
+.contact-links a{color:#c7cdd8;font-size:1.0625rem;transition:color .25s ease;}
+.contact-links a:hover{color:#fff;}
+.contact-foot{margin-top:clamp(60px,10vh,96px);padding-top:26px;border-top:1px solid rgba(255,255,255,.14);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:#7d818c;font-size:0.9375rem;}
+
+@media (max-width:680px){
+  .edu{grid-template-columns:1fr;gap:12px;}
+  .edu-when{padding-top:0;}
+}
