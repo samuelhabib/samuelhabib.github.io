@@ -257,4 +257,31 @@
     } else { visible = true; raf = requestAnimationFrame(loop); }
   }
   initSkillConstellation();
+
+  function initChatDemo(){
+    var aiBubble = document.getElementById('chatAiBubble');
+    if(!aiBubble) return;
+    var reply = "based on the spinach and chicken you grabbed on instacart tuesday, try a grilled chicken bowl. keeps you about 150 calories under today's target.";
+    var visible = false, timer = null;
+    function loop(){
+      aiBubble.innerHTML = '<span class="chat-dots"><span></span><span></span><span></span></span>';
+      timer = setTimeout(function(){
+        if(reduce){ aiBubble.textContent = reply; timer = setTimeout(function(){ if(visible) loop(); }, 3200); return; }
+        aiBubble.textContent = '';
+        var ci = 0;
+        var iv = setInterval(function(){
+          aiBubble.textContent = reply.slice(0, ci);
+          ci++;
+          if(ci > reply.length){ clearInterval(iv); timer = setTimeout(function(){ if(visible) loop(); }, 2600); }
+        }, 18);
+      }, reduce ? 0 : 1100);
+    }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){
+        visible = e.isIntersecting;
+        if(visible){ loop(); } else if(timer){ clearTimeout(timer); }
+      }); }, {threshold:0.3}).observe(aiBubble.closest('.proj-card'));
+    } else { visible = true; loop(); }
+  }
+  initChatDemo();
 })();
