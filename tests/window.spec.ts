@@ -1,15 +1,44 @@
 import { test, expect } from '@playwright/test'
+import type { Page } from '@playwright/test'
 
-// Passes once Task 9 mounts the Résumé window on the desktop.
-test('résumé window can be dragged', async ({ page }) => {
+async function ready(page: Page) {
   await page.goto('/')
+  // Boot overlay sits above everything at z-index 5000; wait it out so pointer
+  // events reach the window chrome instead of the overlay.
+  await page.getByText('Welcome to Macintosh').waitFor({ state: 'detached', timeout: 6000 }).catch(() => {})
+  await expect(page.getByRole('dialog', { name: /résumé/i })).toBeVisible()
+}
+
+test('résumé window drags with the pointer across many move events', async ({ page }) => {
+  await ready(page)
   const dialog = page.getByRole('dialog', { name: /résumé/i })
-  await expect(dialog).toBeVisible()
   const before = await dialog.boundingBox()
-  await page.getByTestId('titlebar').first().hover()
+
+  const bar = dialog.getByTestId('titlebar')
+  const grip = await bar.boundingBox()
+  await page.mouse.move(grip!.x + 40, grip!.y + grip!.height / 2)
   await page.mouse.down()
-  await page.mouse.move(600, 400)
+  await page.mouse.move(grip!.x + 160, grip!.y + grip!.height / 2 + 90, { steps: 20 })
   await page.mouse.up()
+
   const after = await dialog.boundingBox()
-  expect(after!.x).not.toBe(before!.x)
+  expect(after!.x - before!.x).toBeGreaterThan(90)
+  expect(after!.y - before!.y).toBeGreaterThan(60)
+})
+
+test('résumé window resizes from the grow box', async ({ page }) => {
+  await ready(page)
+  const dialog = page.getByRole('dialog', { name: /résumé/i })
+  const before = await dialog.boundingBox()
+
+  const grow = dialog.getByRole('button', { name: /resize résumé/i })
+  const box = await grow.boundingBox()
+  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2)
+  await page.mouse.down()
+  await page.mouse.move(box!.x + 140, box!.y + 110, { steps: 20 })
+  await page.mouse.up()
+
+  const after = await dialog.boundingBox()
+  expect(after!.width - before!.width).toBeGreaterThan(100)
+  expect(after!.height - before!.height).toBeGreaterThan(80)
 })
