@@ -2,6 +2,7 @@
 @import './tokens.css';
 @import './reset.css';
 @import './dither.css';
+@import './fallback.css';
 
 .doc-fallback {
   max-width: 720px;

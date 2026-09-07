@@ -9,7 +9,17 @@ import { SoundProvider, useSound } from './shell/useSound'
 
 function AppInner() {
   const [hydrated, setHydrated] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(true)
   useEffect(() => setHydrated(true), [])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const apply = () => setIsDesktop(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+
   const { booting, skip } = useBoot()
   const sound = useSound()
 
@@ -28,16 +38,25 @@ function AppInner() {
     }
   }, [sound])
 
+  const shell = hydrated && isDesktop
+
   return (
     <>
-      {/* Always in the DOM and in the SSG output — the no-JS / screen-reader / ATS view */}
-      <main id="main" className="doc-fallback" hidden={hydrated}>
-        <ResumeArticle data={resume} />
-        <ReadMeArticle />
+      {/* Always in the DOM and in the SSG output — the no-JS / mobile / screen-reader / ATS view */}
+      <main id="main" className="doc-fallback" hidden={shell}>
+        <nav className="doc-nav">
+          <a href="#resume">Résumé</a> · <a href="#readme">Read Me</a>
+        </nav>
+        <div id="resume">
+          <ResumeArticle data={resume} />
+        </div>
+        <div id="readme">
+          <ReadMeArticle />
+        </div>
       </main>
 
-      {/* Enhancement: the classic-Mac desktop, only after hydration */}
-      {hydrated && (
+      {/* Enhancement: the classic-Mac desktop, only after hydration at desktop widths */}
+      {shell && (
         <>
           {booting && <Boot onSkip={skip} />}
           <Desktop />
