@@ -198,4 +198,28 @@
     } else { visible = true; raf = requestAnimationFrame(frame); }
   }
   initMapJourney();
+
+  function initStatCounts(){
+    var statGrid = document.getElementById('statGrid');
+    if(!statGrid) return;
+    function startCounts(){
+      document.querySelectorAll('.num').forEach(function(el){
+        var to = parseFloat(el.getAttribute('data-to'));
+        var pre = el.getAttribute('data-prefix') || '';
+        var suf = el.getAttribute('data-suffix') || '';
+        function fmt(n){ return pre + Math.round(n).toLocaleString('en-US') + suf; }
+        if(reduce){ el.textContent = fmt(to); return; }
+        var dur = 1700, start = null;
+        function step(ts){ if(!start) start = ts; var p = Math.min((ts-start)/dur,1); var e = 1-Math.pow(1-p,3); el.textContent = fmt(to*e); if(p<1) requestAnimationFrame(step); else el.textContent = fmt(to); }
+        requestAnimationFrame(step);
+      });
+    }
+    if('IntersectionObserver' in window){
+      var sio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ startCounts(); sio.unobserve(e.target); } });
+      }, {threshold:0.4});
+      sio.observe(statGrid);
+    } else { startCounts(); }
+  }
+  initStatCounts();
 })();
