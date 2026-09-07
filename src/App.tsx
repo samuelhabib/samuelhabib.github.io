@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react'
 import { resume } from './content/resume'
 import { ResumeArticle } from './windows/resumeContent'
 import Desktop from './shell/Desktop'
+import Boot from './shell/Boot'
+import { useBoot } from './shell/useBoot'
 
 export default function App() {
   const [hydrated, setHydrated] = useState(false)
   useEffect(() => setHydrated(true), [])
+  const { booting, skip } = useBoot()
 
   return (
     <>
@@ -15,7 +18,12 @@ export default function App() {
       </main>
 
       {/* Enhancement: the classic-Mac desktop, only after hydration */}
-      {hydrated && <Desktop />}
+      {hydrated && (
+        <>
+          {booting && <Boot onSkip={skip} />}
+          <Desktop />
+        </>
+      )}
     </>
   )
 }
