@@ -32,7 +32,7 @@ The visual language is dark, cinematic, and consistent end to end, not a patchwo
 
 Confirmed components, in the order they'd appear on the page:
 
-1. **Hero: terminal boot, then name reveal.** The page opens on a small terminal window that types out a few lines (`whoami`, a one-line personality bit, a status line) before dissolving into the existing large gradient-text name reveal (`Samuel Habib`, kicker, lead line, CTA buttons). One continuous beat, not two separate sections.
+1. **Hero: terminal boot, then name reveal.** The page opens on a small terminal window that types out a few lines (`whoami`, a one-line personality bit, a status line) before dissolving into the existing large gradient-text name reveal (`Samuel Habib`, kicker, lead line, CTA buttons). One continuous beat, not two separate sections. **This exact handoff was never shown in motion during brainstorming** (only its two halves were validated separately). Build and check this transition first during implementation, before wiring up the rest of the page, since it's the single most important beat and the one place a mismatch would be most visible.
 2. **Existing canvas data-visualizations are kept as-is**: the "chaos into order" Provider Directory visualization and the Referral Outbound Center hub-and-packets visualization from the reference file. These were already validated and liked; they anchor the "Now" section.
 3. **Skill constellation**: the skills/toolkit section becomes a small live network graph (nodes drift gently, edges pulse between related tools) instead of a plain grouped list.
 4. **Per-card bespoke live diagrams, replacing any generic hover effect.** Rejected: 3D tilt cards, rotating border-beam cards. Approved: every major project/experience card gets its own small, accurate diagram of what that thing actually does, always animating (not hover-gated): ROC's card shows three facilities routing through the hub to a recipient; Crisis Detection's card shows a message triggering a sentiment network, a risk meter climbing, and an escalation firing. The fitness-bot card gets an equivalent bespoke diagram once its details are finalized.
@@ -46,7 +46,7 @@ Explicitly rejected during iteration: the "hybrid" mockup that flattened the aur
 
 ## Writing style
 
-All site copy must read as high-quality, professional writing with no em dashes anywhere (use periods, commas, or colons instead). No filler, no buzzword soup. This applies to every section, not just the hero.
+All site copy must read as high-quality, professional writing with no em dashes anywhere (use periods, commas, or colons instead). No filler, no buzzword soup. This applies to every section, not just the hero, and covers non-prose copy too: the terminal boot lines, the AI chat demo's reply string, and visualization captions. Grep `index.html` and `main.js` for the em dash character before calling implementation done.
 
 ## Technical approach
 
@@ -59,7 +59,8 @@ All site copy must read as high-quality, professional writing with no em dashes 
 ## Repository changes
 
 - Create a `legacy/` folder at the repository root. Move (not copy, preserving git history via `git mv`) the current `index.html`, `assets/`, and `images/` into it, so the old site is fully preserved and inspectable but no longer live at the root.
-- Replace `Resume.pdf` at the repository root with the contents of `Samuel_Habib_Resume_Jan_26 (1).pdf` from Downloads, keeping the filename `Resume.pdf` so existing links keep working. Remove the stale duplicate copy at `images/Resume.pdf` (it moves into `legacy/` along with the rest of `images/`).
+- `Resume.pdf` at the repository root has already been replaced with the contents of `Samuel_Habib_Resume_Jan_26 (1).pdf` from Downloads, keeping the filename so existing links keep working. The stale duplicate copy at `images/Resume.pdf` moves into `legacy/` along with the rest of `images/`; it is not separately deleted.
+- **Known contradiction to flag to the user, not silently fix:** the installed PDF still lists Apple as "Sept 2023 to Present" with no ExaCare entry, while the new site's hero states ExaCare/New York as current. Anyone who clicks through from the site to the resume will see a mismatch until the user regenerates the PDF (the `Resume Bullets.md` side deliverable is exactly the fix for that). Confirm with the user whether the resume link should go live as-is or wait.
 - Build the new site as `index.html` (plus `assets/css/style.css`, `assets/js/main.js`) at the repository root.
 
 ## Out of scope / deferred
