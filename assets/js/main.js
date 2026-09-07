@@ -172,29 +172,38 @@
       dot.setAttribute('cx', end.x); dot.setAttribute('cy', end.y);
     }
     if(reduce){ lightAll(); return; }
-    var visible = false, raf = null, start = null, dur = 4600, trailGap = 0.018;
+    var visible = false, raf = null, start = null, lastT = 0, travelDur = 4600, holdDur = 1800, trailGap = 0.018;
+    var cycle = travelDur + holdDur;
     function resetLights(){
       stops.forEach(function(s){ s.lit=false; s.els.forEach(function(id){ document.getElementById(id).classList.remove('lit'); }); document.getElementById(s.ring).classList.remove('lit'); });
     }
+    function lightStop(s){
+      s.lit = true;
+      s.els.forEach(function(id){ document.getElementById(id).classList.add('lit'); });
+      document.getElementById(s.ring).classList.add('lit');
+    }
     function frame(ts){
       if(!start) start = ts;
-      var raw = (ts-start)/dur, p = raw % 1;
-      if(raw>=1 && p<0.015){ resetLights(); }
-      var pt = path.getPointAtLength(len*p);
-      dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
-      trails.forEach(function(t,i){ var tp=Math.max(0,p-trailGap*(i+1)), pos=path.getPointAtLength(len*tp); t.setAttribute('cx',pos.x); t.setAttribute('cy',pos.y); });
-      stops.forEach(function(s){
-        if(!s.lit && p >= s.frac-0.004){
-          s.lit=true;
-          s.els.forEach(function(id){ document.getElementById(id).classList.add('lit'); });
-          document.getElementById(s.ring).classList.add('lit');
-        }
-      });
+      var elapsed = ts - start, t = elapsed % cycle;
+      if(t < lastT) resetLights();
+      lastT = t;
+      if(t < travelDur){
+        var p = t / travelDur;
+        var pt = path.getPointAtLength(len*p);
+        dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+        trails.forEach(function(tr,i){ var tp=Math.max(0,p-trailGap*(i+1)), pos=path.getPointAtLength(len*tp); tr.setAttribute('cx',pos.x); tr.setAttribute('cy',pos.y); });
+        stops.forEach(function(s){ if(!s.lit && p >= s.frac-0.004) lightStop(s); });
+      } else {
+        var end = path.getPointAtLength(len);
+        dot.setAttribute('cx', end.x); dot.setAttribute('cy', end.y);
+        trails.forEach(function(tr){ tr.setAttribute('cx', end.x); tr.setAttribute('cy', end.y); });
+        stops.forEach(function(s){ if(!s.lit) lightStop(s); });
+      }
       if(visible) raf = requestAnimationFrame(frame);
     }
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){ es.forEach(function(e){ visible = e.isIntersecting;
-        if(visible){ start=null; raf=requestAnimationFrame(frame); } else if(raf){ cancelAnimationFrame(raf); } }); }, {threshold:0.2}).observe(path.closest('svg'));
+        if(visible){ start=null; lastT=0; raf=requestAnimationFrame(frame); } else if(raf){ cancelAnimationFrame(raf); } }); }, {threshold:0.2}).observe(path.closest('svg'));
     } else { visible = true; raf = requestAnimationFrame(frame); }
   }
   initMapJourney();
@@ -289,4 +298,60 @@
     } else { visible = true; loop(); }
   }
   initChatDemo();
+
+  function initTerminalPopup(){
+    var triggers = [document.getElementById('brandLink'), document.getElementById('heroName')].filter(Boolean);
+    var modal = document.getElementById('termModal');
+    var body = document.getElementById('termModalBody');
+    var backdrop = document.getElementById('termBackdrop');
+    if(!triggers.length || !modal || !body || !backdrop) return;
+    var lines = [
+      {p:'$ whoami', o:'samuel-habib, full stack software engineer @ exacare'},
+      {p:'$ cat personality.md', o:'builds fast, pairs with AI agents, obsesses over clean systems'},
+      {p:'$ echo $MOOD', o:'caffeinated, mid-deploy, probably fine'}
+    ];
+    var playing = false;
+    function typeLines(done){
+      body.innerHTML = '';
+      var li = 0;
+      function nextLine(){
+        if(li >= lines.length){ done(); return; }
+        var line = lines[li], ci = 0;
+        var promptSpan = document.createElement('span');
+        promptSpan.className = 'boot-prompt';
+        body.appendChild(promptSpan);
+        body.appendChild(document.createElement('br'));
+        function typeChar(){
+          if(reduce){ promptSpan.textContent = line.p; ci = line.p.length + 1; }
+          if(ci <= line.p.length){ promptSpan.textContent = line.p.slice(0, ci); ci++; setTimeout(typeChar, reduce ? 0 : 26); }
+          else {
+            var out = document.createElement('span');
+            out.className = 'boot-out';
+            out.textContent = line.o;
+            body.appendChild(out);
+            body.appendChild(document.createElement('br'));
+            li++;
+            setTimeout(nextLine, reduce ? 0 : 300);
+          }
+        }
+        typeChar();
+      }
+      nextLine();
+    }
+    function open(){
+      if(playing) return;
+      playing = true;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      typeLines(function(){ playing = false; });
+    }
+    function close(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+    triggers.forEach(function(t){ t.addEventListener('click', function(e){ e.preventDefault(); open(); }); });
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+  }
+  initTerminalPopup();
 })();

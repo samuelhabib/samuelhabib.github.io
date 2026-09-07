@@ -232,3 +232,14 @@ a{color:var(--accent);text-decoration:none;}
   .edu{grid-template-columns:1fr;gap:12px;}
   .edu-when{padding-top:0;}
 }
+
+.brand, #heroName{cursor:pointer;}
+.term-modal{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;padding:24px;}
+.term-modal.open{display:flex;}
+.term-modal-backdrop{position:absolute;inset:0;background:rgba(6,7,13,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
+.term-modal-window{position:relative;z-index:1;width:min(90vw,460px);box-shadow:0 30px 90px rgba(0,0,0,.55);}
+#termModal .boot{opacity:1 !important;transform:none !important;max-width:none;pointer-events:auto !important;}
+
+@media (prefers-reduced-motion:reduce){
+  .term-modal-backdrop{-webkit-backdrop-filter:none;backdrop-filter:none;}
+}
