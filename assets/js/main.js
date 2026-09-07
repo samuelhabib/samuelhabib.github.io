@@ -61,4 +61,21 @@
     nextLine();
   }
   runBootSequence();
+
+  function initMagneticButton(){
+    var btn = document.getElementById('ctaContact');
+    if(!btn || reduce) return;
+    var radius = 90;
+    document.addEventListener('mousemove', function(e){
+      var r = btn.getBoundingClientRect();
+      var mx = e.clientX - (r.left + r.width/2), my = e.clientY - (r.top + r.height/2);
+      var dist = Math.hypot(mx, my);
+      if(dist < radius){
+        btn.style.transform = 'translate(' + (mx*0.28) + 'px,' + (my*0.28) + 'px)';
+      } else {
+        btn.style.transform = 'translate(0,0)';
+      }
+    });
+  }
+  initMagneticButton();
 })();
