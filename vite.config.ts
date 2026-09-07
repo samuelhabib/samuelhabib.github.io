@@ -9,5 +9,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/test-setup.ts',
     css: false,
+    // Vitest owns src/**; Playwright owns tests/**.
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['tests/**', 'node_modules/**', 'dist/**'],
   },
 })

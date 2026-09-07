@@ -1,0 +1,20 @@
+:root {
+  color-scheme: light;
+  --black: #000;
+  --white: #fff;
+  --font-chrome: 'Chicago', 'Geneva', system-ui, sans-serif;
+  --font-ui: 'Geneva', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-read: 'NewYork', 'PT Serif', Charter, Georgia, serif;
+  --font-mono: 'Monaco', 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --menubar-h: 22px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --fs-read: 17px;
+  --fs-ui: 13px;
+  --fs-h1: 30px;
+  --fs-h2: 20px;
+  --fs-meta: 11px;
+}

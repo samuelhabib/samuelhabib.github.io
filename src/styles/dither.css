@@ -1,0 +1,21 @@
+/*
+ * Ordered dither as a tiled 2px cell of pure black / pure white pixels.
+ * Hard colour stops only — no soft gradient that would antialias into grey.
+ * These stand in for the classic Mac 25% / 50% / 75% desktop patterns.
+ */
+.dither-50 {
+  background-color: var(--white);
+  background-image: repeating-conic-gradient(var(--black) 0 25%, var(--white) 0 50%);
+  background-size: 2px 2px;
+}
+.dither-25 {
+  background-color: var(--white);
+  background-image: conic-gradient(var(--black) 0 25%, var(--white) 0);
+  background-size: 2px 2px;
+}
+.dither-75 {
+  background-color: var(--black);
+  background-image: conic-gradient(var(--white) 0 25%, var(--black) 0);
+  background-size: 2px 2px;
+}
+.invert { background: var(--black) !important; color: var(--white) !important; }
