@@ -18,7 +18,7 @@
 
   if('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      entries.forEach(function(e){ e.target.classList.toggle('in', e.isIntersecting); });
     }, {threshold:0.16, rootMargin:'0px 0px -8% 0px'});
     document.querySelectorAll('.reveal, .stagger').forEach(function(el){ io.observe(el); });
   } else {
@@ -225,7 +225,7 @@
     }
     if('IntersectionObserver' in window){
       var sio = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ if(e.isIntersecting){ startCounts(); sio.unobserve(e.target); } });
+        entries.forEach(function(e){ if(e.isIntersecting) startCounts(); });
       }, {threshold:0.4});
       sio.observe(statGrid);
     } else { startCounts(); }
@@ -237,6 +237,7 @@
     var ctx = canvas.getContext('2d'), dpr = Math.min(window.devicePixelRatio||1, 2);
     var labels = ['Python','Java','TypeScript','Ruby','SQL','AWS','Spring Boot','React','Docker','LLM','Solr','CI/CD'];
     var nodes = [], W = 0, H = 0, visible = false, raf = null, FONT = '12px -apple-system,sans-serif';
+    var mouse = {x:-9999, y:-9999, active:false};
     function resize(){
       var rc = canvas.getBoundingClientRect(); W = rc.width; H = rc.height;
       canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -247,23 +248,41 @@
         return { label:l, lw:lw, x:24+Math.random()*(maxX-24 > 0 ? maxX-24 : 1), y:20+Math.random()*(H-40), vx:(Math.random()-0.5)*0.2, vy:(Math.random()-0.5)*0.2 };
       });
     }
-    function draw(){
+    function step(){
+      nodes.forEach(function(n){
+        n.x+=n.vx; n.y+=n.vy;
+        if(n.x<24||n.x+8+n.lw>W-4)n.vx*=-1;
+        if(n.y<16||n.y>H-16)n.vy*=-1;
+        if(mouse.active){
+          var dx=n.x-mouse.x, dy=n.y-mouse.y, d=Math.hypot(dx,dy), rad=100;
+          if(d<rad && d>0.01){ var f=(1-d/rad)*0.9; n.x += (dx/d)*f; n.y += (dy/d)*f; }
+        }
+      });
+    }
+    function render(){
       ctx.clearRect(0,0,W,H);
-      if(!reduce){
-        nodes.forEach(function(n){ n.x+=n.vx; n.y+=n.vy; if(n.x<24||n.x+8+n.lw>W-4)n.vx*=-1; if(n.y<16||n.y>H-16)n.vy*=-1; });
-      }
       for(var i=0;i<nodes.length;i++) for(var j=i+1;j<nodes.length;j++){
         var a=nodes[i], b=nodes[j], d=Math.hypot(a.x-b.x,a.y-b.y);
         if(d<130){ ctx.strokeStyle='rgba(90,170,255,'+(0.3*(1-d/130))+')'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
       }
       nodes.forEach(function(n){
-        ctx.fillStyle='#0071e3'; ctx.beginPath(); ctx.arc(n.x,n.y,3.5,0,Math.PI*2); ctx.fill();
-        ctx.fillStyle='#c7cdd8'; ctx.font='12px -apple-system,sans-serif'; ctx.fillText(n.label, n.x+8, n.y+4);
+        var near = mouse.active && Math.hypot(n.x-mouse.x, n.y-mouse.y) < 70;
+        ctx.fillStyle = near ? '#6be89a' : '#0071e3';
+        ctx.beginPath(); ctx.arc(n.x, n.y, near ? 5 : 3.5, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = near ? '#ffffff' : '#c7cdd8';
+        ctx.font = FONT;
+        ctx.fillText(n.label, n.x+8, n.y+4);
       });
     }
-    function loop(){ draw(); if(visible && !reduce) raf = requestAnimationFrame(loop); }
-    resize(); draw();
-    window.addEventListener('resize', function(){ resize(); draw(); });
+    function loop(){ if(!reduce) step(); render(); if(visible && !reduce) raf = requestAnimationFrame(loop); }
+    resize(); render();
+    window.addEventListener('resize', function(){ resize(); render(); });
+    canvas.addEventListener('mousemove', function(e){
+      var r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.active = true;
+      if(reduce) render();
+    });
+    canvas.addEventListener('mouseleave', function(){ mouse.active = false; if(reduce) render(); });
     if(reduce) return;
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){ es.forEach(function(e){ visible = e.isIntersecting;
@@ -298,6 +317,44 @@
     } else { visible = true; loop(); }
   }
   initChatDemo();
+
+  function initCrisisChatDemo(){
+    var aiBubble = document.getElementById('crisisAiBubble');
+    var flag = document.getElementById('crisisFlag');
+    if(!aiBubble || !flag) return;
+    var reply = "that sounds really heavy, thank you for telling me. i want to make sure you get real support, so i'm connecting you with someone who can help right now.";
+    var visible = false, timer = null;
+    function loop(){
+      flag.classList.remove('show');
+      aiBubble.innerHTML = '<span class="chat-dots"><span></span><span></span><span></span></span>';
+      timer = setTimeout(function(){
+        if(reduce){
+          aiBubble.textContent = reply;
+          flag.classList.add('show');
+          timer = setTimeout(function(){ if(visible) loop(); }, 3200);
+          return;
+        }
+        aiBubble.textContent = '';
+        var ci = 0;
+        var iv = setInterval(function(){
+          aiBubble.textContent = reply.slice(0, ci);
+          ci++;
+          if(ci > reply.length){
+            clearInterval(iv);
+            flag.classList.add('show');
+            timer = setTimeout(function(){ if(visible) loop(); }, 2800);
+          }
+        }, 16);
+      }, reduce ? 0 : 1000);
+    }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){
+        visible = e.isIntersecting;
+        if(visible){ loop(); } else if(timer){ clearTimeout(timer); }
+      }); }, {threshold:0.3}).observe(aiBubble.closest('.proj-card'));
+    } else { visible = true; loop(); }
+  }
+  initCrisisChatDemo();
 
   function initTerminalPopup(){
     var triggers = [document.getElementById('brandLink'), document.getElementById('heroName')].filter(Boolean);
