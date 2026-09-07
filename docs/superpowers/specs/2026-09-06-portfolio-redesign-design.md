@@ -8,16 +8,16 @@ The old site is retired into a backup folder rather than deleted. The resume fil
 
 ## Content facts (verified against source documents)
 
-These were checked against `Samuel_Habib_Resume_Jan_26 (1).pdf` and `Final SWE III Promotion Case.md` (an internal ExaCare promotion document) during brainstorming, because the reference file's content could not be taken on faith.
+These were checked against `Samuel_Habib_Resume_Sep_26.pdf` (the current resume, which now includes ExaCare) and `Final SWE III Promotion Case.md` (an internal ExaCare promotion document) during brainstorming, because the reference file's content could not be taken on faith.
 
-- **Current role:** Software Engineer at ExaCare, started February 2026, based in New York. The resume PDF has not been updated since the ExaCare move and still lists Apple as current; the site should reflect ExaCare as current, Apple as most recent past role.
-- **Career path:** Toronto (TMU, AMD, Amazon), then Austin (Apple, Sept 2023 to 2026), then New York (ExaCare, Feb 2026 to present).
-- **ExaCare "now" narrative**, drawn from the promotion document:
+- **Current role:** Full Stack Software Engineer at ExaCare AI, started February 2026, Manhattan, NY. This is now confirmed directly on the current resume, which lists ExaCare as the top (current) entry.
+- **Career path:** Toronto (TMU, AMD, Amazon), then Austin (Apple, Sept 2023 to 2026), then New York (ExaCare, Feb 2026 to present). Note: the resume still shows Apple's end date as "Present" rather than a firm 2026 end date; treat "to 2026" as approximate for site copy and not a hard claim.
+- **ExaCare "now" narrative**, drawn from the promotion document and confirmed against the resume's own ExaCare bullets:
   - Owned the Referral Outbound Center (ROC) end to end, from proof of concept to launch and ongoing feature work; piloted 25+ sender facilities at 100% retention.
   - Self-scoped and built the Provider Directory: an ingestion pipeline over public CMS/NPI healthcare data (40,000+ rows across six rosters), with self-healing weekly reconciliation.
   - Built an internal on-call report tool, cutting weekly report time by roughly 50%.
   - Cut a core API endpoint's warm median latency by 42% and its response payload by 70%; eliminated full-table scans responsible for ~57% of database time behind alarms firing ~144 times a day.
-  - Do **not** state a leveling claim ("Software Engineer III", "promoted to"). The promotion case is still pending, not final. Keep title as "Software Engineer."
+  - Do **not** state a leveling claim ("Software Engineer III", "promoted to"). The promotion case is still pending, not final. Keep title as "Full Stack Software Engineer," matching the resume.
 - **Apple, Amazon, AMD experience:** use the resume bullets as the source of truth (they're already accurate and specific: BART, receipt-parsing service, OIDC/RBAC, Solr search, 80%/95% figures for Apple; the two Amazon internships with their own distinct scopes; AMD's Ruby/CI-CD work).
 - **Education:** Toronto Metropolitan University, B.Eng Computer Engineering, CGPA 3.90, Aug 2019 to May 2024.
 - **Projects section**, two entries:
@@ -59,8 +59,7 @@ All site copy must read as high-quality, professional writing with no em dashes 
 ## Repository changes
 
 - Create a `legacy/` folder at the repository root. Move (not copy, preserving git history via `git mv`) the current `index.html`, `assets/`, and `images/` into it, so the old site is fully preserved and inspectable but no longer live at the root.
-- `Resume.pdf` at the repository root has already been replaced with the contents of `Samuel_Habib_Resume_Jan_26 (1).pdf` from Downloads, keeping the filename so existing links keep working. The stale duplicate copy at `images/Resume.pdf` moves into `legacy/` along with the rest of `images/`; it is not separately deleted.
-- **Known contradiction to flag to the user, not silently fix:** the installed PDF still lists Apple as "Sept 2023 to Present" with no ExaCare entry, while the new site's hero states ExaCare/New York as current. Anyone who clicks through from the site to the resume will see a mismatch until the user regenerates the PDF (the `Resume Bullets.md` side deliverable is exactly the fix for that). Confirm with the user whether the resume link should go live as-is or wait.
+- `Resume.pdf` at the repository root has already been replaced with the contents of `Samuel_Habib_Resume_Sep_26.pdf` from Downloads, keeping the filename so existing links keep working. This version already includes ExaCare as the current role, so it's consistent with the new site's content; the earlier concern about the resume and site contradicting each other no longer applies. The stale duplicate copy at `images/Resume.pdf` moves into `legacy/` along with the rest of `images/`; it is not separately deleted.
 - Build the new site as `index.html` (plus `assets/css/style.css`, `assets/js/main.js`) at the repository root.
 
 ## Out of scope / deferred
@@ -73,3 +72,5 @@ All site copy must read as high-quality, professional writing with no em dashes 
 ## Side deliverable (not part of the implementation plan)
 
 Write a short markdown file with new resume bullet points and a section header, distilled from `Final SWE III Promotion Case.md`, for the user to manually fold into their resume. This is a quick content-writing task, independent of the site build, done once and handed over rather than tracked as an implementation step.
+
+**Status: done, and already reflected in the resume.** `Resume Bullets.md` was written to `Career/ExaCare AI/` in the user's Obsidian vault. The subsequently-provided `Samuel_Habib_Resume_Sep_26.pdf` already contains an ExaCare entry matching it almost verbatim, so this deliverable has already served its purpose.
