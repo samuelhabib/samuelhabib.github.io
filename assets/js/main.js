@@ -149,9 +149,9 @@
     if(!path || !dot) return;
     var trails = [document.getElementById('mapTrail0'), document.getElementById('mapTrail1'), document.getElementById('mapTrail2')];
     var stops = [
-      {x:262.2,y:72.3, els:['mapTor','mapTorCity','mapTorCh','mapTorYr'], ring:'mapTorRing'},
-      {x:157.1,y:159.5, els:['mapAus','mapAusCity','mapAusCh','mapAusYr'], ring:'mapAusRing'},
-      {x:293.9,y:92.3, els:['mapNyc','mapNycCity','mapNycCh','mapNycYr'], ring:'mapNycRing'}
+      {x:262.6,y:72.7, els:['mapTor','mapTorCity','mapTorCh','mapTorYr'], ring:'mapTorRing'},
+      {x:157.0,y:159.6, els:['mapAus','mapAusCity','mapAusCh','mapAusYr'], ring:'mapAusRing'},
+      {x:293.5,y:91.8, els:['mapNyc','mapNycCity','mapNycCh','mapNycYr'], ring:'mapNycRing'}
     ];
     var len = path.getTotalLength(), samples = 500;
     stops.forEach(function(s){
@@ -227,16 +227,21 @@
     var canvas = document.getElementById('constCanvas'); if(!canvas || !canvas.getContext) return;
     var ctx = canvas.getContext('2d'), dpr = Math.min(window.devicePixelRatio||1, 2);
     var labels = ['Python','Java','TypeScript','Ruby','SQL','AWS','Spring Boot','React','Docker','LLM','Solr','CI/CD'];
-    var nodes = [], W = 0, H = 0, visible = false, raf = null;
+    var nodes = [], W = 0, H = 0, visible = false, raf = null, FONT = '12px -apple-system,sans-serif';
     function resize(){
       var rc = canvas.getBoundingClientRect(); W = rc.width; H = rc.height;
       canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
-      nodes = labels.map(function(l){ return { label:l, x:Math.random()*W, y:20+Math.random()*(H-40), vx:(Math.random()-0.5)*0.2, vy:(Math.random()-0.5)*0.2 }; });
+      ctx.font = FONT;
+      nodes = labels.map(function(l){
+        var lw = ctx.measureText(l).width;
+        var maxX = Math.max(24, W-24-8-lw);
+        return { label:l, lw:lw, x:24+Math.random()*(maxX-24 > 0 ? maxX-24 : 1), y:20+Math.random()*(H-40), vx:(Math.random()-0.5)*0.2, vy:(Math.random()-0.5)*0.2 };
+      });
     }
     function draw(){
       ctx.clearRect(0,0,W,H);
       if(!reduce){
-        nodes.forEach(function(n){ n.x+=n.vx; n.y+=n.vy; if(n.x<24||n.x>W-24)n.vx*=-1; if(n.y<16||n.y>H-16)n.vy*=-1; });
+        nodes.forEach(function(n){ n.x+=n.vx; n.y+=n.vy; if(n.x<24||n.x+8+n.lw>W-4)n.vx*=-1; if(n.y<16||n.y>H-16)n.vy*=-1; });
       }
       for(var i=0;i<nodes.length;i++) for(var j=i+1;j<nodes.length;j++){
         var a=nodes[i], b=nodes[j], d=Math.hypot(a.x-b.x,a.y-b.y);
