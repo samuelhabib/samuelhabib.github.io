@@ -13,10 +13,12 @@
   padding: 8px 10px;
 }
 .doc-fallback #resume,
+.doc-fallback #skills,
 .doc-fallback #readme,
 .doc-fallback #projects {
   scroll-margin-top: 48px;
 }
+.doc-fallback #skills,
 .doc-fallback #readme,
 .doc-fallback #projects {
   margin-top: 48px;

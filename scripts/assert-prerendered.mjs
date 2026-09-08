@@ -12,6 +12,11 @@ const needles = [
   'Appearance',
   'Desktop Pattern',
   'Portfolio document',
+  // the dedicated Skills section (SkillsArticle) — a <dl>, distinct from the
+  // résumé's flat "Languages: …" paragraph, so this needle only matches the
+  // new markup.
+  'id="skills-fallback"',
+  'href="#skills"',
 ]
 const missing = needles.filter((n) => !html.includes(n))
 if (missing.length) {
