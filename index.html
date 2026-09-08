@@ -20,6 +20,26 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="/favicon.svg" />
+    <script>
+      /* Set the chosen theme + desktop pattern before first paint so there is
+         no flash of the default. Mirrors src/shell/useTheme.ts. */
+      (function () {
+        try {
+          var THEME_CLASSES = [
+            'theme-system7', 'theme-dark', 'theme-system6',
+            'theme-crt-amber', 'theme-crt-green',
+          ]
+          var t = localStorage.getItem('theme')
+          if (t && THEME_CLASSES.indexOf(t) !== -1) {
+            var el = document.documentElement
+            el.classList.remove.apply(el.classList, THEME_CLASSES)
+            el.classList.add(t)
+          }
+          var p = localStorage.getItem('desktopPattern')
+          if (p && p !== '50') document.documentElement.setAttribute('data-pattern', p)
+        } catch (e) {}
+      })()
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",

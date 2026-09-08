@@ -16,6 +16,23 @@ function moduleCssFiles(dir: string): string[] {
 const tokens = read('src/styles/tokens.css')
 const themes = read('src/styles/themes.css')
 const globalCss = read('src/styles/global.css')
+const indexHtml = read('index.html')
+
+describe('no-flash theme init', () => {
+  it('runs a synchronous theme-init script before the module script', () => {
+    const scriptIdx = indexHtml.indexOf("localStorage.getItem('theme')")
+    const moduleIdx = indexHtml.indexOf('src="/src/main.tsx"')
+    expect(scriptIdx).toBeGreaterThan(-1)
+    expect(scriptIdx).toBeLessThan(moduleIdx)
+  })
+  it('also restores the desktop pattern before paint', () => {
+    expect(indexHtml).toContain("localStorage.getItem('desktopPattern')")
+    expect(indexHtml).toContain('data-pattern')
+  })
+  it('does not auto-apply a theme from prefers-color-scheme', () => {
+    expect(indexHtml).not.toContain('prefers-color-scheme')
+  })
+})
 
 describe('theme classes', () => {
   it('themes.css defines exactly the five theme classes', () => {
