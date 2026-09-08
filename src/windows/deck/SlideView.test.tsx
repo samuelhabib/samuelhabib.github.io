@@ -72,6 +72,17 @@ describe('SlideView', () => {
     expect(texts.some((t) => t.includes('false alarm'))).toBe(true)
   })
 
+  it('quote slide renders the text and attribution', () => {
+    render(
+      <SlideView
+        play={false}
+        slide={{ layout: 'quote', text: 'recall is the metric that matters', attribution: 'design note' }}
+      />,
+    )
+    expect(screen.getByText(/recall is the metric that matters/)).toBeVisible()
+    expect(screen.getByText(/design note/)).toBeVisible()
+  })
+
   it('tech slide lists each chip', () => {
     render(<SlideView play={false} slide={{ layout: 'tech', title: 'Built with', items: ['Python', 'PostgreSQL'] }} />)
     expect(screen.getByText('Python')).toBeVisible()

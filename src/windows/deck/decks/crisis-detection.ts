@@ -1,15 +1,15 @@
 import type { ProjectDeck } from '../slideTypes'
 
 // NOTE: the Result is still `___` in content/projects/crisis-detection.md.
-// When Samuel fills it, replace the 'Results' points slide below with a
-// { layout: 'stat', value: <headline metric>, label: <dataset>, foot: <one change> }.
+// When Samuel fills it, replace the 'Where it stands' points slide below
+// with a { layout: 'stat', value: <headline metric>, label: <dataset>, foot: <one change> }.
 const crisisDetection: ProjectDeck = {
   slug: 'crisis-detection',
   title: 'Mental Health Crisis Detection',
   slides: [
     {
       layout: 'title',
-      kicker: 'Side project',
+      kicker: 'Side project · self-directed',
       title: 'Mental Health Crisis Detection',
       subtitle: 'A problem where the false negative is the expensive one.',
     },
@@ -36,11 +36,11 @@ const crisisDetection: ProjectDeck = {
     },
     {
       layout: 'points',
-      title: 'Results',
+      title: 'Where it stands',
       items: [
         {
           icon: 'refresh',
-          text: 'Evaluation on public datasets is in progress — headline numbers go in the full write-up once they are ones I would stand behind.',
+          text: 'Benchmarking on public datasets now; the headline numbers land in the write-up.',
         },
       ],
     },
