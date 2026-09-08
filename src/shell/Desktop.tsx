@@ -118,10 +118,20 @@ export default function Desktop() {
     setStackTarget({ slug, nonce: ++targetNonce.current })
   }, [])
 
-  // Deep link: /?open=projects[&stack=<slug>] opens the deck on that stack.
+  // Deep links:
+  //   /?open=projects[&stack=<slug>]  — opens the deck (on that stack)
+  //   /?open=writeup&slug=<slug>      — opens one project's full write-up
   useEffect(() => {
     const p = new URLSearchParams(window.location.search)
-    if (p.get('open') !== 'projects') return
+    const open = p.get('open')
+    if (open === 'writeup') {
+      const slug = p.get('slug')
+      if (slug) setWriteupSlug(slug)
+      dispatch({ type: 'open', id: 'writeup' })
+      setJustOpened('writeup')
+      return
+    }
+    if (open !== 'projects') return
     dispatch({ type: 'open', id: 'projects' })
     const s = p.get('stack')
     if (s) setStackTarget({ slug: s, nonce: ++targetNonce.current })

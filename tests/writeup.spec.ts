@@ -29,6 +29,16 @@ test('opening the write-up moves focus into the Project Notes window', async ({ 
   expect(focusedInNotes).toBe(true)
 })
 
+test('?open=writeup&slug= deep-links straight to a project write-up', async ({ page }) => {
+  await page.goto('/?open=writeup&slug=referral-outbound-center')
+  await page
+    .getByText('Welcome to Macintosh')
+    .waitFor({ state: 'detached', timeout: 6000 })
+    .catch(() => {})
+  const notes = page.getByRole('dialog', { name: 'Project Notes' })
+  await expect(notes.getByRole('heading', { level: 2, name: 'Referral Outbound Center' })).toBeVisible()
+})
+
 test('opening the write-up for a different project swaps the window content', async ({ page }) => {
   await ready(page)
   await page.getByRole('button', { name: /full write-up/i }).click()
