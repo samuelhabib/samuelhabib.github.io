@@ -42,6 +42,7 @@ const TITLES: Record<WindowId, string> = {
   about: 'About This Portfolio',
   appearance: 'Appearance',
   getinfo: 'Info',
+  writeup: 'Project Notes',
 }
 
 function focusIcon(id: WindowId) {

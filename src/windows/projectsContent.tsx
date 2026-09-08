@@ -1,6 +1,6 @@
 import type { Project, ProjectsData } from '../content/projectTypes'
 
-function ProjectSection({ project }: { project: Project }) {
+export function ProjectSection({ project }: { project: Project }) {
   return (
     <section className="project" id={`project-${project.slug}`}>
       <h2>{project.title}</h2>

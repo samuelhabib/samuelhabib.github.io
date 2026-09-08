@@ -85,4 +85,13 @@ export const INFO: Record<WindowId, InfoCard> = {
     where: 'samuelhabib.github.io',
     comment: 'This one is a bit recursive. Sorry.',
   },
+  writeup: {
+    subject: 'Project Notes',
+    kind: 'SimpleText document',
+    created: 'March 2003',
+    modified: built,
+    size: '24K on disk',
+    where: 'samuelhabib.github.io',
+    comment: 'The long version — what the slides skip.',
+  },
 }
