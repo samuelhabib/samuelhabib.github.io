@@ -165,7 +165,7 @@ export default function ProjectsDeck({
             {deck ? 'slide' : 'card'} {cardIndex + 1} of {cardCount}
           </span>
         )}
-        {project && onOpenWriteup && (
+        {project && !project.placeholder && onOpenWriteup && (
           <button className={styles.writeup} onClick={() => onOpenWriteup(project.slug)}>
             Full write-up →
           </button>

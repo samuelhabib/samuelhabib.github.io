@@ -51,8 +51,25 @@ test('the Full write-up link calls onOpenWriteup with the current project slug',
   expect(onOpenWriteup).toHaveBeenCalledWith('provider-directory')
 })
 
-test('no Full write-up link on the contents or divider slides', () => {
+test('no Full write-up link on the contents or divider slides', async () => {
   render(<ProjectsDeck data={projects} target={null} onOpenWriteup={() => {}} />)
+  expect(screen.queryByRole('button', { name: /full write-up/i })).toBeNull()
+  await userEvent.click(screen.getByRole('button', { name: 'Next ▶' })) // Work divider
+  expect(screen.getByRole('heading', { level: 2, name: 'Work' })).toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: /full write-up/i })).toBeNull()
+})
+
+test('no Full write-up link on a placeholder project stack', () => {
+  render(
+    <ProjectsDeck
+      data={projects}
+      target={{ slug: 'fitness-bot', nonce: 1 }}
+      onOpenWriteup={() => {}}
+    />,
+  )
+  expect(
+    screen.getByRole('heading', { level: 2, name: 'AI Fitness & Calorie Bot' }),
+  ).toBeInTheDocument()
   expect(screen.queryByRole('button', { name: /full write-up/i })).toBeNull()
 })
 
