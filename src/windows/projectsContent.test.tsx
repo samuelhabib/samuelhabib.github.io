@@ -15,13 +15,10 @@ test('renders no h1 (the document already has one)', () => {
   expect(screen.queryByRole('heading', { level: 1 })).toBeNull()
 })
 
-test('renders prose card HTML and the tech/links list', () => {
+test('renders prose card HTML and the tech list', () => {
   render(<ProjectsArticle data={projects} />)
   expect(screen.getByText(/40,000\+ rows across six rosters/i)).toBeInTheDocument()
-  expect(screen.getAllByRole('link', { name: /resume \(pdf\)/i })[0]).toHaveAttribute(
-    'href',
-    '/Resume.pdf',
-  )
+  expect(screen.getAllByText(/PostgreSQL/i)[0]).toBeInTheDocument()
 })
 
 test('flags the placeholder project', () => {

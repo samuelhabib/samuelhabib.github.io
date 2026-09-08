@@ -8,9 +8,7 @@ tech:
   - React
   - Backend service
   - Workflow / queue design
-links:
-  - label: Resume (PDF)
-    href: /Resume.pdf
+links: []
 ---
 
 My first project at ExaCare — taken from an idea to a piloted product.

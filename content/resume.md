@@ -21,7 +21,7 @@ experience:
     start: Feb 2026
     end: Present
     bullets:
-      - Owned the Referral Outbound Center end to end, from proof of concept to launch in about a month, piloting 25+ sender facilities at a 100% retention rate.
+      - Owned the Referral Outbound Center end to end, from proof of concept to launch in about a month, piloting 25+ sender facilities with no churn over the pilot window.
       - Self-scoped and built the Provider Directory, an ingestion pipeline over public CMS and NPI data spanning 40,000+ rows across six rosters, with weekly self-healing reconciliation.
       - Cut a core API endpoint's latency by 42% and its response payload by 70%, and eliminated full-table scans behind alarms firing about 144 times a day.
       - Built an internal on-call report tool adopted team-wide, cutting weekly report prep time roughly in half.
@@ -80,7 +80,7 @@ watching them. New York, NY.
 
 ### ExaCare — Full Stack Software Engineer (Feb 2026 – Present)
 
-- Owned the Referral Outbound Center end to end, launched in about a month, 25+ pilot facilities at 100% retention.
+- Owned the Referral Outbound Center end to end, launched in about a month, 25+ pilot facilities with no churn over the pilot window.
 - Self-scoped and built the Provider Directory: an ingestion pipeline over public CMS/NPI data, 40,000+ rows across six rosters, weekly self-healing reconciliation.
 - Cut a core API endpoint's latency 42% and payload 70%; killed full-table scans behind alarms firing ~144x a day.
 - Built a team-wide on-call report tool that halved weekly report prep.

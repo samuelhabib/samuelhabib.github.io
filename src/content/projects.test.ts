@@ -13,7 +13,7 @@ test('cards are assembled: Overview lead, ## sections, then a Tech & Links card'
   expect(last.kind).toBe('techlinks')
   if (last.kind === 'techlinks') {
     expect(last.tech).toContain('PostgreSQL')
-    expect(last.links[0]).toEqual({ label: 'Resume (PDF)', href: '/Resume.pdf' })
+    expect(last.links).toEqual([])
   }
 })
 

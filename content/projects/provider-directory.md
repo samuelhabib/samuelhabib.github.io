@@ -9,9 +9,7 @@ tech:
   - PostgreSQL
   - Public CMS / NPI data
   - Scheduled reconciliation
-links:
-  - label: Resume (PDF)
-    href: /Resume.pdf
+links: []
 ---
 
 I self-scoped this one at ExaCare after seeing how much manual cleanup our provider data needed.
