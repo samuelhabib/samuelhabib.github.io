@@ -20,6 +20,14 @@
   font: inherit;
   white-space: pre-wrap;
 }
+.banner {
+  margin: 0 0 var(--space-2);
+  font: inherit;
+  font-style: italic;
+  white-space: pre-wrap;
+  border-bottom: 1px solid var(--c-fg);
+  padding-bottom: var(--space-2);
+}
 .output :global(.term-err) {
   background: var(--c-accent);
   color: var(--c-accent-fg);

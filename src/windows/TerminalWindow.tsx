@@ -53,6 +53,9 @@ export default function TerminalWindow({ bridge }: { bridge: DesktopBridge }) {
   return (
     <div className={styles.term} data-terminal onClick={() => inputRef.current?.focus()}>
       <div className={styles.output} role="log" aria-live="polite">
+        <pre className={styles.banner}>
+          {"samuel@portfolio — my résumé, as a shell.\ntype a command, or tap one below. 'help' lists them all."}
+        </pre>
         {term.entries.map((e) => (
           <div key={e.id}>{e.node}</div>
         ))}
