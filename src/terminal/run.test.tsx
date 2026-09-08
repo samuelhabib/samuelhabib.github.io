@@ -75,8 +75,10 @@ test('cat of an unknown file is an error', () => {
   expect(txt(runCommand('cat passwords.txt', makeCtx()))).toMatch(/No such file/i)
 })
 
-test('experience renders one line per job as a fake commit log', () => {
+test('experience renders a decorated commit log, newest first', () => {
   const out = txt(runCommand('experience', makeCtx()))
+  expect(out).toMatch(/git log --oneline/)
+  expect(out).toMatch(/HEAD -> main/)
   expect(out).toMatch(/ExaCare/)
   expect(out).toMatch(/Apple/)
 })
@@ -89,6 +91,13 @@ test('sysbeep calls the bridge beep', () => {
   const beep = vi.fn()
   runCommand('sysbeep', makeCtx({ beep }))
   expect(beep).toHaveBeenCalledOnce()
+})
+
+test('hidden hypercard command opens the projects window', () => {
+  const open = vi.fn()
+  runCommand('hypercard', makeCtx({ open }))
+  expect(open).toHaveBeenCalledWith('projects')
+  expect(completions('h')).not.toContain('hypercard')
 })
 
 test('completions are prefix matches that exclude hidden commands', () => {

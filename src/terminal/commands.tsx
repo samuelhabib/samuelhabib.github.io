@@ -76,16 +76,13 @@ export const commands: Command[] = [
   {
     name: 'experience',
     description: 'work history as a commit log',
-    run: () => (
-      <Doc>
-        {resume.experience
-          .map(
-            (j) =>
-              `${fakeSha(j.company + j.start)}  ${j.company} — ${j.role}  (${j.start} – ${j.end})`,
-          )
-          .join('\n')}
-      </Doc>
-    ),
+    run: () => {
+      const rows = resume.experience.map((j, i) => {
+        const dec = i === 0 ? ' (HEAD -> main, origin/main)' : ''
+        return `${fakeSha(j.company + j.start)}${dec}  ${j.company} — ${j.role}  (${j.start} – ${j.end})`
+      })
+      return <Doc>{['$ git log --oneline --decorate', ...rows].join('\n')}</Doc>
+    },
   },
   {
     name: 'skills',
@@ -210,6 +207,15 @@ export const commands: Command[] = [
     description: 'ring the system bell',
     run: (_args, ctx) => {
       ctx.beep()
+      return null
+    },
+  },
+  {
+    name: 'hypercard',
+    hidden: true,
+    description: 'open the project stacks',
+    run: (_args, ctx) => {
+      ctx.open('projects')
       return null
     },
   },
