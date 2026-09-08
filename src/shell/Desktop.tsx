@@ -110,6 +110,7 @@ export default function Desktop() {
   const openWriteup = useCallback((slug: string) => {
     setWriteupSlug(slug)
     dispatch({ type: 'open', id: 'writeup' })
+    setJustOpened('writeup')
   }, [])
 
   const jumpToStack = useCallback((slug: string) => {
