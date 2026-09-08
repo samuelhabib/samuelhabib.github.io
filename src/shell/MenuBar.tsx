@@ -8,6 +8,7 @@ export interface MenuBarActions {
   openWindow(id: WindowId): void
   cleanUpIcons(): void
   closeFront(): void
+  zoomFront(): void
   hasFront: boolean
   print(): void
   selectAllInFront(): void
@@ -63,6 +64,11 @@ export default function MenuBar(props: MenuBarActions) {
       separatorBefore: true,
       disabled: !props.hasFront,
       onSelect: props.hasFront ? props.closeFront : undefined,
+    },
+    {
+      label: 'Zoom Window',
+      disabled: !props.hasFront,
+      onSelect: props.hasFront ? props.zoomFront : undefined,
     },
     { label: 'Save as PDF…', separatorBefore: true, onSelect: props.print },
     { label: 'Print…', onSelect: props.print },

@@ -51,6 +51,12 @@ function iconViewport() {
   return { w: window.innerWidth, h: window.innerHeight - menubarH() }
 }
 
+/** Size of the .desktop box (viewport minus the menu bar), for zoom-to-fill. */
+function desktopSize() {
+  const el = document.querySelector('.desktop') as HTMLElement | null
+  return el ? { w: el.clientWidth, h: el.clientHeight } : iconViewport()
+}
+
 export default function Desktop() {
   const [state, dispatch] = useReducer(windowsReducer, initialDesktop, (s) => ({
     ...s,
@@ -217,6 +223,7 @@ export default function Desktop() {
     openWindow: (id) => dispatch({ type: 'open', id }),
     cleanUpIcons,
     closeFront: () => front && close(front),
+    zoomFront: () => front && dispatch({ type: 'zoom', id: front, desktop: desktopSize() }),
     hasFront: front !== null,
     print: () => window.print(),
     selectAllInFront: () => {
@@ -283,6 +290,7 @@ export default function Desktop() {
           onMove={(x, y) => dispatch({ type: 'move', id, x, y })}
           onResize={(w, h) => dispatch({ type: 'resize', id, w, h })}
           onToggleShade={() => dispatch({ type: 'toggleShade', id })}
+          onZoom={() => dispatch({ type: 'zoom', id, desktop: desktopSize() })}
           onDragEnd={(x, y) => maybeTrash(id, x, y)}
           outlineDrag={outlineDrag}
         >
