@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { resume } from './content/resume'
 import { projects, findProject } from './content/projects'
 import { ResumeArticle } from './windows/resumeContent'
@@ -27,8 +27,16 @@ function AppInner() {
   const { booting, skip } = useBoot()
   const sound = useSound()
 
+  // Only chime on a fresh load — one that shows (or would show) the boot
+  // sequence. A same-session reload has the 'booted' flag already set; a
+  // startup chime with no Happy Mac behind it is just uncanny.
+  const freshLoad = useRef(
+    typeof sessionStorage === 'undefined' || sessionStorage.getItem('booted') !== '1',
+  )
+
   // Play the startup chime on the first user gesture (autoplay policy), once.
   useEffect(() => {
+    if (!freshLoad.current) return
     const once = () => {
       sound.chime()
       window.removeEventListener('pointerdown', once)
