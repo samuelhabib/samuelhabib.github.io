@@ -56,3 +56,12 @@ test('Special ▸ Shut Down shows the safe-to-power-off screen, then a click res
   await page.getByText(/safe to turn off/i).click()
   await expect(page.getByText('Welcome to Macintosh')).toBeVisible({ timeout: 4000 })
 })
+
+test('Edit ▸ Select All puts a non-empty selection on the front window', async ({ page }) => {
+  await boot(page)
+  await page.getByRole('button', { name: 'Edit' }).click()
+  await page.getByRole('menuitem', { name: 'Select All' }).click()
+  await page.waitForTimeout(150)
+  const len = await page.evaluate(() => (window.getSelection()?.toString() ?? '').length)
+  expect(len).toBeGreaterThan(50)
+})
