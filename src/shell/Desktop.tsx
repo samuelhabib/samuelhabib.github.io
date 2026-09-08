@@ -23,6 +23,7 @@ import ResumeWindow from '../windows/ResumeWindow'
 import ReadMeWindow from '../windows/ReadMeWindow'
 import TerminalWindow from '../windows/TerminalWindow'
 import ProjectsWindow from '../windows/ProjectsWindow'
+import WriteupWindow from '../windows/WriteupWindow'
 import AboutDialog from '../windows/AboutDialog'
 import PuzzleWindow from '../windows/PuzzleWindow'
 import AppearanceWindow from '../windows/AppearanceWindow'
@@ -104,6 +105,12 @@ export default function Desktop() {
 
   const [stackTarget, setStackTarget] = useState<{ slug: string; nonce: number } | null>(null)
   const targetNonce = useRef(0)
+  const [writeupSlug, setWriteupSlug] = useState('provider-directory')
+
+  const openWriteup = useCallback((slug: string) => {
+    setWriteupSlug(slug)
+    dispatch({ type: 'open', id: 'writeup' })
+  }, [])
 
   const jumpToStack = useCallback((slug: string) => {
     dispatch({ type: 'open', id: 'projects' })
@@ -135,7 +142,7 @@ export default function Desktop() {
     resume: <ResumeWindow />,
     readme: <ReadMeWindow />,
     terminal: <TerminalWindow bridge={bridge} />,
-    projects: <ProjectsWindow target={stackTarget} />,
+    projects: <ProjectsWindow target={stackTarget} onOpenWriteup={openWriteup} />,
     about: <AboutDialog />,
     puzzle: <PuzzleWindow />,
     appearance: (
@@ -147,6 +154,7 @@ export default function Desktop() {
       />
     ),
     getinfo: <GetInfoWindow subject={infoSubject} />,
+    writeup: <WriteupWindow slug={writeupSlug} />,
   }
 
   const front = frontWindow(state)

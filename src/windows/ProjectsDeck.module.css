@@ -97,3 +97,14 @@
   margin-left: auto;
   font-variant-numeric: tabular-nums;
 }
+.writeup {
+  margin-left: 12px;
+  font-family: var(--chrome-font);
+  border: 1px solid var(--c-fg);
+  padding: 2px 8px;
+}
+.writeup:hover,
+.writeup:focus-visible {
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
+}

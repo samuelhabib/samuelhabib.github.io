@@ -24,9 +24,11 @@ function buildSlides(data: ProjectsData): Slide[] {
 export default function ProjectsDeck({
   data,
   target,
+  onOpenWriteup,
 }: {
   data: ProjectsData
   target: { slug: string; nonce: number } | null
+  onOpenWriteup?: (slug: string) => void
 }) {
   const slides = useMemo(() => buildSlides(data), [data])
   const [si, setSi] = useState(0)
@@ -162,6 +164,11 @@ export default function ProjectsDeck({
           <span className={styles.count}>
             {deck ? 'slide' : 'card'} {cardIndex + 1} of {cardCount}
           </span>
+        )}
+        {project && onOpenWriteup && (
+          <button className={styles.writeup} onClick={() => onOpenWriteup(project.slug)}>
+            Full write-up →
+          </button>
         )}
       </div>
     </div>

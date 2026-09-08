@@ -38,6 +38,24 @@ test('Next walks through the Provider deck, then into the Referral deck', async 
   expect(screen.getByText(/slide 1 of/i)).toBeInTheDocument()
 })
 
+test('the Full write-up link calls onOpenWriteup with the current project slug', async () => {
+  const onOpenWriteup = vi.fn()
+  render(
+    <ProjectsDeck
+      data={projects}
+      target={{ slug: 'provider-directory', nonce: 1 }}
+      onOpenWriteup={onOpenWriteup}
+    />,
+  )
+  await userEvent.click(screen.getByRole('button', { name: /full write-up/i }))
+  expect(onOpenWriteup).toHaveBeenCalledWith('provider-directory')
+})
+
+test('no Full write-up link on the contents or divider slides', () => {
+  render(<ProjectsDeck data={projects} target={null} onOpenWriteup={() => {}} />)
+  expect(screen.queryByRole('button', { name: /full write-up/i })).toBeNull()
+})
+
 test('Home returns to the contents slide', async () => {
   render(<ProjectsDeck data={projects} target={null} />)
   await userEvent.click(screen.getByRole('button', { name: 'Next ▶' }))
