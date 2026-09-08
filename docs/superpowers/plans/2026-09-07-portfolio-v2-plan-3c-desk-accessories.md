@@ -60,7 +60,7 @@ Deferred out of all four (from earlier reviews): dithered card transitions, gene
   ```
   - `src/windows/PuzzleWindow.tsx` default export, no props: a 4×4 grid of 15 numbered `<button>` tiles + an empty gap cell, a `Shuffle` button, and a "Solved!" line shown when `isSolved`. Clicking a tile adjacent to the gap calls `slide`.
 
-- [ ] **Step 1: Write the failing logic test**
+- [x] **Step 1: Write the failing logic test**
 
 ```ts
 // src/windows/puzzle.test.ts
@@ -92,12 +92,12 @@ test('shuffle is a solvable 16-permutation that is not already solved', () => {
 })
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npm test -- src/windows/puzzle`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement `puzzle.ts`**
+- [x] **Step 3: Implement `puzzle.ts`**
 
 ```ts
 // src/windows/puzzle.ts
@@ -144,12 +144,12 @@ export function shuffle(rng: () => number = Math.random): Board {
 }
 ```
 
-- [ ] **Step 4: Run the logic test to verify it passes**
+- [x] **Step 4: Run the logic test to verify it passes**
 
 Run: `npm test -- src/windows/puzzle`
 Expected: PASS (all four).
 
-- [ ] **Step 5: Write the failing component test**
+- [x] **Step 5: Write the failing component test**
 
 ```tsx
 // src/windows/PuzzleWindow.test.tsx
@@ -199,12 +199,12 @@ test('clicking a tile next to the gap moves it', async () => {
 })
 ```
 
-- [ ] **Step 6: Run to verify it fails**
+- [x] **Step 6: Run to verify it fails**
 
 Run: `npm test -- PuzzleWindow`
 Expected: FAIL — module not found.
 
-- [ ] **Step 7: Implement `PuzzleWindow.tsx` + CSS**
+- [x] **Step 7: Implement `PuzzleWindow.tsx` + CSS**
 
 ```tsx
 // src/windows/PuzzleWindow.tsx
@@ -302,12 +302,12 @@ export default function PuzzleWindow() {
 }
 ```
 
-- [ ] **Step 8: Run the component test to verify it passes**
+- [x] **Step 8: Run the component test to verify it passes**
 
 Run: `npm test -- PuzzleWindow`
 Expected: PASS. If "Shuffle produces a different arrangement" is ever flaky (astronomically unlikely — `shuffle` walks 120 moves), re-run; do not weaken the assertion.
 
-- [ ] **Step 9: Wire the Apple menu + mount the window**
+- [x] **Step 9: Wire the Apple menu + mount the window**
 
 `src/shell/MenuBar.tsx` — the Apple `Menu`'s `items`:
 
@@ -337,7 +337,7 @@ import PuzzleWindow from '../windows/PuzzleWindow'
 
 (`TITLES.puzzle` = `'Puzzle'` and `DEFAULTS.puzzle` already exist from Plan 1.)
 
-- [ ] **Step 10: Verify + commit**
+- [x] **Step 10: Verify + commit**
 
 Run: `npm test && npx tsc --noEmit`
 Expected: all green.
@@ -366,7 +366,7 @@ git commit -m "feat: 15-tile sliding Puzzle desk accessory (Apple menu ▸ Puzzl
 - `src/shell/Trash.tsx` default export, no props — a `<button data-trash aria-label="Trash">` with a 1-bit trash-can SVG glyph and a "Trash" caption, positioned bottom-right of `.desktop`.
 - `Desktop` renders `<Trash />` and passes `onDragEnd={() => maybeTrash(id)}` to each `Window`. `maybeTrash(id)` reads `#win-<id> [data-testid="titlebar"]` and `[data-trash]` bounding rects; on rectangle overlap it calls `sound.beep()` then `close(id)`.
 
-- [ ] **Step 1: Write the failing `useDrag` test**
+- [x] **Step 1: Write the failing `useDrag` test**
 
 ```tsx
 // src/shell/useDrag.test.tsx
@@ -405,12 +405,12 @@ test('onEnd does NOT fire for a click with no movement', () => {
 })
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npm test -- src/shell/useDrag`
 Expected: FAIL — `useDrag` takes one argument.
 
-- [ ] **Step 3: Extend `useDrag.ts`**
+- [x] **Step 3: Extend `useDrag.ts`**
 
 ```ts
 import { useCallback, useRef } from 'react'
@@ -462,12 +462,12 @@ export function useDrag(onDelta: (dx: number, dy: number) => void, onEnd?: () =>
 }
 ```
 
-- [ ] **Step 4: Run the `useDrag` test to verify it passes**
+- [x] **Step 4: Run the `useDrag` test to verify it passes**
 
 Run: `npm test -- src/shell/useDrag Window`
 Expected: PASS — `useDrag` cases green and the existing `Window.test.tsx` still green.
 
-- [ ] **Step 5: Thread `onDragEnd` through `Window.tsx`**
+- [x] **Step 5: Thread `onDragEnd` through `Window.tsx`**
 
 Add to `WindowProps`:
 
@@ -481,7 +481,7 @@ Change the move-drag line (leave the grow-box drag as one arg):
   const drag = useDrag((dx, dy) => p.onMove(state.x + dx, state.y + dy), p.onDragEnd)
 ```
 
-- [ ] **Step 6: Implement `Trash.tsx` + CSS**
+- [x] **Step 6: Implement `Trash.tsx` + CSS**
 
 ```tsx
 // src/shell/Trash.tsx
@@ -529,7 +529,7 @@ export default function Trash() {
 }
 ```
 
-- [ ] **Step 7: Wire `Desktop.tsx`**
+- [x] **Step 7: Wire `Desktop.tsx`**
 
 Add the import:
 
@@ -569,7 +569,7 @@ Pass `onDragEnd` to each `Window` in the `openWindows.map`:
           onDragEnd={() => maybeTrash(id)}
 ```
 
-- [ ] **Step 8: Write the e2e**
+- [x] **Step 8: Write the e2e**
 
 ```ts
 // tests/desk.spec.ts
@@ -632,21 +632,21 @@ test('a short drag that misses the Trash keeps the window open', async ({ page }
 })
 ```
 
-- [ ] **Step 9: Run e2e to verify it passes**
+- [x] **Step 9: Run e2e to verify it passes**
 
 Run: `npm run test:e2e -- desk`
 Expected: PASS (all four). If "dragging … onto the Trash" misses because the Read Me window starts near the bottom-right and the drag distance is small, drag from its title bar to the Trash centre in more `steps` — the assertion is that the *title bar* rect overlaps the Trash rect at release.
 
-- [ ] **Step 10: Full regression**
+- [x] **Step 10: Full regression**
 
 Run: `npm test && npm run test:e2e && npm run build && npm run prerender:assert`
 Expected: all green. Watch `tests/window.spec.ts` (the `useDrag` change) and `tests/menubar.spec.ts` (MenuBar change).
 
-- [ ] **Step 11: Manual smoke**
+- [x] **Step 11: Manual smoke**
 
 `npm run dev`, skip boot. **Apple ▸ Puzzle** — tiles slide when clicked next to the gap, Shuffle re-scrambles, arrange 1–15 → "Solved!". Drag the **Read Me** title bar down onto **Trash** (bottom-right) → beep, window gone; reload → it's back. Give a window a small nudge that doesn't reach the Trash → it stays.
 
-- [ ] **Step 12: Commit**
+- [x] **Step 12: Commit**
 
 ```bash
 git add -A
