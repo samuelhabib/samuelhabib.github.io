@@ -1,6 +1,55 @@
+import type { ReactNode } from 'react'
 import type { ResumeData } from '../content/types'
 
-export function ResumeArticle({ data }: { data: ResumeData }) {
+// Project names that appear in the Experience bullets and have a deck stack.
+const PROJECT_REFS = [
+  { phrase: 'Referral Outbound Center', slug: 'referral-outbound-center' },
+  { phrase: 'Provider Directory', slug: 'provider-directory' },
+] as const
+
+// Split a bullet on any known project name and swap in a link: a button that
+// opens the deck stack when we're inside the desktop shell, a plain anchor to
+// the pre-rendered section in the no-JS document.
+function renderBullet(
+  text: string,
+  onOpenStack: ((slug: string) => void) | undefined,
+  keyBase: string,
+): ReactNode[] {
+  let best: { i: number; phrase: string; slug: string } | null = null
+  for (const ref of PROJECT_REFS) {
+    const i = text.indexOf(ref.phrase)
+    if (i !== -1 && (best === null || i < best.i)) best = { i, phrase: ref.phrase, slug: ref.slug }
+  }
+  if (!best) return [text]
+  const before = text.slice(0, best.i)
+  const after = text.slice(best.i + best.phrase.length)
+  const ref = onOpenStack ? (
+    <button
+      type="button"
+      className="resume-projlink"
+      onClick={() => onOpenStack(best!.slug)}
+    >
+      {best.phrase}
+    </button>
+  ) : (
+    <a className="resume-projlink" href={`#project-${best.slug}`}>
+      {best.phrase}
+    </a>
+  )
+  return [
+    before,
+    <span key={`${keyBase}${best.i}`}>{ref}</span>,
+    ...renderBullet(after, onOpenStack, `${keyBase}${best.i}-`),
+  ]
+}
+
+export function ResumeArticle({
+  data,
+  onOpenStack,
+}: {
+  data: ResumeData
+  onOpenStack?: (slug: string) => void
+}) {
   return (
     <article className="resume">
       <header>
@@ -27,7 +76,7 @@ export function ResumeArticle({ data }: { data: ResumeData }) {
           </p>
           <ul>
             {job.bullets.map((b, j) => (
-              <li key={j}>{b}</li>
+              <li key={j}>{renderBullet(b, onOpenStack, `${i}-${j}-`)}</li>
             ))}
           </ul>
         </section>

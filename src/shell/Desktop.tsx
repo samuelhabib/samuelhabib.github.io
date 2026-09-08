@@ -171,7 +171,7 @@ export default function Desktop() {
   )
 
   const content: Partial<Record<WindowId, ReactNode>> = {
-    resume: <ResumeWindow />,
+    resume: <ResumeWindow onOpenStack={jumpToStack} />,
     readme: <ReadMeWindow />,
     terminal: <TerminalWindow bridge={bridge} />,
     projects: <ProjectsWindow target={stackTarget} onOpenWriteup={openWriteup} />,

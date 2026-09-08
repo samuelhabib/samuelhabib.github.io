@@ -1,6 +1,23 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { ResumeArticle } from './resumeContent'
 import { resume } from '../content/resume'
+
+test('project names in bullets open the matching deck stack when wired', async () => {
+  const onOpenStack = vi.fn()
+  render(<ResumeArticle data={resume} onOpenStack={onOpenStack} />)
+  await userEvent.click(screen.getByRole('button', { name: 'Referral Outbound Center' }))
+  expect(onOpenStack).toHaveBeenCalledWith('referral-outbound-center')
+  expect(screen.getByRole('button', { name: 'Provider Directory' })).toBeInTheDocument()
+})
+
+test('without a handler, project names are anchors to the pre-rendered section', () => {
+  render(<ResumeArticle data={resume} />)
+  expect(screen.getByRole('link', { name: 'Provider Directory' })).toHaveAttribute(
+    'href',
+    '#project-provider-directory',
+  )
+})
 
 test('renders a semantic résumé article with correct heading order', () => {
   render(<ResumeArticle data={resume} />)

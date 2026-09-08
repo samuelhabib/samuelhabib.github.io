@@ -16,3 +16,16 @@ test('résumé content is in the served HTML (no-JS view)', async ({ browser }) 
   await expect(page.getByText(/2B\+ records an hour/i)).toBeVisible()
   await ctx.close()
 })
+
+test('a project name in a résumé bullet opens that deck stack', async ({ page }) => {
+  await page.goto('/')
+  await page
+    .getByText('Welcome to Macintosh')
+    .waitFor({ state: 'detached', timeout: 6000 })
+    .catch(() => {})
+  const resume = page.getByRole('dialog', { name: /résumé/i })
+  await resume.getByRole('button', { name: 'Provider Directory' }).click()
+  const deck = page.getByRole('dialog', { name: /projects/i })
+  await expect(deck).toBeVisible()
+  await expect(deck.getByText(/Provider Directory/i).first()).toBeVisible()
+})
