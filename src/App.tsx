@@ -5,6 +5,7 @@ import { ResumeArticle } from './windows/resumeContent'
 import { ReadMeArticle } from './windows/readmeContent'
 import { ProjectsArticle } from './windows/projectsContent'
 import { THEMES } from './shell/useTheme'
+import { INFO } from './windows/getInfo'
 import Desktop from './shell/Desktop'
 import Boot from './shell/Boot'
 import { useBoot } from './shell/useBoot'
@@ -104,6 +105,18 @@ function AppInner() {
               </label>
             ))}
           </fieldset>
+        </section>
+        {/* Get Info panes are a desktop affordance; pre-rendered but hidden
+            from the reading view, same as Appearance. */}
+        <section id="getinfo" hidden>
+          <h2>{INFO.resume.subject} Info</h2>
+          <dl>
+            <dt>Kind</dt>
+            <dd>{INFO.resume.kind}</dd>
+            <dt>Where</dt>
+            <dd>{INFO.resume.where}</dd>
+          </dl>
+          <p>{INFO.resume.comment}</p>
         </section>
       </main>
 

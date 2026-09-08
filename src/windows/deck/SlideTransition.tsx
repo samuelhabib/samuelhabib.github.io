@@ -45,19 +45,29 @@ export default function SlideTransition({ dir, keyId, children }: Props) {
   useEffect(() => {
     if (!outgoing) return
     const el = outRef.current
-    if (!el) {
+    // No WAAPI (jsdom) — swap instantly, don't strand the old slide.
+    if (!el || typeof el.animate !== 'function') {
       setOutgoing(null)
       return
     }
     const finish = () => setOutgoing(null)
-    const anim = el.animate([{ maskSize: '48px 48px' }, { maskSize: '0px 0px' }], {
-      duration: 420,
-      easing: 'steps(9, end)',
-      fill: 'forwards',
-    })
-    anim.onfinish = finish
-    anim.oncancel = finish
-    return () => anim.cancel()
+    let anim: Animation | undefined
+    try {
+      anim = el.animate([{ maskSize: '48px 48px' }, { maskSize: '0px 0px' }], {
+        duration: 420,
+        easing: 'steps(9, end)',
+        fill: 'forwards',
+      })
+      anim.onfinish = finish
+      anim.oncancel = finish
+    } catch {
+      finish()
+    }
+    const backstop = setTimeout(finish, 700) // survive a dropped onfinish
+    return () => {
+      clearTimeout(backstop)
+      anim?.cancel()
+    }
   }, [outgoing])
 
   return (

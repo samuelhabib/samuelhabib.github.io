@@ -26,6 +26,7 @@ import ProjectsWindow from '../windows/ProjectsWindow'
 import AboutDialog from '../windows/AboutDialog'
 import PuzzleWindow from '../windows/PuzzleWindow'
 import AppearanceWindow from '../windows/AppearanceWindow'
+import GetInfoWindow from '../windows/GetInfoWindow'
 import ShutDown from './ShutDown'
 import Trash from './Trash'
 import type { MenuBarActions } from './MenuBar'
@@ -40,6 +41,7 @@ const TITLES: Record<WindowId, string> = {
   puzzle: 'Puzzle',
   about: 'About This Portfolio',
   appearance: 'Appearance',
+  getinfo: 'Info',
 }
 
 function focusIcon(id: WindowId) {
@@ -97,6 +99,7 @@ export default function Desktop() {
   const sound = useSound()
   const { theme, setTheme } = useTheme()
   const { pattern, setPattern } = useDesktopPattern()
+  const [infoSubject, setInfoSubject] = useState<WindowId>('resume')
 
   const [stackTarget, setStackTarget] = useState<{ slug: string; nonce: number } | null>(null)
   const targetNonce = useRef(0)
@@ -142,6 +145,7 @@ export default function Desktop() {
         setPattern={setPattern}
       />
     ),
+    getinfo: <GetInfoWindow subject={infoSubject} />,
   }
 
   const front = frontWindow(state)
@@ -262,6 +266,11 @@ export default function Desktop() {
     cleanUpIcons,
     closeFront: () => front && close(front),
     zoomFront: () => front && dispatch({ type: 'zoom', id: front, desktop: desktopSize() }),
+    getInfoFront: () => {
+      if (!front) return
+      setInfoSubject(front)
+      dispatch({ type: 'open', id: 'getinfo' })
+    },
     hasFront: front !== null,
     print: () => window.print(),
     selectAllInFront: () => {

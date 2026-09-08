@@ -6,6 +6,7 @@ export type WindowId =
   | 'puzzle'
   | 'about'
   | 'appearance'
+  | 'getinfo'
 
 export interface WindowState {
   id: WindowId
@@ -34,6 +35,7 @@ const DEFAULTS: Record<WindowId, Pick<WindowState, 'x' | 'y' | 'w' | 'h'>> = {
   puzzle: { x: 300, y: 140, w: 240, h: 280 },
   about: { x: 260, y: 160, w: 360, h: 220 },
   appearance: { x: 240, y: 120, w: 320, h: 340 },
+  getinfo: { x: 300, y: 180, w: 300, h: 300 },
 }
 
 function make(id: WindowId): WindowState {
@@ -49,6 +51,7 @@ export const initialDesktop: DesktopState = {
     puzzle: make('puzzle'),
     about: make('about'),
     appearance: make('appearance'),
+    getinfo: make('getinfo'),
   },
   nextZ: 1,
 }

@@ -11,6 +11,7 @@ const needles = [
   'Superpowers workflow',
   'Appearance',
   'Desktop Pattern',
+  'Portfolio document',
 ]
 const missing = needles.filter((n) => !html.includes(n))
 if (missing.length) {

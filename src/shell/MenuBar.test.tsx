@@ -9,6 +9,7 @@ function mount(over: Partial<MenuBarActions> = {}) {
     cleanUpIcons: vi.fn(),
     closeFront: vi.fn(),
     zoomFront: vi.fn(),
+    getInfoFront: vi.fn(),
     hasFront: true,
     print: vi.fn(),
     selectAllInFront: vi.fn(),
@@ -48,6 +49,19 @@ test('File ▸ Close is disabled when there is no front window', async () => {
   mount({ hasFront: false })
   await userEvent.click(screen.getByRole('button', { name: 'File' }))
   expect(screen.getByRole('menuitem', { name: 'Close' })).toHaveAttribute('aria-disabled', 'true')
+})
+
+test('File ▸ Get Info calls getInfoFront', async () => {
+  const a = mount()
+  await userEvent.click(screen.getByRole('button', { name: 'File' }))
+  await userEvent.click(screen.getByRole('menuitem', { name: 'Get Info' }))
+  expect(a.getInfoFront).toHaveBeenCalledOnce()
+})
+
+test('File ▸ Get Info is disabled with no front window', async () => {
+  mount({ hasFront: false })
+  await userEvent.click(screen.getByRole('button', { name: 'File' }))
+  expect(screen.getByRole('menuitem', { name: 'Get Info' })).toHaveAttribute('aria-disabled', 'true')
 })
 
 test('File ▸ Zoom Window calls zoomFront', async () => {

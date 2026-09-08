@@ -1,6 +1,6 @@
 export type GlyphKind = 'resume' | 'projects' | 'terminal' | 'readme'
 
-const stroke = { fill: 'none', stroke: '#000', strokeWidth: 2, strokeLinejoin: 'round' as const }
+const stroke = { fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinejoin: 'round' as const }
 
 export default function IconGlyph({ kind }: { kind: GlyphKind }) {
   switch (kind) {

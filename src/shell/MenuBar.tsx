@@ -10,6 +10,7 @@ export interface MenuBarActions {
   cleanUpIcons(): void
   closeFront(): void
   zoomFront(): void
+  getInfoFront(): void
   hasFront: boolean
   print(): void
   selectAllInFront(): void
@@ -67,6 +68,12 @@ export default function MenuBar(props: MenuBarActions) {
     { label: 'Read Me', onSelect: () => props.openWindow('readme') },
     { label: 'Projects', onSelect: () => props.openWindow('projects') },
     { label: 'Terminal', onSelect: () => props.openWindow('terminal') },
+    {
+      label: 'Get Info',
+      separatorBefore: true,
+      disabled: !props.hasFront,
+      onSelect: props.hasFront ? props.getInfoFront : undefined,
+    },
     {
       label: 'Close',
       separatorBefore: true,
