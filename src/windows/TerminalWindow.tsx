@@ -63,8 +63,8 @@ export default function TerminalWindow({ bridge }: { bridge: DesktopBridge }) {
         <span className={styles.prompt}>{PROMPT}</span>
         <span className={styles.field}>
           {term.ghost && (
-            <span className={styles.ghost} aria-hidden>
-              {term.ghost}
+            <span className={styles.ghost} aria-hidden style={{ left: `${term.input.length}ch` }}>
+              {term.ghost.slice(term.input.length)}
             </span>
           )}
           <input
@@ -81,7 +81,7 @@ export default function TerminalWindow({ bridge }: { bridge: DesktopBridge }) {
         </span>
       </div>
 
-      <div className={styles.chips} aria-label="Quick commands">
+      <div className={styles.chips} role="group" aria-label="Quick commands">
         {CHIPS.map((c) => (
           <button key={c} className={styles.chip} onClick={() => term.submit(c)}>
             {c}

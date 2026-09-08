@@ -24,7 +24,7 @@ const PROMPT = 'samuel@portfolio ~ %'
 export function useTerminal(bridge: DesktopBridge): TerminalApi {
   const [entries, setEntries] = useState<TerminalEntry[]>([])
   const [input, setInput] = useState('')
-  const [, setHistory] = useState<string[]>([])
+  const history = useRef<string[]>([])
   const histCursor = useRef<number | null>(null)
   const nextId = useRef(0)
 
@@ -64,7 +64,7 @@ export function useTerminal(bridge: DesktopBridge): TerminalApi {
         </div>,
       )
       if (!cmd) return
-      setHistory((h) => [...h, cmd])
+      history.current = [...history.current, cmd]
       if (cmd === 'clear') {
         setEntries([])
         return
@@ -77,15 +77,12 @@ export function useTerminal(bridge: DesktopBridge): TerminalApi {
   submitRef.current = submit
 
   const recall = useCallback((dir: -1 | 1) => {
-    setHistory((h) => {
-      if (h.length === 0) return h
-      const cur = histCursor.current ?? h.length
-      let next = cur + dir
-      next = Math.max(0, Math.min(h.length, next))
-      histCursor.current = next
-      setInput(next >= h.length ? '' : h[next])
-      return h
-    })
+    const h = history.current
+    if (h.length === 0) return
+    const cur = histCursor.current ?? h.length
+    const next = Math.max(0, Math.min(h.length, cur + dir))
+    histCursor.current = next
+    setInput(next >= h.length ? '' : h[next])
   }, [])
 
   const ghost = useMemo(() => {
