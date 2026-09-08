@@ -3,6 +3,7 @@ import { DECKS } from './index'
 import { DIAGRAMS } from '../diagrams'
 
 const ICON_NAMES = ['split', 'clock', 'eye', 'refresh', 'flag', 'check', 'link']
+const LAYOUTS = ['title', 'points', 'diagram', 'stat', 'quote', 'tech']
 
 describe('presentation decks', () => {
   it('every deck keys itself by its own slug and has slides', () => {
@@ -29,6 +30,12 @@ describe('presentation decks', () => {
     for (const deck of Object.values(DECKS)) {
       expect(deck.slides[0].layout).toBe('title')
       if (deck.slides[0].layout === 'title') expect(deck.slides[0].title).toBe(deck.title)
+    }
+  })
+
+  it('every slide uses a known layout', () => {
+    for (const deck of Object.values(DECKS)) {
+      for (const slide of deck.slides) expect(LAYOUTS).toContain(slide.layout)
     }
   })
 })
