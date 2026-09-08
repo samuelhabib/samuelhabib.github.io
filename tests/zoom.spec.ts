@@ -23,6 +23,16 @@ test('the zoom box fills the desktop and restores the exact rect', async ({ page
   expect(Math.round(restored.x)).toBe(Math.round(before.x))
 })
 
+test('opening a window from the File menu plays the zoom-rect, leaving nothing stranded', async ({
+  page,
+}) => {
+  await ready(page)
+  await page.getByRole('button', { name: 'File' }).click()
+  await page.getByRole('menuitem', { name: 'Terminal' }).click()
+  await expect(page.getByRole('dialog', { name: /terminal/i })).toBeVisible()
+  await expect(page.locator('div[aria-hidden][style*="9999"]')).toHaveCount(0)
+})
+
 test('Cmd-backtick moves the front-window check in the Windows menu', async ({ page }) => {
   await ready(page)
   // Read Me is front on load (opened second). Cmd-` cycles forward to Résumé.

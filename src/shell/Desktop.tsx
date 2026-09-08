@@ -79,6 +79,9 @@ export default function Desktop() {
   const [zoom, setZoom] = useState<{ id: WindowId; from: { x: number; y: number } } | null>(null)
   const [justOpened, setJustOpened] = useState<WindowId | null>(null)
 
+  const stateRef = useRef(state)
+  stateRef.current = state
+
   const open = (id: WindowId, from: { x: number; y: number }) => {
     if (state.windows[id].open) {
       dispatch({ type: 'focus', id })
@@ -86,6 +89,24 @@ export default function Desktop() {
     }
     setZoom({ id, from })
   }
+
+  // Menu- and Terminal-triggered opens get the same zoom-rect as an icon
+  // double-click — flying from the window's desktop icon if it has one, else
+  // from the menu-bar corner. Stable identity so it can sit in bridge's memo.
+  const openAnimated = useCallback((id: WindowId) => {
+    if (stateRef.current.windows[id].open) {
+      dispatch({ type: 'focus', id })
+      return
+    }
+    const el = document.querySelector<HTMLElement>(`[data-window="${id}"]`)
+    const from = el
+      ? (() => {
+          const r = el.getBoundingClientRect()
+          return { x: r.left + r.width / 2, y: r.top + r.height / 2 }
+        })()
+      : { x: 24, y: 12 }
+    setZoom({ id, from })
+  }, [])
   const commitOpen = () => {
     if (!zoom) return
     dispatch({ type: 'open', id: zoom.id, from: zoom.from })
@@ -141,12 +162,12 @@ export default function Desktop() {
     () => ({
       // dispatch is stable (useReducer); the reducer's 'open' also raises z, so
       // this opens-or-focuses in one action.
-      open: (id) => dispatch({ type: 'open', id }),
+      open: (id) => openAnimated(id),
       close: (id) => close(id),
       beep: () => sound.beep(),
       openStack: (slug) => jumpToStack(slug),
     }),
-    [close, sound, jumpToStack],
+    [close, sound, jumpToStack, openAnimated],
   )
 
   const content: Partial<Record<WindowId, ReactNode>> = {
@@ -282,7 +303,7 @@ export default function Desktop() {
   }
 
   const menuActions: MenuBarActions = {
-    openWindow: (id) => dispatch({ type: 'open', id }),
+    openWindow: (id) => openAnimated(id),
     cleanUpIcons,
     closeFront: () => front && close(front),
     zoomFront: () => front && dispatch({ type: 'zoom', id: front, desktop: desktopSize() }),
