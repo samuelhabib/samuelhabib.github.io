@@ -1,4 +1,11 @@
-export type WindowId = 'resume' | 'readme' | 'terminal' | 'projects' | 'puzzle' | 'about'
+export type WindowId =
+  | 'resume'
+  | 'readme'
+  | 'terminal'
+  | 'projects'
+  | 'puzzle'
+  | 'about'
+  | 'appearance'
 
 export interface WindowState {
   id: WindowId
@@ -26,6 +33,7 @@ const DEFAULTS: Record<WindowId, Pick<WindowState, 'x' | 'y' | 'w' | 'h'>> = {
   projects: { x: 160, y: 60, w: 700, h: 520 },
   puzzle: { x: 300, y: 140, w: 240, h: 280 },
   about: { x: 260, y: 160, w: 360, h: 220 },
+  appearance: { x: 240, y: 120, w: 320, h: 340 },
 }
 
 function make(id: WindowId): WindowState {
@@ -40,6 +48,7 @@ export const initialDesktop: DesktopState = {
     projects: make('projects'),
     puzzle: make('puzzle'),
     about: make('about'),
+    appearance: make('appearance'),
   },
   nextZ: 1,
 }

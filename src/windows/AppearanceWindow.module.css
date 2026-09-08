@@ -1,0 +1,45 @@
+.root {
+  padding: var(--space-3);
+  font-family: var(--chrome-font);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.group {
+  border: 1px solid var(--c-fg);
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.group legend {
+  padding: 0 4px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.swatch {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  border: 1px solid var(--c-fg);
+  background-color: var(--c-bg);
+  background-image: repeating-conic-gradient(var(--dither-ink) 0 25%, var(--c-bg) 0 50%);
+  background-size: 2px 2px;
+}
+.p0 {
+  background-image: none;
+}
+.p25 {
+  background-image: repeating-conic-gradient(var(--dither-ink) 0 12.5%, var(--c-bg) 0 50%);
+}
+.p50 {
+  background-size: 2px 2px;
+}
+.p75 {
+  background-image: repeating-conic-gradient(var(--dither-ink) 0 37.5%, var(--c-bg) 0 50%);
+}

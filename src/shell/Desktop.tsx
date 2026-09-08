@@ -17,12 +17,15 @@ import { useWindowKeys } from './useWindowKeys'
 import { nextWindow } from './windowSwitch'
 import { useKonami } from './useKonami'
 import { useSound } from './useSound'
+import { useTheme } from './useTheme'
+import { useDesktopPattern } from './useDesktopPattern'
 import ResumeWindow from '../windows/ResumeWindow'
 import ReadMeWindow from '../windows/ReadMeWindow'
 import TerminalWindow from '../windows/TerminalWindow'
 import ProjectsWindow from '../windows/ProjectsWindow'
 import AboutDialog from '../windows/AboutDialog'
 import PuzzleWindow from '../windows/PuzzleWindow'
+import AppearanceWindow from '../windows/AppearanceWindow'
 import ShutDown from './ShutDown'
 import Trash from './Trash'
 import type { MenuBarActions } from './MenuBar'
@@ -36,6 +39,7 @@ const TITLES: Record<WindowId, string> = {
   projects: 'Projects',
   puzzle: 'Puzzle',
   about: 'About This Portfolio',
+  appearance: 'Appearance',
 }
 
 function focusIcon(id: WindowId) {
@@ -91,6 +95,8 @@ export default function Desktop() {
   }, [])
 
   const sound = useSound()
+  const { theme, setTheme } = useTheme()
+  const { pattern, setPattern } = useDesktopPattern()
 
   const [stackTarget, setStackTarget] = useState<{ slug: string; nonce: number } | null>(null)
   const targetNonce = useRef(0)
@@ -128,6 +134,14 @@ export default function Desktop() {
     projects: <ProjectsWindow target={stackTarget} />,
     about: <AboutDialog />,
     puzzle: <PuzzleWindow />,
+    appearance: (
+      <AppearanceWindow
+        theme={theme}
+        setTheme={setTheme}
+        pattern={pattern}
+        setPattern={setPattern}
+      />
+    ),
   }
 
   const front = frontWindow(state)
