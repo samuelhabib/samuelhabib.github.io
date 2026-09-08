@@ -108,3 +108,60 @@
   background: var(--c-accent);
   color: var(--c-accent-fg);
 }
+.present {
+  margin-left: 4px;
+}
+
+/* Present mode: the deck escapes its window and fills the screen, chrome gone. */
+.show {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--c-bg);
+  color: var(--c-fg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5vmin 7vmin;
+  font-family: var(--font-read);
+  font-size: var(--fs-read);
+  line-height: 1.55;
+  cursor: pointer;
+  outline: none;
+}
+.showStage {
+  width: 100%;
+  max-width: 64rem;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.showExit {
+  position: absolute;
+  top: 3vmin;
+  right: 3vmin;
+  font-family: var(--chrome-font);
+  font-size: 12px;
+  border: 1px solid var(--c-fg);
+  background: var(--c-bg);
+  color: var(--c-fg);
+  padding: 3px 10px;
+  cursor: pointer;
+}
+.showExit:hover,
+.showExit:focus-visible {
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
+}
+.showCount {
+  position: absolute;
+  bottom: 3vmin;
+  margin: 0;
+  font-family: var(--chrome-font);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}

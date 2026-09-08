@@ -113,3 +113,27 @@ test('Next is disabled on the last slide of the last stack', async () => {
   while (!next().disabled) await userEvent.click(next())
   expect(next()).toBeDisabled()
 })
+
+test('Present opens a full-screen show; Escape returns to the windowed deck', async () => {
+  render(<ProjectsDeck data={projects} target={null} />)
+  await userEvent.click(screen.getByRole('button', { name: '▶ Present' }))
+  const show = screen.getByRole('dialog', { name: 'Presentation' })
+  expect(show).toBeInTheDocument()
+  await userEvent.keyboard('{Escape}')
+  expect(screen.queryByRole('dialog', { name: 'Presentation' })).not.toBeInTheDocument()
+})
+
+test('clicking the show advances the slide', async () => {
+  render(<ProjectsDeck data={projects} target={null} />)
+  await userEvent.click(screen.getByRole('button', { name: '▶ Present' }))
+  const show = screen.getByRole('dialog', { name: 'Presentation' })
+  await userEvent.click(show)
+  expect(screen.getByRole('heading', { level: 2, name: 'Work' })).toBeInTheDocument()
+})
+
+test('the End show button leaves present mode', async () => {
+  render(<ProjectsDeck data={projects} target={null} />)
+  await userEvent.click(screen.getByRole('button', { name: '▶ Present' }))
+  await userEvent.click(screen.getByRole('button', { name: /end show/i }))
+  expect(screen.queryByRole('dialog', { name: 'Presentation' })).not.toBeInTheDocument()
+})

@@ -24,6 +24,26 @@ test.describe('deck', () => {
     await expect(deck.getByRole('heading', { level: 2, name: 'Work' })).toBeVisible()
   })
 
+  test('Present mode fills the screen and Escape returns to the window', async ({ page }) => {
+    await page.goto('/')
+    await page
+      .getByText('Welcome to Macintosh')
+      .waitFor({ state: 'detached', timeout: 6000 })
+      .catch(() => {})
+    await page.getByRole('button', { name: 'Projects' }).dblclick()
+    const deck = page.getByRole('dialog', { name: /projects/i })
+    await deck.getByRole('button', { name: '▶ Present' }).click()
+    const show = page.getByRole('dialog', { name: 'Presentation' })
+    await expect(show).toBeVisible()
+    // menu bar is covered
+    await expect(show).toHaveCSS('position', 'fixed')
+    await page.keyboard.press('ArrowRight')
+    await expect(show.getByRole('heading', { level: 2, name: 'Work' })).toBeVisible()
+    await page.keyboard.press('Escape')
+    await expect(show).toBeHidden()
+    await expect(deck).toBeVisible()
+  })
+
   test('Terminal `projects crisis` jumps the deck to that stack', async ({ page }) => {
     await page.goto('/')
     await page
