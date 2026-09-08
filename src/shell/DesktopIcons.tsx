@@ -1,7 +1,8 @@
 import styles from './Desktop.module.css'
 import type { WindowId } from './windows'
+import IconGlyph, { type GlyphKind } from './IconGlyph'
 
-const ICONS: { id: WindowId; label: string }[] = [
+const ICONS: { id: Extract<WindowId, GlyphKind>; label: string }[] = [
   { id: 'resume', label: 'Résumé' },
   { id: 'projects', label: 'Projects' },
   { id: 'terminal', label: 'Terminal' },
@@ -29,7 +30,9 @@ export default function DesktopIcons({
             }
           }}
         >
-          <span className={styles.glyph} aria-hidden />
+          <span className={styles.glyph}>
+            <IconGlyph kind={ic.id} />
+          </span>
           <span className={styles.iconLabel}>{ic.label}</span>
         </button>
       ))}
