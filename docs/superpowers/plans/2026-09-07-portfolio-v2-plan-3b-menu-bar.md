@@ -65,7 +65,7 @@ Deferred out of all four (from A's review): dithered card transitions, general `
   ```
   Behaviour: trigger click toggles. When `open`, the first enabled item is focused. On the menu: ↑/↓ move (skipping disabled, wrapping), Home/End jump, Enter/Space/click activate (`onSelect()` then `onClose()` then focus the trigger), Esc closes and refocuses the trigger, Tab closes, ←/→ call `onCycle`. On the trigger: ↓/Enter/Space open, ←/→ call `onCycle`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // src/shell/Menu.test.tsx
@@ -154,12 +154,12 @@ test('ArrowRight on an open menu calls onCycle(1)', async () => {
 })
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npm test -- src/shell/Menu`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement `Menu.tsx`**
+- [x] **Step 3: Implement `Menu.tsx`**
 
 ```tsx
 // src/shell/Menu.tsx
@@ -313,7 +313,7 @@ export default function Menu({ label, title, items, open, onOpen, onClose, onCyc
 }
 ```
 
-- [ ] **Step 4: Implement `Menu.module.css`**
+- [x] **Step 4: Implement `Menu.module.css`**
 
 ```css
 /* src/shell/Menu.module.css */
@@ -368,12 +368,12 @@ export default function Menu({ label, title, items, open, onOpen, onClose, onCyc
 }
 ```
 
-- [ ] **Step 5: Run the test to verify it passes**
+- [x] **Step 5: Run the test to verify it passes**
 
 Run: `npm test -- src/shell/Menu`
 Expected: PASS (all five).
 
-- [ ] **Step 6: Typecheck + commit**
+- [x] **Step 6: Typecheck + commit**
 
 Run: `npx tsc --noEmit`
 
@@ -413,7 +413,7 @@ git commit -m "feat: Menu primitive — ARIA menu-button dropdown with keyboard 
   - **Special**: `Restart` → `restart()`; `Shut Down` → `shutDown()`.
   - The existing Sound toggle button and live clock stay, as ordinary siblings after the menus.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // src/shell/MenuBar.test.tsx
@@ -493,12 +493,12 @@ test('the Sound toggle still flips', async () => {
 })
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npm test -- src/shell/MenuBar`
 Expected: FAIL — `MenuBar` takes no props yet / no menu roles.
 
-- [ ] **Step 3: Rewrite `MenuBar.tsx`**
+- [x] **Step 3: Rewrite `MenuBar.tsx`**
 
 ```tsx
 // src/shell/MenuBar.tsx
@@ -600,7 +600,7 @@ export default function MenuBar(props: MenuBarActions) {
 }
 ```
 
-- [ ] **Step 4: Update `MenuBar.module.css`**
+- [x] **Step 4: Update `MenuBar.module.css`**
 
 Replace the `.item` rule (the old display-only span) — keep everything else:
 
@@ -642,12 +642,12 @@ Replace the `.item` rule (the old display-only span) — keep everything else:
 }
 ```
 
-- [ ] **Step 5: Run the test to verify it passes**
+- [x] **Step 5: Run the test to verify it passes**
 
 Run: `npm test -- src/shell/MenuBar`
 Expected: PASS (all seven).
 
-- [ ] **Step 6: Typecheck + commit**
+- [x] **Step 6: Typecheck + commit**
 
 Run: `npx tsc --noEmit` — expect errors only in `Desktop.tsx` (it renders `<MenuBar />` with no props yet); that is fixed in Task 4. Commit anyway so the primitive + bar land together:
 
@@ -676,7 +676,7 @@ git commit -m "feat: interactive MenuBar (Apple/File/Edit/Special) wired to acti
   - `ShutDown` default export — props `{ onStartup(): void }`. A fixed full-screen layer: a white "screen" rect that collapses (`scaleY` → line → `scaleX` → dot) via WAAPI `steps()`, then a black screen with "It is now safe to turn off your Macintosh." and a full-bleed `<button>` that calls `onStartup` on any click. `prefers-reduced-motion: reduce` → render the black screen immediately, no animation.
   - `vite.config.ts` gains `define: { __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)) }`; `src/vite-env.d.ts` gains `declare const __BUILD_DATE__: string`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```tsx
 // src/windows/AboutDialog.test.tsx
@@ -723,12 +723,12 @@ test('under reduced motion it shows the safe-to-power-off screen immediately', a
 })
 ```
 
-- [ ] **Step 2: Run to verify they fail**
+- [x] **Step 2: Run to verify they fail**
 
 Run: `npm test -- AboutDialog ShutDown`
 Expected: FAIL — modules not found.
 
-- [ ] **Step 3: Add the build-date define**
+- [x] **Step 3: Add the build-date define**
 
 `vite.config.ts` — add inside `defineConfig({ ... })`:
 
@@ -746,7 +746,7 @@ Expected: FAIL — modules not found.
 declare const __BUILD_DATE__: string
 ```
 
-- [ ] **Step 4: Implement `AboutDialog.tsx` + CSS**
+- [x] **Step 4: Implement `AboutDialog.tsx` + CSS**
 
 ```tsx
 // src/windows/AboutDialog.tsx
@@ -824,7 +824,7 @@ export default function AboutDialog() {
 }
 ```
 
-- [ ] **Step 5: Implement `ShutDown.tsx` + CSS**
+- [x] **Step 5: Implement `ShutDown.tsx` + CSS**
 
 ```tsx
 // src/shell/ShutDown.tsx
@@ -901,12 +901,12 @@ export default function ShutDown({ onStartup }: { onStartup(): void }) {
 }
 ```
 
-- [ ] **Step 6: Run the tests to verify they pass**
+- [x] **Step 6: Run the tests to verify they pass**
 
 Run: `npm test -- AboutDialog ShutDown`
 Expected: PASS. If jsdom's `element.animate` returns something without an `onfinish` hook and the non-reduced `ShutDown` test ever gets added, keep `ShutDown` tests to the reduced-motion path only (as written) — the animation path is covered by the Task 4 e2e in real Chromium.
 
-- [ ] **Step 7: Full unit run + typecheck + commit**
+- [x] **Step 7: Full unit run + typecheck + commit**
 
 Run: `npm test && npx tsc --noEmit` (expect the same pre-existing `Desktop.tsx` MenuBar-props error from Task 2; nothing new).
 
@@ -928,7 +928,7 @@ git commit -m "feat: About This Portfolio dialog + CRT power-off / safe-to-power
 - Consumes: `MenuBar` / `MenuBarActions` from Task 2; `AboutDialog` from Task 3; `ShutDown` from Task 3; the existing reducer / `frontWindow` / `close`.
 - Produces: `Desktop` builds a `MenuBarActions` object and passes it to `<MenuBar />`; mounts `about: <AboutDialog />` in `content`; holds `shutdown` state and renders `<ShutDown onStartup={restart} />` when true. `restart` = clear the `booted` session flag + `location.reload()`. `selectAllInFront` selects the text of the DOM node `#win-<frontId>`.
 
-- [ ] **Step 1: Write the failing e2e test**
+- [x] **Step 1: Write the failing e2e test**
 
 ```ts
 // tests/menubar.spec.ts
@@ -991,12 +991,12 @@ test('Special ▸ Shut Down shows the safe-to-power-off screen, then a click res
 })
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npm run test:e2e -- menubar`
 Expected: FAIL — clicking `File` does nothing (MenuBar still gets no props from `Desktop`).
 
-- [ ] **Step 3: Add the Select-All target id to `Window.tsx`**
+- [x] **Step 3: Add the Select-All target id to `Window.tsx`**
 
 In `src/shell/Window.tsx`, on the `<section>`:
 
@@ -1008,7 +1008,7 @@ In `src/shell/Window.tsx`, on the `<section>`:
       aria-label={p.title}
 ```
 
-- [ ] **Step 4: Wire `Desktop.tsx`**
+- [x] **Step 4: Wire `Desktop.tsx`**
 
 Add imports:
 
@@ -1074,21 +1074,21 @@ Render the overlay at the end of the returned tree, after the `openWindows.map(.
   )
 ```
 
-- [ ] **Step 5: Run the e2e to verify it passes**
+- [x] **Step 5: Run the e2e to verify it passes**
 
 Run: `npm run test:e2e -- menubar`
 Expected: PASS (all five). If the "keyboard navigable" test flakes because focus lands on the `<section>` `id` change, note that `id` does not affect focus; re-check the `ArrowRight` cycle actually re-opens Edit (it depends on `MenuBar`'s `cycle`, already tested in Task 2).
 
-- [ ] **Step 6: Full regression**
+- [x] **Step 6: Full regression**
 
 Run: `npm test && npm run test:e2e && npm run build && npm run prerender:assert`
 Expected: all green. Watch `tests/a11y.spec.ts` (menus closed on load — must still pass) and `tests/terminal.spec.ts` / `tests/projects.spec.ts` (Desktop changed).
 
-- [ ] **Step 7: Manual smoke**
+- [x] **Step 7: Manual smoke**
 
 `npm run dev`, skip boot. Click **File** → menu snaps open, hover inverts items, click **Read Me** (already open → raises it) then **Terminal** (opens). **Apple ▸ About This Portfolio** → the dithered memory bar. Keyboard: Tab to **File**, ↓ opens, ↓↓ moves, → jumps to **Edit**, Esc closes. **Edit ▸ Select All** with the Résumé window front → its text highlights. **Special ▸ Restart** → boot replays. **Special ▸ Shut Down** → screen collapses to a dot, "safe to turn off" screen, click → boots again.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add -A
