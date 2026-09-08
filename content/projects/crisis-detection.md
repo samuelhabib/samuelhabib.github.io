@@ -23,4 +23,7 @@ A text classifier built on a RoBERTa encoder, tuned for recall on the crisis cla
 
 ## Result
 
-___ (Samuel to fill in: which dataset, the headline metric you'd stand behind, and one thing you'd change.)
+Still in progress. The model trains and classifies; I'm benchmarking it on public
+datasets now and would rather leave this blank than quote a number off my own test
+set. The headline recall figure and a proper error analysis land here once that's
+done.

@@ -1,7 +1,7 @@
 import type { ProjectDeck } from '../slideTypes'
 
-// NOTE: the Result is still `___` in content/projects/crisis-detection.md.
-// When Samuel fills it, replace the 'Where it stands' points slide below
+// NOTE: content/projects/crisis-detection.md has no benchmarked Result yet.
+// When Samuel has one, replace the 'Where it stands' points slide below
 // with a { layout: 'stat', value: <headline metric>, label: <dataset>, foot: <one change> }.
 const crisisDetection: ProjectDeck = {
   slug: 'crisis-detection',
@@ -40,7 +40,7 @@ const crisisDetection: ProjectDeck = {
       items: [
         {
           icon: 'refresh',
-          text: 'Benchmarking on public datasets now; the headline numbers land in the write-up.',
+          text: 'Trains and classifies today; benchmarking on public datasets now. No recall figure I would stand behind yet.',
         },
       ],
     },
