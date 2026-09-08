@@ -56,3 +56,22 @@
   pointer-events: none;
   backdrop-filter: invert(1);
 }
+
+/* CRT phosphor tint — the one sanctioned non-B&W. A fixed, non-interactive
+   overlay that MULTIPLIES a phosphor hue over the whole screen (white -> hue,
+   black stays black). Not a `filter` on any layout ancestor: that would make
+   .desktop the containing block for the fixed menu bar and shove it down. */
+.crt {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  background: var(--crt-hue, transparent);
+  mix-blend-mode: multiply;
+}
+.crt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0 1px, transparent 1px 3px);
+}

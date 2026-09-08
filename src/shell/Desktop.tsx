@@ -312,6 +312,9 @@ export default function Desktop() {
   return (
     <div className={`${styles.desktop} desktop`}>
       {flash && <div className={styles.flashOverlay} aria-hidden />}
+      {(theme === 'crtAmber' || theme === 'crtGreen') && (
+        <div className={styles.crt} aria-hidden />
+      )}
       <MenuBar {...menuActions} />
       <DesktopIcons onOpen={open} positions={iconPos} onMoveIcon={onMoveIcon} />
       <Trash />

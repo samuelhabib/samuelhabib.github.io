@@ -111,7 +111,7 @@ export default function MenuBar(props: MenuBarActions) {
   ]
 
   return (
-    <div className={styles.bar} ref={barRef}>
+    <div className={styles.bar} ref={barRef} data-testid="menubar">
       <Menu
         label={<span className={styles.apple} aria-hidden />}
         title="Apple menu"
