@@ -1,12 +1,15 @@
-import { useReducer, useState, useCallback, type ReactNode } from 'react'
+import { useReducer, useState, useCallback, useMemo, type ReactNode } from 'react'
 import { windowsReducer, initialDesktop, frontWindow, type WindowId } from './windows'
 import Window from './Window'
 import ZoomRect from './ZoomRectLayer'
 import MenuBar from './MenuBar'
 import DesktopIcons from './DesktopIcons'
 import { useWindowKeys } from './useWindowKeys'
+import { useSound } from './useSound'
 import ResumeWindow from '../windows/ResumeWindow'
 import ReadMeWindow from '../windows/ReadMeWindow'
+import TerminalWindow from '../windows/TerminalWindow'
+import type { DesktopBridge } from '../terminal/types'
 import styles from './Desktop.module.css'
 
 const TITLES: Record<WindowId, string> = {
@@ -16,11 +19,6 @@ const TITLES: Record<WindowId, string> = {
   projects: 'Projects',
   puzzle: 'Puzzle',
   about: 'About This Portfolio',
-}
-
-const CONTENT: Partial<Record<WindowId, ReactNode>> = {
-  resume: <ResumeWindow />,
-  readme: <ReadMeWindow />,
 }
 
 function focusIcon(id: WindowId) {
@@ -59,10 +57,29 @@ export default function Desktop() {
     focusIcon(id)
   }, [])
 
+  const sound = useSound()
+
+  const bridge = useMemo<DesktopBridge>(
+    () => ({
+      // dispatch is stable (useReducer); the reducer's 'open' also raises z, so
+      // this opens-or-focuses in one action.
+      open: (id) => dispatch({ type: 'open', id }),
+      close: (id) => close(id),
+      beep: () => sound.beep(),
+    }),
+    [close, sound],
+  )
+
+  const content: Partial<Record<WindowId, ReactNode>> = {
+    resume: <ResumeWindow />,
+    readme: <ReadMeWindow />,
+    terminal: <TerminalWindow bridge={bridge} />,
+  }
+
   const front = frontWindow(state)
   useWindowKeys(front, close)
 
-  const openWindows = (Object.keys(CONTENT) as WindowId[]).filter((id) => state.windows[id].open)
+  const openWindows = (Object.keys(content) as WindowId[]).filter((id) => state.windows[id].open)
 
   return (
     <div className={`${styles.desktop} desktop`}>
@@ -92,7 +109,7 @@ export default function Desktop() {
           onResize={(w, h) => dispatch({ type: 'resize', id, w, h })}
           onToggleShade={() => dispatch({ type: 'toggleShade', id })}
         >
-          {CONTENT[id]}
+          {content[id]}
         </Window>
       ))}
     </div>
