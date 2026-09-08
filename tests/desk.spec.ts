@@ -1,0 +1,57 @@
+import { test, expect } from '@playwright/test'
+import type { Page } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
+
+async function boot(page: Page) {
+  await page.goto('/')
+  await page
+    .getByText('Welcome to Macintosh')
+    .waitFor({ state: 'detached', timeout: 6000 })
+    .catch(() => {})
+}
+
+test('Apple ▸ Puzzle opens the Puzzle window', async ({ page }) => {
+  await boot(page)
+  await page.getByRole('button', { name: 'Apple menu' }).click()
+  await page.getByRole('menuitem', { name: 'Puzzle' }).click()
+  const puzzle = page.getByRole('dialog', { name: /puzzle/i })
+  await expect(puzzle).toBeVisible()
+  await expect(puzzle.getByRole('button', { name: 'Shuffle' })).toBeVisible()
+})
+
+test('no serious axe violations with the Puzzle open', async ({ page }) => {
+  await boot(page)
+  await page.getByRole('button', { name: 'Apple menu' }).click()
+  await page.getByRole('menuitem', { name: 'Puzzle' }).click()
+  await expect(page.getByRole('dialog', { name: /puzzle/i })).toBeVisible()
+  const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze()
+  const serious = results.violations.filter((v) => ['serious', 'critical'].includes(v.impact ?? ''))
+  expect(serious).toEqual([])
+})
+
+test('dragging a window onto the Trash closes it', async ({ page }) => {
+  await boot(page)
+  const readme = page.getByRole('dialog', { name: /read me/i })
+  await expect(readme).toBeVisible()
+  const bar = readme.getByTestId('titlebar')
+  const trash = page.locator('[data-trash]')
+  const from = await bar.boundingBox()
+  const to = await trash.boundingBox()
+  await page.mouse.move(from!.x + 30, from!.y + from!.height / 2)
+  await page.mouse.down()
+  await page.mouse.move(to!.x + to!.width / 2, to!.y + to!.height / 2, { steps: 24 })
+  await page.mouse.up()
+  await expect(readme).toHaveCount(0)
+})
+
+test('a short drag that misses the Trash keeps the window open', async ({ page }) => {
+  await boot(page)
+  const readme = page.getByRole('dialog', { name: /read me/i })
+  const bar = readme.getByTestId('titlebar')
+  const from = await bar.boundingBox()
+  await page.mouse.move(from!.x + 30, from!.y + from!.height / 2)
+  await page.mouse.down()
+  await page.mouse.move(from!.x + 90, from!.y + from!.height / 2 + 20, { steps: 12 })
+  await page.mouse.up()
+  await expect(readme).toBeVisible()
+})

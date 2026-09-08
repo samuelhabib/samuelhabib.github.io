@@ -21,6 +21,7 @@ import ProjectsWindow from '../windows/ProjectsWindow'
 import AboutDialog from '../windows/AboutDialog'
 import PuzzleWindow from '../windows/PuzzleWindow'
 import ShutDown from './ShutDown'
+import Trash from './Trash'
 import type { MenuBarActions } from './MenuBar'
 import type { DesktopBridge } from '../terminal/types'
 import styles from './Desktop.module.css'
@@ -143,12 +144,25 @@ export default function Desktop() {
     shutDown: () => setShutdown(true),
   }
 
+  const maybeTrash = (id: WindowId) => {
+    const trashEl = document.querySelector<HTMLElement>('[data-trash]')
+    const bar = document.querySelector<HTMLElement>(`#win-${id} [data-testid="titlebar"]`)
+    if (!trashEl || !bar) return
+    const t = trashEl.getBoundingClientRect()
+    const b = bar.getBoundingClientRect()
+    const overlap = b.left < t.right && b.right > t.left && b.top < t.bottom && b.bottom > t.top
+    if (!overlap) return
+    sound.beep()
+    close(id)
+  }
+
   const openWindows = (Object.keys(content) as WindowId[]).filter((id) => state.windows[id].open)
 
   return (
     <div className={`${styles.desktop} desktop`}>
       <MenuBar {...menuActions} />
       <DesktopIcons onOpen={open} />
+      <Trash />
       {zoom && (
         <ZoomRect
           from={zoom.from}
@@ -172,6 +186,7 @@ export default function Desktop() {
           onMove={(x, y) => dispatch({ type: 'move', id, x, y })}
           onResize={(w, h) => dispatch({ type: 'resize', id, w, h })}
           onToggleShade={() => dispatch({ type: 'toggleShade', id })}
+          onDragEnd={() => maybeTrash(id)}
         >
           {content[id]}
         </Window>

@@ -12,12 +12,13 @@ interface WindowProps {
   onMove(x: number, y: number): void
   onResize(w: number, h: number): void
   onToggleShade(): void
+  onDragEnd?(): void
   children: ReactNode
 }
 
 export default function Window(p: WindowProps) {
   const { state } = p
-  const drag = useDrag((dx, dy) => p.onMove(state.x + dx, state.y + dy))
+  const drag = useDrag((dx, dy) => p.onMove(state.x + dx, state.y + dy), p.onDragEnd)
   const grow = useDrag((dx, dy) => p.onResize(state.w + dx, state.h + dy))
   const ref = useRef<HTMLElement>(null)
 
