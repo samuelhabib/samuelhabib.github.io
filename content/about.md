@@ -27,6 +27,8 @@ I brought Claude Code and the Superpowers workflow into ExaCare, then presented 
 company-wide at Town Hall and Eng Week. I spend most of my day pairing with agents
 now. It changed how fast the team ships.
 
-## Outside work
+## About this site
 
-___ (Samuel to fill in: one honest, specific line.)
+This is a Macintosh desktop, more or less how one looked in 1991. The icons open
+on a double-click, the menus in the bar all work, and there's a Terminal in there
+if you'd rather type than click. A couple of things are hidden. Poke around.
