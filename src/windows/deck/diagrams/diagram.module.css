@@ -2,6 +2,10 @@
   display: block;
   width: 100%;
   max-width: 560px;
+  /* viewBox + height:auto keeps the aspect ratio while the cap lets a
+     tall diagram shrink so the slide title + caption stay on screen at
+     the default (un-zoomed) window size. */
+  max-height: min(46vh, 300px);
   height: auto;
   margin: 8px 0;
   color: var(--c-fg);
