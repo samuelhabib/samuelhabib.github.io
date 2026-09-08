@@ -74,7 +74,7 @@ Every task's requirements implicitly include these. Values copied verbatim from 
   // trims; empty -> null; unknown -> a "command not found" node; otherwise the command's node (may be null)
   ```
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // src/terminal/run.test.tsx
@@ -164,12 +164,12 @@ test('completions are prefix matches that exclude hidden commands', () => {
 })
 ```
 
-- [ ] **Step 2: Run it to verify it fails**
+- [x] **Step 2: Run it to verify it fails**
 
 Run: `npm test -- src/terminal/run`
 Expected: FAIL — `Cannot find module './run'`.
 
-- [ ] **Step 3: Implement `types.ts`**
+- [x] **Step 3: Implement `types.ts`**
 
 ```ts
 // src/terminal/types.ts
@@ -198,7 +198,7 @@ export interface Command {
 }
 ```
 
-- [ ] **Step 4: Implement `commands.tsx`**
+- [x] **Step 4: Implement `commands.tsx`**
 
 ```tsx
 // src/terminal/commands.tsx
@@ -410,7 +410,7 @@ export function completions(prefix: string): string[] {
 }
 ```
 
-- [ ] **Step 5: Implement `run.tsx`**
+- [x] **Step 5: Implement `run.tsx`**
 
 ```tsx
 // src/terminal/run.tsx
@@ -432,17 +432,17 @@ export function runCommand(line: string, ctx: CommandCtx): ReactNode | null {
 }
 ```
 
-- [ ] **Step 6: Run the test to verify it passes**
+- [x] **Step 6: Run the test to verify it passes**
 
 Run: `npm test -- src/terminal/run`
 Expected: PASS (all cases).
 
-- [ ] **Step 7: Typecheck**
+- [x] **Step 7: Typecheck**
 
 Run: `npx tsc --noEmit`
 Expected: no errors.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add -A
@@ -479,7 +479,7 @@ git commit -m "feat: terminal command registry and runCommand dispatcher"
   - `clear` is intercepted in `submit` (before `runCommand`) and wipes the buffer entirely — including the just-typed line — the way a real `clear` does. It is still recorded in history.
   - `ghost` is empty when the input contains a space (you are past the command word) or when the only candidate already equals the input.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // src/terminal/useTerminal.test.ts
@@ -548,12 +548,12 @@ test('bridge calls go through the live ref, not a stale closure', () => {
 })
 ```
 
-- [ ] **Step 2: Run it to verify it fails**
+- [x] **Step 2: Run it to verify it fails**
 
 Run: `npm test -- src/terminal/useTerminal`
 Expected: FAIL — `Cannot find module './useTerminal'`.
 
-- [ ] **Step 3: Implement `useTerminal.ts`**
+- [x] **Step 3: Implement `useTerminal.ts`**
 
 ```ts
 // src/terminal/useTerminal.ts
@@ -667,17 +667,17 @@ export function useTerminal(bridge: DesktopBridge): TerminalApi {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `npm test -- src/terminal/useTerminal`
 Expected: PASS (all cases).
 
-- [ ] **Step 5: Typecheck**
+- [x] **Step 5: Typecheck**
 
 Run: `npx tsc --noEmit`
 Expected: no errors.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add -A
@@ -716,7 +716,7 @@ git commit -m "feat: useTerminal hook (buffer, history, tab-completion)"
     so a window whose content focused itself (the Terminal input) keeps that focus.
   - `src/shell/useWindowKeys.ts`: the Escape handler ignores events whose target is inside `[data-terminal]`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```tsx
 // src/windows/TerminalWindow.test.tsx
@@ -833,12 +833,12 @@ test('does not steal focus from content that focused itself', () => {
 })
 ```
 
-- [ ] **Step 2: Run to verify they fail**
+- [x] **Step 2: Run to verify they fail**
 
 Run: `npm test -- TerminalWindow useWindowKeys Window`
 Expected: FAIL — `TerminalWindow` module missing; the new `useWindowKeys` and `Window` cases fail.
 
-- [ ] **Step 3: Apply the two shell fixes**
+- [x] **Step 3: Apply the two shell fixes**
 
 `src/shell/Window.tsx` — replace the mount focus effect:
 
@@ -873,7 +873,7 @@ export function useWindowKeys(front: WindowId | null, onClose: (id: WindowId) =>
 }
 ```
 
-- [ ] **Step 4: Implement `TerminalWindow.tsx`**
+- [x] **Step 4: Implement `TerminalWindow.tsx`**
 
 ```tsx
 // src/windows/TerminalWindow.tsx
@@ -975,7 +975,7 @@ export default function TerminalWindow({ bridge }: { bridge: DesktopBridge }) {
 }
 ```
 
-- [ ] **Step 5: Implement `TerminalWindow.module.css`**
+- [x] **Step 5: Implement `TerminalWindow.module.css`**
 
 ```css
 /* src/windows/TerminalWindow.module.css */
@@ -1077,17 +1077,17 @@ export default function TerminalWindow({ bridge }: { bridge: DesktopBridge }) {
 }
 ```
 
-- [ ] **Step 6: Run the tests to verify they pass**
+- [x] **Step 6: Run the tests to verify they pass**
 
 Run: `npm test -- TerminalWindow useWindowKeys Window`
 Expected: PASS. If the `focuses the input on mount` test is flaky under jsdom, ensure the test file does not render two `TerminalWindow`s in one file-level DOM (each `render` gets its own container; use `screen` within each `test`).
 
-- [ ] **Step 7: Full unit run + typecheck**
+- [x] **Step 7: Full unit run + typecheck**
 
 Run: `npm test && npx tsc --noEmit`
 Expected: all green.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add -A
@@ -1106,7 +1106,7 @@ git commit -m "feat: TerminalWindow component; stop focus theft and Esc-close in
 - Consumes: `TerminalWindow` from `src/windows/TerminalWindow.tsx`; `useSound` from `src/shell/useSound.tsx`; `DesktopBridge` from `src/terminal/types.ts`; the existing `windowsReducer` / `frontWindow` / `Window`.
 - Produces: `Desktop` renders a real `terminal` window. `CONTENT` moves inside the component (it now needs the `bridge` closure). The existing Terminal desktop icon opens it via the normal zoom-rect path. `bridge.open` dispatches `{ type: 'open' }` (the reducer already raises `z`, so this both opens and focuses — no separate zoom-rect for terminal-initiated opens, which is fine).
 
-- [ ] **Step 1: Write the failing e2e test**
+- [x] **Step 1: Write the failing e2e test**
 
 ```ts
 // tests/terminal.spec.ts
@@ -1173,12 +1173,12 @@ test('mobile still renders no desktop shell (Terminal included)', async ({ page 
 })
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npm run test:e2e -- terminal`
 Expected: FAIL — no `dialog` named "Terminal" appears (icon opens nothing today).
 
-- [ ] **Step 3: Wire `Desktop.tsx`**
+- [x] **Step 3: Wire `Desktop.tsx`**
 
 Add imports:
 
@@ -1228,21 +1228,21 @@ And the render map body stays the same except it reads `content[id]`:
 
 (No other change. `TITLES.terminal` is already `'Terminal'`. The Terminal icon already exists in `DesktopIcons`. `terminal` default geometry is already in `windows.ts` DEFAULTS.)
 
-- [ ] **Step 4: Run the e2e to verify it passes**
+- [x] **Step 4: Run the e2e to verify it passes**
 
 Run: `npm run test:e2e -- terminal`
 Expected: PASS (all five). If the `:focus-within` assertion is flaky, replace it with a z-order check: `expect(await resume.evaluate((el) => Number(getComputedStyle(el).zIndex))).toBeGreaterThan(await page.getByRole('dialog', { name: /terminal/i }).evaluate((el) => Number(getComputedStyle(el).zIndex)))`.
 
-- [ ] **Step 5: Full regression — unit + e2e + build + prerender assert**
+- [x] **Step 5: Full regression — unit + e2e + build + prerender assert**
 
 Run: `npm test && npm run test:e2e && npm run build && npm run prerender:assert`
 Expected: all green. Pay attention to `tests/a11y.spec.ts`, `tests/mobile.spec.ts`, and `tests/window.spec.ts` — they are the specs most likely to regress from a shell change and are outside the obvious blast radius. `scripts/assert-prerendered.mjs` needles must be unchanged and still pass.
 
-- [ ] **Step 6: Manual smoke**
+- [x] **Step 6: Manual smoke**
 
 Run: `npm run dev`, open `http://localhost:5173`, skip boot, double-click **Terminal**. Check: input is focused; `help` then Enter prints the list; `↑` recalls `help`; typing `sk` shows a `skills` ghost and Tab fills it; `open resume` raises the résumé window; the chip row runs commands on tap; `Esc` clears the line and leaves the window open; `Ctrl-L` clears the screen.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add -A
