@@ -30,7 +30,7 @@ experience:
     role: Software Development Engineer
     location: Austin, TX
     start: Sept 2023
-    end: Present
+    end: Feb 2026
     bullets:
       - Built an AI receipt-parsing service for Apple Travel, pairing LLM extraction with rule-based validation and schema normalization to process third-party receipts reliably.
       - Owned BART, a structured budget reconciliation system that replaced spreadsheets, cutting manual processing about 80% and errors about 95%.
@@ -86,7 +86,7 @@ watching them. New York, NY.
 - Built a team-wide on-call report tool that halved weekly report prep.
 - Brought Claude Code and the Superpowers workflow to the company; presented it company-wide at Town Hall and Eng Week.
 
-### Apple — Software Development Engineer (Sept 2023 – Present)
+### Apple — Software Development Engineer (Sept 2023 – Feb 2026)
 
 - AI receipt-parsing service for Apple Travel: LLM extraction plus rule-based validation and schema normalization.
 - Owned BART, a budget reconciliation system replacing spreadsheets: ~80% less manual processing, ~95% fewer errors.
