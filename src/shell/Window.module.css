@@ -19,6 +19,11 @@
   user-select: none;
   touch-action: none;
 }
+/* Inactive windows lose the racing stripes — the System 7 "this one isn't
+   front" cue. Close/zoom boxes stay put so a click still lands. */
+.titlebar.inactive {
+  background-image: none;
+}
 .title {
   background: var(--c-chrome-bg);
   padding: 0 8px;

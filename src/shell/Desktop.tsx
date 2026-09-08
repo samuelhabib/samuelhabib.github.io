@@ -364,6 +364,7 @@ export default function Desktop() {
           key={id}
           state={state.windows[id]}
           title={TITLES[id]}
+          active={front === id}
           autoFocus={justOpened === id}
           onFocus={() => dispatch({ type: 'focus', id })}
           onClose={() => close(id)}

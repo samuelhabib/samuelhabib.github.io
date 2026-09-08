@@ -6,6 +6,8 @@ import styles from './Window.module.css'
 interface WindowProps {
   state: WindowState
   title: string
+  /** front-most window; inactive windows drop their title-bar pinstripes */
+  active?: boolean
   autoFocus?: boolean
   onFocus(): void
   onClose(): void
@@ -23,6 +25,7 @@ export default function Window(p: WindowProps) {
   const ref = useRef<HTMLElement>(null)
   const [offset, setOffset] = useState<{ x: number; y: number } | null>(null)
   const outline = p.outlineDrag ?? false
+  const active = p.active ?? true
 
   const drag = useDrag(
     (dx, dy) => {
@@ -66,7 +69,7 @@ export default function Window(p: WindowProps) {
         onPointerDown={p.onFocus}
       >
         <div
-          className={styles.titlebar}
+          className={`${styles.titlebar} ${active ? '' : styles.inactive}`}
           data-testid="titlebar"
           onPointerDown={drag.onPointerDown}
           onDoubleClick={p.onToggleShade}
