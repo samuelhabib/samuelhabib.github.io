@@ -1,0 +1,40 @@
+/* Plan 4-A theme classes. A theme is one class on <html>. The default
+   (System 7) matches :root, so a class-less document is already themed. */
+
+.theme-system7 {
+  /* no-op: semantic tokens already equal :root. Present so the
+     Appearance panel can select it to clear another theme. */
+}
+
+.theme-dark {
+  --c-bg: var(--black);
+  --c-fg: var(--white);
+  --c-chrome-bg: var(--black);
+  --c-chrome-fg: var(--white);
+  --c-accent: var(--white);
+  --c-accent-fg: var(--black);
+  --dither-ink: var(--white);
+  color-scheme: dark;
+}
+
+.theme-system6 {
+  --chrome-font: 'Geneva', system-ui, sans-serif;
+  --window-border-w: 2px;
+  --titlebar-lines: 0;
+}
+
+/* CRT: tint comes from a fixed overlay Desktop renders (see 4-E); these
+   only carry the hue so nothing in the layout tree gets a `filter`. */
+.theme-crt-amber { --crt-hue: #ffb000; }
+.theme-crt-green { --crt-hue: #33ff66; }
+
+/* Desktop pattern (density of the Plan 1 stipple under the windows).
+   data-pattern is set by the init script + useDesktopPattern. */
+html[data-pattern='0'] .desktop { background-image: none; }
+html[data-pattern='25'] .desktop {
+  background-image: repeating-conic-gradient(var(--dither-ink) 0 12.5%, var(--c-bg) 0 50%);
+}
+html[data-pattern='75'] .desktop {
+  background-image: repeating-conic-gradient(var(--dither-ink) 0 37.5%, var(--c-bg) 0 50%);
+}
+/* 50 is the default already in Desktop.module.css */
