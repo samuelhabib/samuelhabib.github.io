@@ -35,6 +35,24 @@
 .close:active {
   background: var(--c-accent);
 }
+.zoom {
+  position: absolute;
+  right: 6px;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--c-fg);
+  background: var(--c-chrome-bg);
+}
+.zoom::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border: 1px solid var(--c-fg);
+}
+.zoom:active {
+  background: var(--c-accent);
+}
 .body {
   flex: 1;
   overflow: auto;

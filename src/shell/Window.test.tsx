@@ -61,6 +61,26 @@ test('shaded window hides its body', () => {
   expect(screen.queryByText('body text')).not.toBeVisible()
 })
 
+test('title bar has a zoom box that calls onZoom', async () => {
+  const onZoom = vi.fn()
+  render(
+    <Window
+      state={base}
+      title="Résumé"
+      onFocus={() => {}}
+      onClose={() => {}}
+      onMove={() => {}}
+      onResize={() => {}}
+      onToggleShade={() => {}}
+      onZoom={onZoom}
+    >
+      <p>body</p>
+    </Window>,
+  )
+  await userEvent.click(screen.getByRole('button', { name: 'Zoom Résumé' }))
+  expect(onZoom).toHaveBeenCalledOnce()
+})
+
 test('does not steal focus from content that focused itself', () => {
   function SelfFocuser() {
     return <input aria-label="inner" autoFocus />
