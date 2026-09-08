@@ -22,6 +22,40 @@
   display: none;
 }
 
+/* Classic 1-bit scrollbars inside the desktop shell. Square everything, a
+   dithered track, a hollow thumb — no rounded modern overlay bar breaking the
+   1991 read the moment a window overflows. Scoped to .desktop so the plain
+   mobile/no-JS document keeps the host scrollbar. */
+.desktop ::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+.desktop ::-webkit-scrollbar-track {
+  background-color: var(--c-bg);
+  background-image: repeating-conic-gradient(var(--dither-ink) 0 25%, var(--c-bg) 0 50%);
+  background-size: 2px 2px;
+  border-left: 1px solid var(--c-fg);
+  border-top: 1px solid var(--c-fg);
+}
+.desktop ::-webkit-scrollbar-thumb {
+  background: var(--c-bg);
+  border: 1px solid var(--c-fg);
+}
+.desktop ::-webkit-scrollbar-button {
+  width: 15px;
+  height: 15px;
+  background: var(--c-chrome-bg);
+  border: 1px solid var(--c-fg);
+}
+.desktop ::-webkit-scrollbar-corner {
+  background: var(--c-bg);
+}
+.desktop *,
+.desktop {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-fg) var(--c-bg);
+}
+
 .skip {
   position: absolute;
   left: -999px;
