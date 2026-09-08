@@ -1,0 +1,28 @@
+.wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.layer {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+}
+/* the outgoing slide, dissolving: a hard-stop dither mask whose cell size
+   is animated to zero. Hard conic stops => every cell fully shown or fully
+   clipped, so no antialiased grey at any frame. */
+.dissolve {
+  pointer-events: none;
+  -webkit-mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
+  mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
+  -webkit-mask-size: 48px 48px;
+  mask-size: 48px 48px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dissolve {
+    display: none;
+  }
+}
