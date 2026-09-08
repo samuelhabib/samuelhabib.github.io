@@ -55,6 +55,23 @@ describe('SlideView', () => {
     expect(screen.getByText('weekly')).toBeVisible()
   })
 
+  it('renders the ReferralPipeline diagram with its stages', () => {
+    render(<SlideView play={false} slide={{ layout: 'diagram', name: 'ReferralPipeline' }} />)
+    const svg = screen.getByRole('img', { name: /referral/i })
+    const texts = [...svg.querySelectorAll('text')].map((t) => t.textContent?.toLowerCase() ?? '')
+    for (const stage of ['send', 'track', 'follow up']) {
+      expect(texts.some((t) => t.includes(stage))).toBe(true)
+    }
+  })
+
+  it('renders the RecallVsCost grid emphasising the missed cell', () => {
+    render(<SlideView play={false} slide={{ layout: 'diagram', name: 'RecallVsCost' }} />)
+    const svg = screen.getByRole('img', { name: /recall|missed|cost/i })
+    const texts = [...svg.querySelectorAll('text')].map((t) => t.textContent?.toLowerCase() ?? '')
+    expect(texts.some((t) => t.includes('missed'))).toBe(true)
+    expect(texts.some((t) => t.includes('false alarm'))).toBe(true)
+  })
+
   it('tech slide lists each chip', () => {
     render(<SlideView play={false} slide={{ layout: 'tech', title: 'Built with', items: ['Python', 'PostgreSQL'] }} />)
     expect(screen.getByText('Python')).toBeVisible()

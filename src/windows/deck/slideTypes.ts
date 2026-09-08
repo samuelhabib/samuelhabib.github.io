@@ -4,7 +4,7 @@
  * a hand-authored sequence of terse, visual slides, one idea each.
  */
 
-export type DiagramName = 'ReconcileLoop'
+export type DiagramName = 'ReconcileLoop' | 'ReferralPipeline' | 'RecallVsCost'
 
 export type DeckIconName =
   | 'split'
