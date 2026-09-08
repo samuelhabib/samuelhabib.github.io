@@ -4,8 +4,8 @@
   height: var(--menubar-h);
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 0 10px;
+  gap: 4px;
+  padding: 0 8px;
   background: var(--white);
   border-bottom: 1px solid var(--black);
   font-family: var(--font-chrome);
@@ -19,19 +19,17 @@
   -webkit-mask: radial-gradient(circle at 50% 55%, #000 42%, transparent 43%);
   mask: radial-gradient(circle at 50% 55%, #000 42%, transparent 43%);
 }
-.clock {
-  margin-left: auto;
-  font-variant-numeric: tabular-nums;
-}
-.item {
-  user-select: none;
-}
 .toggle {
   font-family: var(--font-chrome);
   font-size: 12px;
-  padding: 0 4px;
+  padding: 0 6px;
+  margin-left: 12px;
 }
 .toggle:active {
   background: var(--black);
   color: var(--white);
+}
+.clock {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
 }
