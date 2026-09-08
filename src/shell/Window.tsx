@@ -74,12 +74,7 @@ export default function Window(p: WindowProps) {
           <button className={styles.close} aria-label={`Close ${p.title}`} onClick={p.onClose} />
           <span className={styles.title}>{p.title}</span>
           {p.onZoom && (
-            <button
-              className={styles.zoom}
-              aria-label={`Zoom ${p.title}`}
-              onClick={p.onZoom}
-              onPointerDown={(e) => e.stopPropagation()}
-            />
+            <button className={styles.zoom} aria-label={`Zoom ${p.title}`} onClick={p.onZoom} />
           )}
         </div>
         {/* tabIndex lets keyboard users scroll the window body */}
