@@ -36,6 +36,11 @@ describe('SlideView', () => {
     render(<SlideView play={false} slide={{ layout: 'diagram', name: 'ReconcileLoop', caption: 'c' }} />)
     expect(screen.getByRole('img', { name: /reconcile/i })).toBeInTheDocument()
     expect(screen.getByText('c')).toBeVisible()
+    // self-heal caption lives in the SVG and DIRECTORY is labelled exactly once
+    const svg = screen.getByRole('img', { name: /reconcile/i })
+    const texts = [...svg.querySelectorAll('text')].map((t) => t.textContent)
+    expect(texts.some((t) => /self-heal/i.test(t ?? ''))).toBe(true)
+    expect(texts.filter((t) => /DIRECTORY/i.test(t ?? '')).length).toBe(1)
   })
 
   it('stat slide shows value, label and foot', () => {

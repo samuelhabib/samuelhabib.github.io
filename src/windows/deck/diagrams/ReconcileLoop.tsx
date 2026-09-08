@@ -2,15 +2,15 @@ import styles from './diagram.module.css'
 
 /**
  * Provider Directory: six roster boxes -> a normalize step -> one directory,
- * with a weekly arrow looping back to repair drift. 1-bit, themed via
- * currentColor.
+ * with a weekly arc looping back to repair drift. 1-bit, themed via
+ * currentColor. The self-heal label sits in its own band below the arc.
  */
 export default function ReconcileLoop() {
-  const rosterY = [14, 44, 74, 104, 134, 164]
+  const rosterY = [14, 38, 62, 86, 110, 134]
   return (
     <svg
       className={styles.svg}
-      viewBox="0 0 460 236"
+      viewBox="0 0 480 288"
       role="img"
       aria-labelledby="reconcileLoop-title"
       focusable="false"
@@ -32,6 +32,7 @@ export default function ReconcileLoop() {
         </marker>
       </defs>
 
+      {/* connectors */}
       <g
         fill="none"
         stroke="currentColor"
@@ -40,49 +41,47 @@ export default function ReconcileLoop() {
         markerEnd="url(#rl-arrow)"
       >
         {rosterY.map((y, i) => (
-          <line key={i} x1="74" y1={y + 11} x2="150" y2="103" />
+          <line key={i} x1="74" y1={y + 10} x2="168" y2="110" />
         ))}
-        <line x1="244" y1="103" x2="286" y2="103" />
-        {/* weekly self-heal loop: directory -> back around -> rosters */}
-        <path
-          strokeDasharray="5 4"
-          markerEnd="url(#rl-arrow)"
-          d="M340 150 C340 210 120 224 40 188 L40 96"
-        />
+        <line x1="258" y1="110" x2="298" y2="110" />
+        {/* weekly self-heal loop — a clean arc under everything, ending back at the sources */}
+        <path strokeDasharray="5 4" d="M356 138 C356 220 96 236 44 198 C22 182 24 156 26 148" />
       </g>
 
+      {/* boxes (fill so connectors don't show through labels) */}
       <g stroke="currentColor" strokeWidth="2" fill="var(--c-bg)">
         {rosterY.map((y, i) => (
-          <rect key={i} x="6" y={y} width="68" height="22" rx="1" />
+          <rect key={i} x="8" y={y} width="66" height="20" rx="1" />
         ))}
-        <rect x="150" y="80" width="94" height="46" rx="1" />
-        <rect x="286" y="76" width="118" height="54" rx="1" />
-        <rect x="290" y="80" width="118" height="54" rx="1" />
+        <rect x="168" y="88" width="90" height="44" rx="1" />
+        <rect x="298" y="84" width="118" height="52" rx="1" />
+        <rect x="302" y="88" width="118" height="52" rx="1" />
       </g>
 
+      {/* labels */}
       <g
         fill="currentColor"
         fontFamily="var(--chrome-font, sans-serif)"
         fontSize="11"
         textAnchor="middle"
       >
-        <text x="40" y={rosterY[0] - 4}>
+        <text x="41" y="9">
           6 public rosters
         </text>
-        <text x="197" y="100">
+        <text x="213" y="106">
           normalize
         </text>
-        <text x="197" y="113">
+        <text x="213" y="119">
           to one shape
         </text>
-        <text x="351" y="100" fontSize="13">
+        <text x="361" y="106" fontSize="13">
           DIRECTORY
         </text>
-        <text x="351" y="116">
+        <text x="361" y="122">
           40,000+ rows
         </text>
-        <text x="196" y="214">
-          weekly self-heal · diffs live sources, repairs drift
+        <text x="240" y="272">
+          weekly self-heal — diffs the live sources, repairs drift
         </text>
       </g>
     </svg>
