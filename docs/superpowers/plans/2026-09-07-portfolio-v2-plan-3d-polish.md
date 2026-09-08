@@ -45,7 +45,7 @@ Deferred out of all four (from earlier reviews): dithered card transitions, gene
 **Interfaces:**
 - Produces: `IconGlyph({ kind }: { kind: 'resume' | 'projects' | 'terminal' | 'readme' })` — a single `<svg viewBox="0 0 32 32" aria-hidden>` with 1-bit line art per kind (document, folder, monitor with a prompt, note). `DesktopIcons` renders `<span className={styles.glyph}><IconGlyph kind={ic.id} /></span>` for each of its four buttons.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // src/shell/DesktopIcons.test.tsx
@@ -61,12 +61,12 @@ test('each desktop icon renders a drawn glyph', () => {
 })
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npm test -- DesktopIcons`
 Expected: FAIL — no `<svg>` inside the icon buttons yet.
 
-- [ ] **Step 3: Implement `IconGlyph.tsx`**
+- [x] **Step 3: Implement `IconGlyph.tsx`**
 
 ```tsx
 // src/shell/IconGlyph.tsx
@@ -112,7 +112,7 @@ export default function IconGlyph({ kind }: { kind: GlyphKind }) {
 }
 ```
 
-- [ ] **Step 4: Wire `DesktopIcons.tsx`**
+- [x] **Step 4: Wire `DesktopIcons.tsx`**
 
 ```tsx
 import styles from './Desktop.module.css'
@@ -158,7 +158,7 @@ export default function DesktopIcons({
 }
 ```
 
-- [ ] **Step 5: Update `.glyph` in `Desktop.module.css`**
+- [x] **Step 5: Update `.glyph` in `Desktop.module.css`**
 
 ```css
 .glyph {
@@ -174,12 +174,12 @@ export default function DesktopIcons({
 
 (Drop the `border` and `background` — the SVG is the icon now.)
 
-- [ ] **Step 6: Run the test to verify it passes**
+- [x] **Step 6: Run the test to verify it passes**
 
 Run: `npm test -- DesktopIcons`
 Expected: PASS.
 
-- [ ] **Step 7: Typecheck + commit**
+- [x] **Step 7: Typecheck + commit**
 
 Run: `npx tsc --noEmit`
 
@@ -201,7 +201,7 @@ git commit -m "feat: hand-drawn 1-bit glyphs for the desktop icons"
 **Interfaces:**
 - Produces: `useKonami(onTrigger: () => void): void` — a `window` keydown listener that fires `onTrigger` when the exact sequence `↑ ↑ ↓ ↓ ← → ← → b a` is entered (case-insensitive for the letters); a wrong key resets progress (a wrong key that is itself `↑` starts a fresh run at position 1). `onTrigger` is read through a ref.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // src/shell/useKonami.test.ts
@@ -236,12 +236,12 @@ test('re-arms after firing', () => {
 })
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npm test -- useKonami`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement `useKonami.ts`**
+- [x] **Step 3: Implement `useKonami.ts`**
 
 ```ts
 // src/shell/useKonami.ts
@@ -284,12 +284,12 @@ export function useKonami(onTrigger: () => void) {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 Run: `npm test -- useKonami`
 Expected: PASS (all three).
 
-- [ ] **Step 5: Wire into `Desktop.tsx`**
+- [x] **Step 5: Wire into `Desktop.tsx`**
 
 Add the import and a `flash` state, and call the hook (near the other `Desktop` hooks):
 
@@ -312,7 +312,7 @@ Change the root element's className:
     <div className={`${styles.desktop} desktop ${flash ? styles.flash : ''}`}>
 ```
 
-- [ ] **Step 6: `Desktop.module.css`**
+- [x] **Step 6: `Desktop.module.css`**
 
 ```css
 .flash {
@@ -320,7 +320,7 @@ Change the root element's className:
 }
 ```
 
-- [ ] **Step 7: Verify + commit**
+- [x] **Step 7: Verify + commit**
 
 Run: `npm test && npx tsc --noEmit`
 
@@ -349,7 +349,7 @@ git commit -m "feat: Konami-code easter egg — screen invert + system beep"
 - `Window` gains `outlineDrag?: boolean` and changes `onDragEnd?()` → `onDragEnd?(x: number, y: number)`. When `outlineDrag`, the title-bar drag accumulates `(dx, dy)` into a local `offset` state and renders `<div className={styles.outline}>` at `state.x + offset.x, state.y + offset.y`; on release it calls `onMove(finalX, finalY)` then `onDragEnd?.(finalX, finalY)` and clears the offset. When not `outlineDrag`, behaviour is unchanged (live `onMove`) and `onDragEnd?.(state.x, state.y)` is still called with the current position.
 - `Desktop` owns `outlineDrag` (`localStorage['outlineDrag'] !== '0'`, default `true`), passes it to every `Window`, and its `maybeTrash(id, x, y)` builds the title-bar rect from `(x, y)` + `--menubar-h` + `state.windows[id].w` instead of reading the DOM.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Add to `src/shell/Menu.test.tsx`:
 
@@ -427,12 +427,12 @@ test('View ▸ Outline dragging switches to live drag', async ({ page }) => {
 })
 ```
 
-- [ ] **Step 2: Run to verify they fail**
+- [x] **Step 2: Run to verify they fail**
 
 Run: `npm test -- Menu MenuBar` then `npm run test:e2e -- outline-drag`
 Expected: FAIL — no `menuitemcheckbox`, no `View` menu, no outline behaviour.
 
-- [ ] **Step 3: `Menu.tsx` — checkbox support**
+- [x] **Step 3: `Menu.tsx` — checkbox support**
 
 In `MenuItemSpec` add `checked?: boolean`. In the item `<button>`:
 
@@ -453,7 +453,7 @@ In `MenuItemSpec` add `checked?: boolean`. In the item `<button>`:
               </button>
 ```
 
-- [ ] **Step 4: `MenuBar.tsx` — the View menu**
+- [x] **Step 4: `MenuBar.tsx` — the View menu**
 
 ```tsx
 const NAMES = ['apple', 'file', 'edit', 'view', 'special'] as const
@@ -480,7 +480,7 @@ Build the items and render the menu between Edit and Special:
       <Menu label="Special" title="Special" items={special} {...menuProps('special')} />
 ```
 
-- [ ] **Step 5: `Window.tsx` — outline drag**
+- [x] **Step 5: `Window.tsx` — outline drag**
 
 ```tsx
 import { useEffect, useRef, useState, type ReactNode } from 'react'
@@ -535,7 +535,7 @@ Wrap the return in a fragment and add the outline element after `</section>`:
   )
 ```
 
-- [ ] **Step 6: `Window.module.css`**
+- [x] **Step 6: `Window.module.css`**
 
 ```css
 .outline {
@@ -546,7 +546,7 @@ Wrap the return in a fragment and add the outline element after `</section>`:
 }
 ```
 
-- [ ] **Step 7: `Desktop.tsx` — own the setting, feed the windows, fix the Trash math**
+- [x] **Step 7: `Desktop.tsx` — own the setting, feed the windows, fix the Trash math**
 
 ```tsx
   const [outlineDrag, setOutlineDrag] = useState(() => {
@@ -598,26 +598,26 @@ In the `openWindows.map`, pass both:
           outlineDrag={outlineDrag}
 ```
 
-- [ ] **Step 8: Run the unit tests to verify they pass**
+- [x] **Step 8: Run the unit tests to verify they pass**
 
 Run: `npm test -- Menu MenuBar Window`
 Expected: PASS. The existing `tests/window.spec.ts` drag/resize e2e still passes because the window commits on release (assertions read the box *after* `mouse.up`).
 
-- [ ] **Step 9: Run the e2e**
+- [x] **Step 9: Run the e2e**
 
 Run: `npm run test:e2e -- outline-drag window desk`
 Expected: PASS. `desk.spec.ts` "dragging a window onto the Trash closes it" still passes — `maybeTrash` now uses the committed `(x, y)` from `onDragEnd`, which is correct for both outline and live drag.
 
-- [ ] **Step 10: Full regression**
+- [x] **Step 10: Full regression**
 
 Run: `npm test && npm run test:e2e && npm run build && npm run prerender:assert`
 Expected: all green. Watch `tests/window.spec.ts`, `tests/desk.spec.ts`, `tests/menubar.spec.ts`, `tests/a11y.spec.ts`.
 
-- [ ] **Step 11: Manual smoke**
+- [x] **Step 11: Manual smoke**
 
 `npm run dev`, skip boot. Icons show drawn glyphs. Drag a window by its title bar → only a 1px outline follows; release → the window jumps there. **View ▸ Outline dragging** (checked) → uncheck → drag now moves the window live; reload → still live (persisted); re-check → outline again. Drag a window's outline onto the **Trash** → beep + close. Type ↑↑↓↓←→←→BA → the whole screen inverts for ~1s and the bell rings.
 
-- [ ] **Step 12: Commit**
+- [x] **Step 12: Commit**
 
 ```bash
 git add -A
