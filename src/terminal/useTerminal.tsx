@@ -45,6 +45,7 @@ export function useTerminal(bridge: DesktopBridge): TerminalApi {
       open: (id) => bridgeRef.current.open(id),
       close: (id) => bridgeRef.current.close(id),
       beep: () => bridgeRef.current.beep(),
+      openStack: (slug) => bridgeRef.current.openStack(slug),
       run: (line) => submitRef.current(line),
       clear: () => setEntries([]),
       cwd: '/Users/samuel',

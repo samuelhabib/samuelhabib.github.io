@@ -9,6 +9,7 @@ function makeCtx(over: Partial<CommandCtx> = {}): CommandCtx {
     open: () => {},
     close: () => {},
     beep: () => {},
+    openStack: () => {},
     run: () => {},
     clear: () => {},
     cwd: '/Users/samuel',
@@ -51,9 +52,19 @@ test('open dispatches through the bridge', () => {
 
 test('open with an unknown target is an error, not a dispatch', () => {
   const open = vi.fn()
-  const out = txt(runCommand('open projects', makeCtx({ open })))
+  const out = txt(runCommand('open trash', makeCtx({ open })))
   expect(open).not.toHaveBeenCalled()
   expect(out).toMatch(/no such window/i)
+})
+
+test('projects <slug> opens that stack through the bridge', () => {
+  const openStack = vi.fn()
+  runCommand('projects crisis', makeCtx({ openStack }))
+  expect(openStack).toHaveBeenCalledWith('crisis-detection')
+})
+
+test('projects with an unknown stack is an error', () => {
+  expect(txt(runCommand('projects nope', makeCtx()))).toMatch(/no such stack/i)
 })
 
 test('cat resume.md prints the raw résumé markdown body', () => {

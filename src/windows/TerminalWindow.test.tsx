@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import TerminalWindow from './TerminalWindow'
 
-const bridge = { open: vi.fn(), close: vi.fn(), beep: vi.fn() }
+const bridge = { open: vi.fn(), close: vi.fn(), beep: vi.fn(), openStack: vi.fn() }
 
 test('has a labelled input and a polite log region', () => {
   render(<TerminalWindow bridge={bridge} />)

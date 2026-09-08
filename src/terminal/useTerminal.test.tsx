@@ -2,7 +2,7 @@ import { renderHook, act, render } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { useTerminal } from './useTerminal'
 
-const bridge = { open: () => {}, close: () => {}, beep: () => {} }
+const bridge = { open: () => {}, close: () => {}, beep: () => {}, openStack: () => {} }
 const lastText = (nodes: { node: ReactNode }[]) => {
   const { container } = render(<>{nodes[nodes.length - 1].node}</>)
   return container.textContent ?? ''
@@ -53,9 +53,9 @@ test('complete fills a single candidate', () => {
 test('bridge calls go through the live ref, not a stale closure', () => {
   const open = vi.fn()
   const { result, rerender } = renderHook(({ b }) => useTerminal(b), {
-    initialProps: { b: { open: () => {}, close: () => {}, beep: () => {} } },
+    initialProps: { b: { open: () => {}, close: () => {}, beep: () => {}, openStack: () => {} } },
   })
-  rerender({ b: { open, close: () => {}, beep: () => {} } })
+  rerender({ b: { open, close: () => {}, beep: () => {}, openStack: () => {} } })
   act(() => result.current.submit('open resume'))
   expect(open).toHaveBeenCalledWith('resume')
 })

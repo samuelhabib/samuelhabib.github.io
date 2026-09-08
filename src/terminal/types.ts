@@ -5,6 +5,7 @@ export interface DesktopBridge {
   open(id: WindowId): void
   close(id: WindowId): void
   beep(): void
+  openStack(slug: string): void
 }
 
 export interface CommandCtx extends DesktopBridge {

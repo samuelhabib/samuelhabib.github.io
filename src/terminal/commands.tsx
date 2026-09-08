@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react'
 import { resume } from '../content/resume'
 import { about } from '../content/about'
+import { projects, findProject } from '../content/projects'
 import type { WindowId } from '../shell/windows'
 import type { Command } from './types'
 
-const OPENABLE: WindowId[] = ['resume', 'readme', 'terminal']
+const OPENABLE: WindowId[] = ['resume', 'readme', 'terminal', 'projects']
 
 // Deterministic 7-hex pseudo-hash so `experience` reads like `git log --oneline`
 // without pulling in a real hash.
@@ -122,7 +123,7 @@ export const commands: Command[] = [
   {
     name: 'open',
     description: 'open a window',
-    usage: 'open <resume | readme | terminal>',
+    usage: 'open <resume | readme | terminal | projects>',
     run: (args, ctx) => {
       const target = args[0] as WindowId
       if (!OPENABLE.includes(target)) {
@@ -130,6 +131,33 @@ export const commands: Command[] = [
       }
       ctx.open(target)
       return null
+    },
+  },
+  {
+    name: 'projects',
+    description: 'browse the project stacks',
+    usage: 'projects [stack]',
+    run: (args, ctx) => {
+      if (args[0]) {
+        const p = findProject(projects, args[0])
+        if (!p) return <span className="term-err">projects: no such stack: {args[0]}</span>
+        ctx.openStack(p.slug)
+        return null
+      }
+      const flat = [...projects.work, ...projects.side]
+      return (
+        <div className="term-ls">
+          {flat.map((p) => (
+            <button
+              key={p.slug}
+              className="term-file"
+              onClick={() => ctx.run(`projects ${p.slug}`)}
+            >
+              {p.slug}
+            </button>
+          ))}
+        </div>
+      )
     },
   },
   {

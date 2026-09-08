@@ -1,4 +1,12 @@
-import { useReducer, useState, useCallback, useMemo, type ReactNode } from 'react'
+import {
+  useReducer,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+  type ReactNode,
+} from 'react'
 import { windowsReducer, initialDesktop, frontWindow, type WindowId } from './windows'
 import Window from './Window'
 import ZoomRect from './ZoomRectLayer'
@@ -9,6 +17,7 @@ import { useSound } from './useSound'
 import ResumeWindow from '../windows/ResumeWindow'
 import ReadMeWindow from '../windows/ReadMeWindow'
 import TerminalWindow from '../windows/TerminalWindow'
+import ProjectsWindow from '../windows/ProjectsWindow'
 import type { DesktopBridge } from '../terminal/types'
 import styles from './Desktop.module.css'
 
@@ -59,6 +68,23 @@ export default function Desktop() {
 
   const sound = useSound()
 
+  const [stackTarget, setStackTarget] = useState<{ slug: string; nonce: number } | null>(null)
+  const targetNonce = useRef(0)
+
+  const jumpToStack = useCallback((slug: string) => {
+    dispatch({ type: 'open', id: 'projects' })
+    setStackTarget({ slug, nonce: ++targetNonce.current })
+  }, [])
+
+  // Deep link: /?open=projects[&stack=<slug>] opens the deck on that stack.
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search)
+    if (p.get('open') !== 'projects') return
+    dispatch({ type: 'open', id: 'projects' })
+    const s = p.get('stack')
+    if (s) setStackTarget({ slug: s, nonce: ++targetNonce.current })
+  }, [])
+
   const bridge = useMemo<DesktopBridge>(
     () => ({
       // dispatch is stable (useReducer); the reducer's 'open' also raises z, so
@@ -66,14 +92,16 @@ export default function Desktop() {
       open: (id) => dispatch({ type: 'open', id }),
       close: (id) => close(id),
       beep: () => sound.beep(),
+      openStack: (slug) => jumpToStack(slug),
     }),
-    [close, sound],
+    [close, sound, jumpToStack],
   )
 
   const content: Partial<Record<WindowId, ReactNode>> = {
     resume: <ResumeWindow />,
     readme: <ReadMeWindow />,
     terminal: <TerminalWindow bridge={bridge} />,
+    projects: <ProjectsWindow target={stackTarget} />,
   }
 
   const front = frontWindow(state)
