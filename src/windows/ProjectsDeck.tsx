@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useState, type KeyboardEvent } from 'react'
-import type { Project, ProjectCard, ProjectsData } from '../content/projectTypes'
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
+import type { Project, ProjectsData } from '../content/projectTypes'
+import SlideTransition from './deck/SlideTransition'
+import { slideMotion, motionKeyFor } from './deck/slideMotion'
 import styles from './ProjectsDeck.module.css'
 
 type Slide =
@@ -17,37 +19,6 @@ function buildSlides(data: ProjectsData): Slide[] {
   ]
 }
 
-function Card({ card }: { card: ProjectCard }) {
-  if (card.kind === 'prose') {
-    return (
-      <>
-        <h3>{card.heading}</h3>
-        {/* HTML from our own trusted content/projects/*.md via marked; no user input */}
-        <div dangerouslySetInnerHTML={{ __html: card.html }} />
-      </>
-    )
-  }
-  return (
-    <>
-      <h3>{card.heading}</h3>
-      {card.tech.length > 0 && (
-        <p>
-          <strong>Tech:</strong> {card.tech.join(', ')}
-        </p>
-      )}
-      {card.links.length > 0 && (
-        <ul>
-          {card.links.map((l) => (
-            <li key={l.href}>
-              <a href={l.href}>{l.label}</a>
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
-  )
-}
-
 export default function ProjectsDeck({
   data,
   target,
@@ -58,6 +29,7 @@ export default function ProjectsDeck({
   const slides = useMemo(() => buildSlides(data), [data])
   const [si, setSi] = useState(0)
   const [ci, setCi] = useState(0)
+  const dir = useRef<1 | -1>(1)
 
   const slide = slides[si]
   const stackCards = slide.kind === 'stack' ? slide.project.cards : []
@@ -72,14 +44,19 @@ export default function ProjectsDeck({
     setCi(0)
   }
   const next = () => {
+    dir.current = 1
     if (slide.kind === 'stack' && ci < cardCount - 1) setCi(ci + 1)
     else goSlide(si + 1)
   }
   const prev = () => {
+    dir.current = -1
     if (slide.kind === 'stack' && ci > 0) setCi(ci - 1)
     else goSlide(si - 1)
   }
-  const home = () => goSlide(0)
+  const home = () => {
+    dir.current = -1
+    goSlide(0)
+  }
 
   const jumpTo = (query: string) => {
     const q = query.toLowerCase()
@@ -88,7 +65,10 @@ export default function ProjectsDeck({
         s.kind === 'stack' &&
         (s.project.slug.toLowerCase() === q || s.project.slug.toLowerCase().includes(q)),
     )
-    if (idx >= 0) goSlide(idx)
+    if (idx >= 0) {
+      dir.current = idx >= si ? 1 : -1
+      goSlide(idx)
+    }
   }
 
   useEffect(() => {
@@ -110,6 +90,11 @@ export default function ProjectsDeck({
   }
 
   const allProjects = [...data.work, ...data.side]
+  const cardIndex = Math.min(ci, cardCount - 1)
+
+  const Contents = slideMotion.contents
+  const Divider = slideMotion.divider
+  const CardMotion = card ? slideMotion[motionKeyFor(card.heading, card.kind)] : null
 
   return (
     <div
@@ -120,35 +105,41 @@ export default function ProjectsDeck({
       onKeyDown={onKeyDown}
     >
       <div className={styles.stage}>
-        {slide.kind === 'contents' && (
-          <div className={styles.contents}>
-            <h2>Projects</h2>
-            <p>A guided tour. Use Next / Prev, the arrow keys, or jump straight in:</p>
-            <ul>
-              {allProjects.map((p) => (
-                <li key={p.slug}>
-                  <button onClick={() => jumpTo(p.slug)}>
-                    {p.title}
-                    {p.placeholder ? ' (placeholder)' : ''}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <SlideTransition dir={dir.current} keyId={`${si}.${cardIndex}`}>
+          {slide.kind === 'contents' && (
+            <Contents play>
+              <h2 className={styles.bigTitle}>Projects</h2>
+              <p>A guided tour. Use Next / Prev, the arrow keys, or jump straight in:</p>
+              <ul className={styles.agenda}>
+                {allProjects.map((p) => (
+                  <li key={p.slug}>
+                    <button onClick={() => jumpTo(p.slug)}>
+                      {p.title}
+                      {p.placeholder ? ' (placeholder)' : ''}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </Contents>
+          )}
 
-        {slide.kind === 'divider' && <h2 className={styles.divider}>{slide.label}</h2>}
+          {slide.kind === 'divider' && (
+            <Divider play>
+              <h2 className={styles.divider}>{slide.label}</h2>
+            </Divider>
+          )}
 
-        {slide.kind === 'stack' && (
-          <div className={styles.stack}>
-            <h2>{slide.project.title}</h2>
-            <p className={styles.summary}>{slide.project.summary}</p>
-            {slide.project.placeholder && (
-              <p className={styles.flag}>Placeholder — not yet written</p>
-            )}
-            {card && <Card card={card} />}
-          </div>
-        )}
+          {slide.kind === 'stack' && (
+            <div className={styles.stack}>
+              <h2 className={styles.bigTitle}>{slide.project.title}</h2>
+              <p className={styles.summary}>{slide.project.summary}</p>
+              {slide.project.placeholder && (
+                <p className={styles.flag}>Placeholder — not yet written</p>
+              )}
+              {card && CardMotion && <CardMotion play card={card} />}
+            </div>
+          )}
+        </SlideTransition>
       </div>
 
       <div className={styles.nav}>
@@ -161,7 +152,7 @@ export default function ProjectsDeck({
         </button>
         {slide.kind === 'stack' && (
           <span className={styles.count}>
-            card {Math.min(ci, cardCount - 1) + 1} of {cardCount}
+            card {cardIndex + 1} of {cardCount}
           </span>
         )}
       </div>

@@ -1,17 +1,22 @@
 .wrap {
   position: relative;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-height: 0;
 }
 .layer {
-  position: absolute;
-  inset: 0;
+  flex: 1;
+  min-height: 0;
   overflow: auto;
 }
 /* the outgoing slide, dissolving: a hard-stop dither mask whose cell size
-   is animated to zero. Hard conic stops => every cell fully shown or fully
+   animates to zero. Hard conic stops => every cell fully shown or fully
    clipped, so no antialiased grey at any frame. */
 .dissolve {
+  position: absolute;
+  inset: 0;
+  flex: none;
   pointer-events: none;
   -webkit-mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
   mask-image: repeating-conic-gradient(#000 0 25%, transparent 0 50%);
