@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 220" role="img" aria-label="Six public rosters flow into a weekly reconciliation step and out to one directory">
+  <rect width="480" height="220" fill="#fff"/>
+  <g fill="none" stroke="#000" stroke-width="2">
+    <rect x="12" y="14" width="96" height="24"/>
+    <rect x="12" y="46" width="96" height="24"/>
+    <rect x="12" y="78" width="96" height="24"/>
+    <rect x="12" y="110" width="96" height="24"/>
+    <rect x="12" y="142" width="96" height="24"/>
+    <rect x="12" y="174" width="96" height="24"/>
+    <rect x="196" y="82" width="108" height="56"/>
+    <rect x="372" y="82" width="96" height="56"/>
+    <path d="M108 26 H150 M108 58 H150 M108 90 H150 M108 122 H150 M108 154 H150 M108 186 H150 M150 26 V186 M150 106 H196"/>
+    <path d="M304 110 H372"/>
+    <path d="M420 138 V196 H250 V138" stroke-dasharray="4 4"/>
+  </g>
+  <g font-family="monospace" font-size="11" fill="#000">
+    <text x="24" y="30">roster 1</text>
+    <text x="24" y="62">roster 2</text>
+    <text x="24" y="94">roster 3</text>
+    <text x="24" y="126">roster 4</text>
+    <text x="24" y="158">roster 5</text>
+    <text x="24" y="190">roster 6</text>
+    <text x="210" y="106">reconcile</text>
+    <text x="210" y="122">(weekly)</text>
+    <text x="388" y="114">directory</text>
+    <text x="256" y="212">self-heal</text>
+  </g>
+</svg>
