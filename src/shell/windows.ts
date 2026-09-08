@@ -10,6 +10,8 @@ export interface WindowState {
   h: number
   shaded: boolean
   minZoom: { x: number; y: number } | null
+  /** Pre-zoom rect while the window is filling the desktop; null when normal. */
+  maxed: { x: number; y: number; w: number; h: number } | null
 }
 
 export interface DesktopState {
@@ -27,7 +29,7 @@ const DEFAULTS: Record<WindowId, Pick<WindowState, 'x' | 'y' | 'w' | 'h'>> = {
 }
 
 function make(id: WindowId): WindowState {
-  return { id, open: false, z: 0, shaded: false, minZoom: null, ...DEFAULTS[id] }
+  return { id, open: false, z: 0, shaded: false, minZoom: null, maxed: null, ...DEFAULTS[id] }
 }
 
 export const initialDesktop: DesktopState = {
@@ -49,6 +51,7 @@ export type WindowAction =
   | { type: 'move'; id: WindowId; x: number; y: number }
   | { type: 'resize'; id: WindowId; w: number; h: number }
   | { type: 'toggleShade'; id: WindowId }
+  | { type: 'zoom'; id: WindowId; desktop: { w: number; h: number } }
 
 export function windowsReducer(state: DesktopState, action: WindowAction): DesktopState {
   const w = state.windows[action.id]
@@ -83,6 +86,29 @@ export function windowsReducer(state: DesktopState, action: WindowAction): Deskt
       }
     case 'toggleShade':
       return { ...state, windows: { ...state.windows, [action.id]: { ...w, shaded: !w.shaded } } }
+    case 'zoom': {
+      if (w.maxed) {
+        const { x, y, w: ww, h } = w.maxed
+        return {
+          ...state,
+          windows: { ...state.windows, [action.id]: { ...w, x, y, w: ww, h, maxed: null } },
+        }
+      }
+      return {
+        ...state,
+        windows: {
+          ...state.windows,
+          [action.id]: {
+            ...w,
+            maxed: { x: w.x, y: w.y, w: w.w, h: w.h },
+            x: 0,
+            y: 0,
+            w: action.desktop.w,
+            h: action.desktop.h,
+          },
+        },
+      }
+    }
   }
 }
 
