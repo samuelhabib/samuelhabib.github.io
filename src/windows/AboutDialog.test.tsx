@@ -10,3 +10,12 @@ test('shows the version line, a build date, and the memory legend', () => {
     expect(screen.getByText(label)).toBeInTheDocument()
   }
 })
+
+test('shows real build receipts: commit + test counts and a source link', () => {
+  render(<AboutDialog />)
+  expect(screen.getByText(/pairing with claude code/i)).toBeInTheDocument()
+  expect(screen.getByText(/\d+\s+commits/i)).toBeInTheDocument()
+  expect(screen.getByText(/\d+\s+tests/i)).toBeInTheDocument()
+  const link = screen.getByRole('link', { name: /source/i })
+  expect(link).toHaveAttribute('href', 'https://github.com/samuelhabib/samuelhabib.github.io')
+})

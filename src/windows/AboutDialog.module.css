@@ -35,3 +35,15 @@
   justify-content: space-between;
   font-size: var(--fs-meta);
 }
+.receipts {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--c-fg);
+}
+.repoLink {
+  text-decoration: underline;
+}
+.asOf {
+  margin: 4px 0 0;
+  font-size: var(--fs-meta);
+}

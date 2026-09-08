@@ -26,6 +26,19 @@ export default function AboutDialog() {
           <li key={s.label}>{s.label}</li>
         ))}
       </ul>
+
+      <div className={styles.receipts}>
+        <p className={styles.line}>Made by pairing with Claude Code</p>
+        <p className={styles.line}>
+          {__COMMIT_COUNT__} commits · {__TEST_COUNT__} tests · specs in the repo
+        </p>
+        <p className={styles.line}>
+          <a className={styles.repoLink} href={__REPO_URL__}>
+            View source ↗
+          </a>
+        </p>
+        <p className={styles.asOf}>counts as of {__BUILD_DATE__}</p>
+      </div>
     </div>
   )
 }
