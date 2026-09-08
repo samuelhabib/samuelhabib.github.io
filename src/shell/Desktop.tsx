@@ -23,6 +23,7 @@ import ResumeWindow from '../windows/ResumeWindow'
 import ReadMeWindow from '../windows/ReadMeWindow'
 import TerminalWindow from '../windows/TerminalWindow'
 import ProjectsWindow from '../windows/ProjectsWindow'
+import SkillsWindow from '../windows/SkillsWindow'
 import WriteupWindow from '../windows/WriteupWindow'
 import AboutDialog from '../windows/AboutDialog'
 import PuzzleWindow from '../windows/PuzzleWindow'
@@ -44,6 +45,7 @@ const TITLES: Record<WindowId, string> = {
   appearance: 'Appearance',
   getinfo: 'Info',
   writeup: 'Project Notes',
+  skills: 'Skills',
 }
 
 function focusIcon(id: WindowId) {
@@ -173,6 +175,7 @@ export default function Desktop() {
   const content: Partial<Record<WindowId, ReactNode>> = {
     resume: <ResumeWindow />,
     readme: <ReadMeWindow />,
+    skills: <SkillsWindow />,
     terminal: <TerminalWindow bridge={bridge} />,
     projects: <ProjectsWindow target={stackTarget} onOpenWriteup={openWriteup} />,
     about: <AboutDialog />,

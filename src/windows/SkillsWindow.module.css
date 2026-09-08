@@ -1,0 +1,97 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-3);
+  font-family: var(--chrome-font);
+  font-size: 12px;
+}
+
+/* The framed list widget — a Chooser sits its two panes inside one inset box. */
+.panes {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  border: 1px solid var(--c-fg);
+}
+
+.groups {
+  flex: 0 0 42%;
+  max-width: 180px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  border-right: 1px solid var(--c-fg);
+}
+
+.option {
+  padding: 3px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+.option:focus-visible {
+  outline: 1px dotted var(--c-fg);
+  outline-offset: -3px;
+}
+
+/* System 7 selection: the hard black bar, pure ink on pure paper. */
+.selected {
+  background: var(--c-fg);
+  color: var(--c-bg);
+}
+
+.selected:focus-visible {
+  outline-color: var(--c-bg);
+}
+
+.detail {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 10px 8px;
+  overflow-y: auto;
+}
+
+.detailHead {
+  margin: 0 0 6px;
+  padding-bottom: 4px;
+  font-family: var(--chrome-font);
+  font-size: 12px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--c-fg);
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.items li {
+  position: relative;
+  padding-left: 14px;
+}
+
+/* a crisp 1-bit square bullet — no font glyph, no antialiased dot */
+.items li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 5px;
+  width: 4px;
+  height: 4px;
+  background: var(--c-fg);
+}
+
+.count {
+  margin: 10px 0 0;
+  padding-top: 4px;
+  font-size: 11px;
+  border-top: 1px solid var(--c-fg);
+}
