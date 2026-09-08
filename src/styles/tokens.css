@@ -17,4 +17,16 @@
   --fs-h1: 30px;
   --fs-h2: 20px;
   --fs-meta: 11px;
+
+  /* --- semantic layer (Plan 4-A): components read THESE, not the primitives --- */
+  --c-bg: var(--white);
+  --c-fg: var(--black);
+  --c-chrome-bg: var(--white);
+  --c-chrome-fg: var(--black);
+  --c-accent: var(--black);
+  --c-accent-fg: var(--white);
+  --dither-ink: var(--black);
+  --chrome-font: 'Chicago', 'Geneva', system-ui, sans-serif;
+  --window-border-w: 1px;
+  --titlebar-lines: 6;
 }
