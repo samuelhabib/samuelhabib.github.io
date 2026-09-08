@@ -4,12 +4,11 @@ import type { Project, ProjectCard, ProjectLink, ProjectsData } from './projectT
 import providerDirectory from '../../content/projects/provider-directory.md?raw'
 import referralOutboundCenter from '../../content/projects/referral-outbound-center.md?raw'
 import crisisDetection from '../../content/projects/crisis-detection.md?raw'
-import fitnessBot from '../../content/projects/fitness-bot.md?raw'
 
-// Four explicit ?raw imports rather than import.meta.glob: proven to work in
-// this codebase (resume.ts / about.ts), zero SSG risk, and the list is short.
+// Explicit ?raw imports rather than import.meta.glob: proven to work in this
+// codebase (resume.ts / about.ts), zero SSG risk, and the list is short.
 // Adding a project = add an import and an array entry.
-const RAW = [providerDirectory, referralOutboundCenter, crisisDetection, fitnessBot]
+const RAW = [providerDirectory, referralOutboundCenter, crisisDetection]
 
 function splitSections(body: string): {
   lead: string

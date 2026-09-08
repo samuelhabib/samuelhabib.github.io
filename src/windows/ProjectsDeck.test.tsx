@@ -9,7 +9,7 @@ test('opens on the contents slide with a button per project', () => {
   expect(screen.getByRole('heading', { level: 2, name: 'Projects' })).toBeInTheDocument()
   expect(screen.getByRole('button', { name: /provider directory/i })).toBeInTheDocument()
   expect(
-    screen.getByRole('button', { name: /ai fitness & calorie bot \(placeholder\)/i }),
+    screen.getByRole('button', { name: /mental health crisis detection/i }),
   ).toBeInTheDocument()
 })
 
@@ -59,20 +59,6 @@ test('no Full write-up link on the contents or divider slides', async () => {
   expect(screen.queryByRole('button', { name: /full write-up/i })).toBeNull()
 })
 
-test('no Full write-up link on a placeholder project stack', () => {
-  render(
-    <ProjectsDeck
-      data={projects}
-      target={{ slug: 'fitness-bot', nonce: 1 }}
-      onOpenWriteup={() => {}}
-    />,
-  )
-  expect(
-    screen.getByRole('heading', { level: 2, name: 'AI Fitness & Calorie Bot' }),
-  ).toBeInTheDocument()
-  expect(screen.queryByRole('button', { name: /full write-up/i })).toBeNull()
-})
-
 test('Home returns to the contents slide', async () => {
   render(<ProjectsDeck data={projects} target={null} />)
   await userEvent.click(screen.getByRole('button', { name: 'Next ▶' }))
@@ -118,9 +104,12 @@ test('Prev is disabled on the contents slide', () => {
   expect(screen.getByRole('button', { name: '◀ Prev' })).toBeDisabled()
 })
 
-test('Next is disabled on the last card of the last stack', async () => {
-  render(<ProjectsDeck data={projects} target={{ slug: 'fitness-bot', nonce: 1 }} />)
-  // fitness-bot is the last slide and has a single card
-  expect(screen.getByRole('heading', { level: 2, name: 'AI Fitness & Calorie Bot' })).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: 'Next ▶' })).toBeDisabled()
+test('Next is disabled on the last slide of the last stack', async () => {
+  render(<ProjectsDeck data={projects} target={{ slug: 'crisis-detection', nonce: 1 }} />)
+  expect(
+    screen.getByRole('heading', { level: 2, name: 'Mental Health Crisis Detection' }),
+  ).toBeInTheDocument()
+  const next = () => screen.getByRole('button', { name: 'Next ▶' }) as HTMLButtonElement
+  while (!next().disabled) await userEvent.click(next())
+  expect(next()).toBeDisabled()
 })

@@ -1,8 +1,8 @@
 import { projects, findProject } from './projects'
 
-test('loads all four project files, split into work and side by front matter', () => {
+test('loads the project files, split into work and side by front matter', () => {
   expect(projects.work.map((p) => p.slug)).toEqual(['provider-directory', 'referral-outbound-center'])
-  expect(projects.side.map((p) => p.slug)).toEqual(['crisis-detection', 'fitness-bot'])
+  expect(projects.side.map((p) => p.slug)).toEqual(['crisis-detection'])
 })
 
 test('cards are assembled: Overview lead, ## sections, then a Tech & Links card', () => {
@@ -23,14 +23,9 @@ test('prose cards carry rendered HTML', () => {
   if (problem?.kind === 'prose') expect(problem.html).toMatch(/<p>.*40,000\+ rows.*<\/p>/s)
 })
 
-test('a project with no lead paragraph has no Overview card', () => {
-  const fb = projects.side.find((p) => p.slug === 'fitness-bot')!
-  expect(fb.cards.map((c) => c.heading)).toEqual(['Placeholder'])
-  expect(fb.placeholder).toBe(true)
-})
-
-test('non-placeholder projects are not flagged', () => {
+test('no project is flagged as a placeholder', () => {
   expect(projects.work.every((p) => p.placeholder === false)).toBe(true)
+  expect(projects.side.every((p) => p.placeholder === false)).toBe(true)
   expect(findProject(projects, 'crisis-detection')!.placeholder).toBe(false)
 })
 

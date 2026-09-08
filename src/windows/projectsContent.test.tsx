@@ -20,8 +20,3 @@ test('renders prose card HTML and the tech list', () => {
   expect(screen.getByText(/40,000\+ rows across six rosters/i)).toBeInTheDocument()
   expect(screen.getAllByText(/PostgreSQL/i)[0]).toBeInTheDocument()
 })
-
-test('flags the placeholder project', () => {
-  render(<ProjectsArticle data={projects} />)
-  expect(screen.getByText(/placeholder — not yet written/i)).toBeInTheDocument()
-})
