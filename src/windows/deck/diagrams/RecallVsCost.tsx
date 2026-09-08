@@ -57,6 +57,8 @@ export default function RecallVsCost() {
         <rect x="80" y="146" width="140" height="110" />
         <rect x="220" y="146" width="140" height="110" />
       </g>
+      {/* knockout plate so the label reads over the hatch */}
+      <rect x="232" y="74" width="116" height="42" fill="var(--c-bg)" stroke="currentColor" strokeWidth="2" />
       <g
         fill="currentColor"
         fontFamily="var(--chrome-font, sans-serif)"
@@ -64,7 +66,7 @@ export default function RecallVsCost() {
         textAnchor="middle"
       >
         <text x="150" y="96">caught</text>
-        <text x="290" y="90" fontSize="13">MISSED</text>
+        <text x="290" y="92" fontSize="13">MISSED</text>
         <text x="290" y="108" fontSize="10">the expensive one</text>
         <text x="150" y="206">false alarm</text>
         <text x="150" y="222" fontSize="10">cheap</text>

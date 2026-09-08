@@ -40,6 +40,9 @@ test.describe('deck', () => {
         name: 'Mental Health Crisis Detection',
       }),
     ).toBeVisible()
+    await expect(
+      page.getByRole('dialog', { name: /projects/i }).getByText(/slide 1 of/i),
+    ).toBeVisible()
   })
 
   test('deep link ?open=projects&stack= lands on that stack', async ({ page }) => {
