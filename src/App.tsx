@@ -4,6 +4,7 @@ import { projects, findProject } from './content/projects'
 import { ResumeArticle } from './windows/resumeContent'
 import { ReadMeArticle } from './windows/readmeContent'
 import { ProjectsArticle } from './windows/projectsContent'
+import { THEMES } from './shell/useTheme'
 import Desktop from './shell/Desktop'
 import Boot from './shell/Boot'
 import { useBoot } from './shell/useBoot'
@@ -70,6 +71,40 @@ function AppInner() {
         <div id="projects">
           <ProjectsArticle data={projects} />
         </div>
+        {/* Every window's content ships as real HTML. Appearance is a control
+            panel — of no use without JS — so it is pre-rendered but hidden
+            from the no-JS reading view. */}
+        <section id="appearance" hidden>
+          <h2>Appearance</h2>
+          <fieldset>
+            <legend>Theme</legend>
+            {THEMES.map((t) => (
+              <label key={t.id}>
+                <input
+                  type="radio"
+                  name="appearance-theme-static"
+                  defaultChecked={t.id === 'system7'}
+                  disabled
+                />
+                {t.label}
+              </label>
+            ))}
+          </fieldset>
+          <fieldset>
+            <legend>Desktop Pattern</legend>
+            {['None', 'Light 25%', 'Standard 50%', 'Dense 75%'].map((label) => (
+              <label key={label}>
+                <input
+                  type="radio"
+                  name="appearance-pattern-static"
+                  defaultChecked={label === 'Standard 50%'}
+                  disabled
+                />
+                {label}
+              </label>
+            ))}
+          </fieldset>
+        </section>
       </main>
 
       {/* Enhancement: the classic-Mac desktop, only after hydration at desktop widths */}

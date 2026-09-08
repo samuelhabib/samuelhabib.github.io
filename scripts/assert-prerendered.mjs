@@ -9,6 +9,8 @@ const needles = [
   'Toronto Metropolitan University',
   'need me watching them',
   'Superpowers workflow',
+  'Appearance',
+  'Desktop Pattern',
 ]
 const missing = needles.filter((n) => !html.includes(n))
 if (missing.length) {
