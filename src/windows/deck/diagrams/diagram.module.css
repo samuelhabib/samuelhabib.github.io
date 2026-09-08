@@ -1,0 +1,8 @@
+.svg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin: 8px 0;
+  color: var(--c-fg);
+}

@@ -13,13 +13,17 @@ test('opens on the contents slide with a button per project', () => {
   ).toBeInTheDocument()
 })
 
-test('Next walks contents → "Work" divider → first work stack at card 1 of M', async () => {
+test('Next walks contents → "Work" divider → the first work deck at slide 1 of N', async () => {
   render(<ProjectsDeck data={projects} target={null} />)
   await userEvent.click(screen.getByRole('button', { name: 'Next ▶' }))
   expect(screen.getByRole('heading', { level: 2, name: 'Work' })).toBeInTheDocument()
   await userEvent.click(screen.getByRole('button', { name: 'Next ▶' }))
+  // Provider Directory has a hand-authored presentation deck (title slide first)
   expect(screen.getByRole('heading', { level: 2, name: 'Provider Directory' })).toBeInTheDocument()
-  expect(screen.getByText(/card 1 of 5/i)).toBeInTheDocument()
+  expect(screen.getByText(/slide 1 of 5/i)).toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: 'Next ▶' }))
+  expect(screen.getByRole('heading', { level: 2, name: 'The problem' })).toBeInTheDocument()
+  expect(screen.getByText(/slide 2 of 5/i)).toBeInTheDocument()
 })
 
 test('Next steps through a stack card by card, then to the next slide', async () => {

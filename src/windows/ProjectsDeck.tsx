@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import type { Project, ProjectsData } from '../content/projectTypes'
 import SlideTransition from './deck/SlideTransition'
+import SlideView from './deck/SlideView'
+import { DECKS } from './deck/decks'
 import { slideMotion, motionKeyFor } from './deck/slideMotion'
 import styles from './ProjectsDeck.module.css'
 
@@ -32,12 +34,15 @@ export default function ProjectsDeck({
   const dir = useRef<1 | -1>(1)
 
   const slide = slides[si]
-  const stackCards = slide.kind === 'stack' ? slide.project.cards : []
-  const cardCount = Math.max(stackCards.length, 1)
-  const card = slide.kind === 'stack' ? stackCards[Math.min(ci, cardCount - 1)] : null
+  const project = slide.kind === 'stack' ? slide.project : null
+  const deck = project ? DECKS[project.slug] : undefined
+  const mdCards = project && !deck ? project.cards : []
+  const cardCount = project ? (deck ? deck.slides.length : Math.max(mdCards.length, 1)) : 1
+  const cardIndex = Math.min(ci, cardCount - 1)
+  const mdCard = deck ? null : (mdCards[cardIndex] ?? null)
 
   const atStart = si === 0 && ci === 0
-  const atEnd = si === slides.length - 1 && (slide.kind !== 'stack' || ci >= cardCount - 1)
+  const atEnd = si === slides.length - 1 && (!project || ci >= cardCount - 1)
 
   const goSlide = (n: number) => {
     setSi(Math.max(0, Math.min(slides.length - 1, n)))
@@ -45,12 +50,12 @@ export default function ProjectsDeck({
   }
   const next = () => {
     dir.current = 1
-    if (slide.kind === 'stack' && ci < cardCount - 1) setCi(ci + 1)
+    if (project && ci < cardCount - 1) setCi(ci + 1)
     else goSlide(si + 1)
   }
   const prev = () => {
     dir.current = -1
-    if (slide.kind === 'stack' && ci > 0) setCi(ci - 1)
+    if (project && ci > 0) setCi(ci - 1)
     else goSlide(si - 1)
   }
   const home = () => {
@@ -90,11 +95,10 @@ export default function ProjectsDeck({
   }
 
   const allProjects = [...data.work, ...data.side]
-  const cardIndex = Math.min(ci, cardCount - 1)
 
   const Contents = slideMotion.contents
   const Divider = slideMotion.divider
-  const CardMotion = card ? slideMotion[motionKeyFor(card.heading, card.kind)] : null
+  const CardMotion = mdCard ? slideMotion[motionKeyFor(mdCard.heading, mdCard.kind)] : null
 
   return (
     <div
@@ -129,14 +133,18 @@ export default function ProjectsDeck({
             </Divider>
           )}
 
-          {slide.kind === 'stack' && (
+          {slide.kind === 'stack' && deck && (
+            <SlideView slide={deck.slides[cardIndex]} play />
+          )}
+
+          {slide.kind === 'stack' && !deck && (
             <div className={styles.stack}>
               <h2 className={styles.bigTitle}>{slide.project.title}</h2>
               <p className={styles.summary}>{slide.project.summary}</p>
               {slide.project.placeholder && (
                 <p className={styles.flag}>Placeholder — not yet written</p>
               )}
-              {card && CardMotion && <CardMotion play card={card} />}
+              {mdCard && CardMotion && <CardMotion play card={mdCard} />}
             </div>
           )}
         </SlideTransition>
@@ -150,9 +158,9 @@ export default function ProjectsDeck({
         <button onClick={next} disabled={atEnd}>
           Next ▶
         </button>
-        {slide.kind === 'stack' && (
+        {project && (
           <span className={styles.count}>
-            card {cardIndex + 1} of {cardCount}
+            {deck ? 'slide' : 'card'} {cardIndex + 1} of {cardCount}
           </span>
         )}
       </div>
