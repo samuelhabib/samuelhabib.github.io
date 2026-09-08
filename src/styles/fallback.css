@@ -3,10 +3,14 @@
   top: 0;
   background: var(--c-bg);
   border-bottom: 1px solid var(--c-fg);
-  padding: 8px 0;
+  padding: 2px 0;
   margin-bottom: 24px;
   font-family: var(--font-chrome);
   font-size: 12px;
+}
+.doc-nav a {
+  display: inline-block;
+  padding: 8px 10px;
 }
 .doc-fallback #resume,
 .doc-fallback #readme,
@@ -18,9 +22,4 @@
   margin-top: 48px;
   border-top: 1px solid var(--c-fg);
   padding-top: 24px;
-}
-@media (max-width: 767px) {
-  .doc-fallback {
-    padding: 24px 16px;
-  }
 }

@@ -21,6 +21,13 @@
 .doc-fallback[hidden] {
   display: none;
 }
+/* Base `.doc-fallback` padding is set above, after the fallback.css @import, so
+   the responsive override has to live here to win the cascade. */
+@media (max-width: 767px) {
+  .doc-fallback {
+    padding: 24px 16px;
+  }
+}
 
 /* Classic 1-bit scrollbars inside the desktop shell. Square everything, a
    dithered track, a hollow thumb — no rounded modern overlay bar breaking the
