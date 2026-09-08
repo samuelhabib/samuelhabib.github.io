@@ -43,14 +43,14 @@ describe('SlideView', () => {
     expect(texts.filter((t) => /DIRECTORY/i.test(t ?? '')).length).toBe(1)
   })
 
-  it('stat slide shows value, label and foot', () => {
+  it('stat slide shows value as a heading, plus label and foot', () => {
     render(
       <SlideView
         play={false}
         slide={{ layout: 'stat', value: '40,000+', label: 'rows kept current', foot: 'weekly' }}
       />,
     )
-    expect(screen.getByText('40,000+')).toBeVisible()
+    expect(screen.getByRole('heading', { level: 2, name: '40,000+' })).toBeVisible()
     expect(screen.getByText('rows kept current')).toBeVisible()
     expect(screen.getByText('weekly')).toBeVisible()
   })

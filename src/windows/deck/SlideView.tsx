@@ -11,7 +11,7 @@ export default function SlideView({ slide, play }: { slide: Slide; play: boolean
   switch (slide.layout) {
     case 'title':
       return (
-        <div className={`${styles.slide} ${styles.title} ${anim(styles.inTitle) ?? ''}`}>
+        <div className={`${styles.slide} ${anim(styles.inTitle) ?? ''}`}>
           {slide.kicker && <p className={styles.kicker}>{slide.kicker}</p>}
           <h2 className={styles.bigTitle}>{slide.title}</h2>
           {slide.subtitle && <p className={styles.subtitle}>{slide.subtitle}</p>}
@@ -51,7 +51,7 @@ export default function SlideView({ slide, play }: { slide: Slide; play: boolean
     case 'stat':
       return (
         <div className={`${styles.slide} ${styles.center} ${anim(styles.inScale) ?? ''}`}>
-          <p className={styles.statValue}>{slide.value}</p>
+          <h2 className={styles.statValue}>{slide.value}</h2>
           <p className={styles.statLabel}>{slide.label}</p>
           {slide.foot && <p className={styles.statFoot}>{slide.foot}</p>}
         </div>
