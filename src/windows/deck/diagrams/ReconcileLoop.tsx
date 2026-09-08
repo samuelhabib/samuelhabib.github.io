@@ -77,7 +77,7 @@ export default function ReconcileLoop() {
         <text x="361" y="106" fontSize="13">
           DIRECTORY
         </text>
-        <text x="361" y="122">
+        <text x="361" y="123" fontSize="13">
           40,000+ rows
         </text>
         <text x="240" y="272">
