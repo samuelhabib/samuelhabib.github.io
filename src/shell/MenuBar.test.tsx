@@ -12,6 +12,8 @@ function mount(over: Partial<MenuBarActions> = {}) {
     selectAllInFront: vi.fn(),
     restart: vi.fn(),
     shutDown: vi.fn(),
+    outlineDrag: true,
+    toggleOutlineDrag: vi.fn(),
     ...over,
   }
   render(
@@ -64,6 +66,15 @@ test('a pointerdown outside the bar closes the open menu', async () => {
   await userEvent.click(screen.getByRole('button', { name: 'File' }))
   await userEvent.click(document.body)
   expect(screen.queryByRole('menu')).not.toBeInTheDocument()
+})
+
+test('View ▸ Outline dragging reflects the prop and toggles', async () => {
+  const a = mount({ outlineDrag: true })
+  await userEvent.click(screen.getByRole('button', { name: 'View' }))
+  const item = screen.getByRole('menuitemcheckbox', { name: /outline dragging/i })
+  expect(item).toHaveAttribute('aria-checked', 'true')
+  await userEvent.click(item)
+  expect(a.toggleOutlineDrag).toHaveBeenCalledOnce()
 })
 
 test('the Sound toggle still flips', async () => {

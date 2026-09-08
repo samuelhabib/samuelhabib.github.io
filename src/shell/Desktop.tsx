@@ -133,6 +133,25 @@ export default function Desktop() {
     window.location.reload()
   }, [])
 
+  const [outlineDrag, setOutlineDrag] = useState(() => {
+    try {
+      return localStorage.getItem('outlineDrag') !== '0'
+    } catch {
+      return true
+    }
+  })
+  const toggleOutlineDrag = useCallback(() => {
+    setOutlineDrag((v) => {
+      const next = !v
+      try {
+        localStorage.setItem('outlineDrag', next ? '1' : '0')
+      } catch {
+        /* ignore */
+      }
+      return next
+    })
+  }, [])
+
   const menuActions: MenuBarActions = {
     openWindow: (id) => dispatch({ type: 'open', id }),
     closeFront: () => front && close(front),
@@ -150,15 +169,24 @@ export default function Desktop() {
     },
     restart,
     shutDown: () => setShutdown(true),
+    outlineDrag,
+    toggleOutlineDrag,
   }
 
-  const maybeTrash = (id: WindowId) => {
+  // The dragged window's committed top-left comes straight from onDragEnd, so the
+  // Trash hit test works for both live and outline drag without reading a
+  // mid-flight DOM rect.
+  const maybeTrash = (id: WindowId, x: number, y: number) => {
     const trashEl = document.querySelector<HTMLElement>('[data-trash]')
-    const bar = document.querySelector<HTMLElement>(`#win-${id} [data-testid="titlebar"]`)
-    if (!trashEl || !bar) return
+    if (!trashEl) return
     const t = trashEl.getBoundingClientRect()
-    const b = bar.getBoundingClientRect()
-    const overlap = b.left < t.right && b.right > t.left && b.top < t.bottom && b.bottom > t.top
+    const menubarH =
+      parseInt(getComputedStyle(document.documentElement).getPropertyValue('--menubar-h'), 10) || 22
+    const w = state.windows[id].w
+    const barTop = y + menubarH
+    const bar = { left: x, right: x + w, top: barTop, bottom: barTop + 22 }
+    const overlap =
+      bar.left < t.right && bar.right > t.left && bar.top < t.bottom && bar.bottom > t.top
     if (!overlap) return
     sound.beep()
     close(id)
@@ -194,7 +222,8 @@ export default function Desktop() {
           onMove={(x, y) => dispatch({ type: 'move', id, x, y })}
           onResize={(w, h) => dispatch({ type: 'resize', id, w, h })}
           onToggleShade={() => dispatch({ type: 'toggleShade', id })}
-          onDragEnd={() => maybeTrash(id)}
+          onDragEnd={(x, y) => maybeTrash(id, x, y)}
+          outlineDrag={outlineDrag}
         >
           {content[id]}
         </Window>

@@ -6,6 +6,8 @@ export interface MenuItemSpec {
   onSelect?: () => void
   disabled?: boolean
   separatorBefore?: boolean
+  /** when defined, the item is a menuitemcheckbox reflecting this value */
+  checked?: boolean
 }
 
 interface MenuProps {
@@ -129,12 +131,16 @@ export default function Menu({ label, title, items, open, onOpen, onClose, onCyc
               {it.separatorBefore && <div role="separator" className={styles.sep} />}
               <button
                 type="button"
-                role="menuitem"
+                role={it.checked === undefined ? 'menuitem' : 'menuitemcheckbox'}
+                aria-checked={it.checked === undefined ? undefined : it.checked}
                 tabIndex={-1}
                 className={styles.item}
                 aria-disabled={it.disabled || !it.onSelect || undefined}
                 onClick={() => activate(it)}
               >
+                {it.checked === undefined ? null : (
+                  <span aria-hidden>{it.checked ? '✓ ' : '  '}</span>
+                )}
                 {it.label}
               </button>
             </Fragment>

@@ -61,6 +61,16 @@ test('Escape closes and returns focus to the trigger', async () => {
   expect(screen.getByRole('button', { name: 'File' })).toHaveFocus()
 })
 
+test('a checked item is a menuitemcheckbox and toggles via onSelect', async () => {
+  const pick = vi.fn()
+  render(<One items={[{ label: 'Outline dragging', checked: true, onSelect: pick }]} />)
+  await userEvent.click(screen.getByRole('button', { name: 'File' }))
+  const item = screen.getByRole('menuitemcheckbox', { name: /outline dragging/i })
+  expect(item).toHaveAttribute('aria-checked', 'true')
+  await userEvent.click(item)
+  expect(pick).toHaveBeenCalledOnce()
+})
+
 test('ArrowRight on an open menu calls onCycle(1)', async () => {
   const cycle = vi.fn()
   function Harness() {

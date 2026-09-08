@@ -12,9 +12,11 @@ export interface MenuBarActions {
   selectAllInFront(): void
   restart(): void
   shutDown(): void
+  outlineDrag: boolean
+  toggleOutlineDrag(): void
 }
 
-const NAMES = ['apple', 'file', 'edit', 'special'] as const
+const NAMES = ['apple', 'file', 'edit', 'view', 'special'] as const
 type MenuName = (typeof NAMES)[number]
 
 export default function MenuBar(props: MenuBarActions) {
@@ -71,6 +73,9 @@ export default function MenuBar(props: MenuBarActions) {
     { label: 'Paste', disabled: true },
     { label: 'Select All', separatorBefore: true, onSelect: props.selectAllInFront },
   ]
+  const view: MenuItemSpec[] = [
+    { label: 'Outline dragging', checked: props.outlineDrag, onSelect: props.toggleOutlineDrag },
+  ]
   const special: MenuItemSpec[] = [
     { label: 'Restart', onSelect: props.restart },
     { label: 'Shut Down', onSelect: props.shutDown },
@@ -89,6 +94,7 @@ export default function MenuBar(props: MenuBarActions) {
       />
       <Menu label="File" title="File" items={file} {...menuProps('file')} />
       <Menu label="Edit" title="Edit" items={edit} {...menuProps('edit')} />
+      <Menu label="View" title="View" items={view} {...menuProps('view')} />
       <Menu label="Special" title="Special" items={special} {...menuProps('special')} />
       <button className={styles.toggle} onClick={sound.toggle} aria-pressed={!sound.muted}>
         {sound.muted ? 'Sound: Off' : 'Sound: On'}
