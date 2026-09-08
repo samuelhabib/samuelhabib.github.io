@@ -142,6 +142,22 @@ export default function Desktop() {
 
   const [shutdown, setShutdown] = useState(false)
 
+  const [isFullScreen, setFullScreen] = useState(false)
+  useEffect(() => {
+    const h = () => setFullScreen(!!document.fullscreenElement)
+    document.addEventListener('fullscreenchange', h)
+    return () => document.removeEventListener('fullscreenchange', h)
+  }, [])
+  const toggleFullScreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {})
+      return
+    }
+    // Fullscreen #root — it holds both the menu bar and the desktop, so
+    // Exit Full Screen stays reachable.
+    document.getElementById('root')?.requestFullscreen?.().catch(() => {})
+  }
+
   const [flash, setFlash] = useState(false)
   useKonami(() => {
     sound.beep()
@@ -248,6 +264,14 @@ export default function Desktop() {
     shutDown: () => setShutdown(true),
     outlineDrag,
     toggleOutlineDrag,
+    toggleFullScreen,
+    isFullScreen,
+    frontId: front,
+    focusWindow: (id) => dispatch({ type: 'focus', id }),
+    openWindowsList: (Object.keys(TITLES) as WindowId[])
+      .filter((id) => state.windows[id].open)
+      .sort((a, b) => state.windows[b].z - state.windows[a].z)
+      .map((id) => ({ id, title: TITLES[id] })),
   }
 
   // The dragged window's committed top-left comes straight from onDragEnd, so the

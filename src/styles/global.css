@@ -35,6 +35,14 @@
   left: 0;
 }
 
+/* View ▸ Enter Full Screen fullscreens #root (menu bar + desktop live inside
+   it). Paint its ground so the black ::backdrop never shows through. */
+#root:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  background: var(--c-bg);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

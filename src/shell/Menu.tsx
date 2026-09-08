@@ -18,9 +18,20 @@ interface MenuProps {
   onOpen(): void
   onClose(): void
   onCycle(dir: -1 | 1): void
+  /** open the dropdown flush to the trigger's right edge (for far-right menus) */
+  alignRight?: boolean
 }
 
-export default function Menu({ label, title, items, open, onOpen, onClose, onCycle }: MenuProps) {
+export default function Menu({
+  label,
+  title,
+  items,
+  open,
+  onOpen,
+  onClose,
+  onCycle,
+  alignRight,
+}: MenuProps) {
   const triggerRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
   const menuId = useId()
@@ -123,7 +134,7 @@ export default function Menu({ label, title, items, open, onOpen, onClose, onCyc
           id={menuId}
           role="menu"
           aria-label={title}
-          className={styles.drop}
+          className={`${styles.drop} ${alignRight ? styles.dropRight : ''}`}
           onKeyDown={onMenuKey}
         >
           {items.map((it, i) => (

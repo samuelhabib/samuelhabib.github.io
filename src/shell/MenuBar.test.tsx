@@ -16,6 +16,14 @@ function mount(over: Partial<MenuBarActions> = {}) {
     shutDown: vi.fn(),
     outlineDrag: true,
     toggleOutlineDrag: vi.fn(),
+    toggleFullScreen: vi.fn(),
+    isFullScreen: false,
+    openWindowsList: [
+      { id: 'resume', title: 'Résumé' },
+      { id: 'readme', title: 'Read Me' },
+    ],
+    frontId: 'resume',
+    focusWindow: vi.fn(),
     ...over,
   }
   render(
@@ -100,6 +108,30 @@ test('View ▸ Outline dragging reflects the prop and toggles', async () => {
   expect(item).toHaveAttribute('aria-checked', 'true')
   await userEvent.click(item)
   expect(a.toggleOutlineDrag).toHaveBeenCalledOnce()
+})
+
+test('Windows menu lists open windows with the front one checked', async () => {
+  const a = mount()
+  await userEvent.click(screen.getByRole('button', { name: 'Windows' }))
+  expect(screen.getByRole('menuitemcheckbox', { name: 'Résumé' })).toHaveAttribute(
+    'aria-checked',
+    'true',
+  )
+  await userEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Read Me' }))
+  expect(a.focusWindow).toHaveBeenCalledWith('readme')
+})
+
+test('View ▸ Enter Full Screen calls toggleFullScreen', async () => {
+  const a = mount()
+  await userEvent.click(screen.getByRole('button', { name: 'View' }))
+  await userEvent.click(screen.getByRole('menuitem', { name: 'Enter Full Screen' }))
+  expect(a.toggleFullScreen).toHaveBeenCalledOnce()
+})
+
+test('View shows Exit Full Screen while full screen', async () => {
+  mount({ isFullScreen: true })
+  await userEvent.click(screen.getByRole('button', { name: 'View' }))
+  expect(screen.getByRole('menuitem', { name: 'Exit Full Screen' })).toBeInTheDocument()
 })
 
 test('the Sound toggle still flips', async () => {

@@ -16,9 +16,14 @@ export interface MenuBarActions {
   shutDown(): void
   outlineDrag: boolean
   toggleOutlineDrag(): void
+  toggleFullScreen(): void
+  isFullScreen: boolean
+  openWindowsList: { id: WindowId; title: string }[]
+  frontId: WindowId | null
+  focusWindow(id: WindowId): void
 }
 
-const NAMES = ['apple', 'file', 'edit', 'view', 'special'] as const
+const NAMES = ['apple', 'file', 'edit', 'view', 'special', 'windows'] as const
 type MenuName = (typeof NAMES)[number]
 
 export default function MenuBar(props: MenuBarActions) {
@@ -82,6 +87,13 @@ export default function MenuBar(props: MenuBarActions) {
   ]
   const view: MenuItemSpec[] = [
     { label: 'Outline dragging', checked: props.outlineDrag, onSelect: props.toggleOutlineDrag },
+    {
+      label: props.isFullScreen ? 'Exit Full Screen' : 'Enter Full Screen',
+      separatorBefore: true,
+      disabled: !props.hasFront && !props.isFullScreen,
+      onSelect:
+        props.hasFront || props.isFullScreen ? props.toggleFullScreen : undefined,
+    },
   ]
   const special: MenuItemSpec[] = [
     { label: 'Clean Up', onSelect: props.cleanUpIcons },
@@ -108,6 +120,19 @@ export default function MenuBar(props: MenuBarActions) {
         {sound.muted ? 'Sound: Off' : 'Sound: On'}
       </button>
       <span className={styles.clock}>{clock}</span>
+      {props.openWindowsList.length > 0 && (
+        <Menu
+          label="Windows"
+          title="Windows"
+          alignRight
+          items={props.openWindowsList.map((w) => ({
+            label: w.title,
+            checked: w.id === props.frontId,
+            onSelect: () => props.focusWindow(w.id),
+          }))}
+          {...menuProps('windows')}
+        />
+      )}
     </div>
   )
 }

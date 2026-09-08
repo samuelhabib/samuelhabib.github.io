@@ -25,6 +25,10 @@
   padding: 2px 0;
   z-index: 1;
 }
+.drop.dropRight {
+  left: auto;
+  right: 0;
+}
 .item {
   display: block;
   width: 100%;
