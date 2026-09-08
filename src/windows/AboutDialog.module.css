@@ -1,0 +1,37 @@
+.about {
+  padding: var(--space-4);
+  font-family: var(--font-chrome);
+  font-size: 12px;
+  text-align: center;
+}
+.title {
+  font-size: var(--fs-h2);
+  margin: 0 0 8px;
+}
+.line {
+  margin: 2px 0;
+}
+.memLabel {
+  margin: 16px 0 4px;
+  text-align: left;
+}
+.bar {
+  display: flex;
+  height: 16px;
+  border: 1px solid var(--black);
+}
+.seg {
+  flex: 1;
+  border-right: 1px solid var(--black);
+}
+.seg:last-child {
+  border-right: 0;
+}
+.legend {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-meta);
+}

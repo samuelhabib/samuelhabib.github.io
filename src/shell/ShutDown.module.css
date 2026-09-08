@@ -1,0 +1,30 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--black);
+}
+.crt {
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  transform-origin: 50% 50%;
+}
+.safe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-chrome);
+  font-size: 14px;
+}
+.hint {
+  font-size: var(--fs-meta);
+}
