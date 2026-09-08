@@ -20,7 +20,7 @@ const providerDirectory: ProjectDeck = {
       items: [
         { icon: 'split', text: 'Six public sources — CMS, the NPI registry, plan rosters — that disagree with each other.' },
         { icon: 'clock', text: 'They go stale and move. 40,000+ rows, no single source of truth.' },
-        { icon: 'eye', text: 'Features that needed “which providers are real and reachable” read whatever snapshot happened to be loaded.' },
+        { icon: 'eye', text: 'Features asked “which providers are real?” and got whatever snapshot was loaded.' },
       ],
     },
     {
@@ -28,13 +28,13 @@ const providerDirectory: ProjectDeck = {
       name: 'ReconcileLoop',
       title: 'The approach',
       caption:
-        'Normalize each roster into a shared shape, then a weekly job diffs the live sources against the directory and repairs the drift on its own — new records, retired NPIs, changed affiliations.',
+        'Normalize every roster to one shape; a weekly job diffs the live sources and repairs the drift itself.',
     },
     {
       layout: 'stat',
       value: '40,000+',
       label: 'rows across six rosters, kept current without a human in the loop',
-      foot: 'Weekly reconciliation · self-healing · nobody has to babysit it',
+      foot: 'Reconciliation runs weekly, unattended.',
     },
     {
       layout: 'tech',
