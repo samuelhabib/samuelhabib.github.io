@@ -21,7 +21,7 @@ export default function ZoomRect(props: {
         { x: props.from.x, y: props.from.y, width: 0, height: 0 },
         { x: props.to.x, y: props.to.y, width: props.to.w, height: props.to.h },
       ),
-      { duration: 180, easing: 'steps(6, end)' },
+      { duration: 180, easing: 'steps(6, end)', fill: 'forwards' },
     )
     anim.onfinish = props.onDone
     return () => anim.cancel()
@@ -32,12 +32,11 @@ export default function ZoomRect(props: {
       aria-hidden
       style={{
         position: 'fixed',
-        left: 0,
-        top: 0,
-        width: 1,
-        height: 1,
-        border: '1px solid #000',
-        transformOrigin: 'top left',
+        left: props.from.x,
+        top: props.from.y,
+        width: 0,
+        height: 0,
+        border: '1px solid var(--c-fg)',
         pointerEvents: 'none',
         zIndex: 9999,
       }}
