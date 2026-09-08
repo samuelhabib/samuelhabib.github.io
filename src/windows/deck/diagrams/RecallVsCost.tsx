@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import styles from './diagram.module.css'
 
 /**
@@ -7,20 +8,23 @@ import styles from './diagram.module.css'
  * the point. 1-bit — the hatch is a <pattern> of 1px lines, no grey.
  */
 export default function RecallVsCost() {
+  const uid = useId().replace(/:/g, '')
+  const titleId = `${uid}-title`
+  const hatch = `${uid}-hatch`
   return (
     <svg
       className={styles.svg}
       viewBox="0 0 420 300"
       role="img"
-      aria-labelledby="recallVsCost-title"
+      aria-labelledby={titleId}
       focusable="false"
     >
-      <title id="recallVsCost-title">
+      <title id={titleId}>
         Recall versus cost: missing a real crisis is the expensive error; a false alarm is cheap
       </title>
       <defs>
         <pattern
-          id="rc-hatch"
+          id={hatch}
           width="6"
           height="6"
           patternUnits="userSpaceOnUse"
@@ -53,7 +57,7 @@ export default function RecallVsCost() {
       {/* cells */}
       <g stroke="currentColor" strokeWidth="2" fill="var(--c-bg)">
         <rect x="80" y="36" width="140" height="110" />
-        <rect x="220" y="36" width="140" height="110" fill="url(#rc-hatch)" strokeWidth="4" />
+        <rect x="220" y="36" width="140" height="110" fill={`url(#${hatch})`} strokeWidth="4" />
         <rect x="80" y="146" width="140" height="110" />
         <rect x="220" y="146" width="140" height="110" />
       </g>

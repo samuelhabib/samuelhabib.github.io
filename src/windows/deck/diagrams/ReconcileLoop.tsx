@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import styles from './diagram.module.css'
 
 /**
@@ -7,20 +8,23 @@ import styles from './diagram.module.css'
  */
 export default function ReconcileLoop() {
   const rosterY = [14, 38, 62, 86, 110, 134]
+  const uid = useId().replace(/:/g, '')
+  const titleId = `${uid}-title`
+  const arrow = `${uid}-arrow`
   return (
     <svg
       className={styles.svg}
       viewBox="0 0 480 288"
       role="img"
-      aria-labelledby="reconcileLoop-title"
+      aria-labelledby={titleId}
       focusable="false"
     >
-      <title id="reconcileLoop-title">
+      <title id={titleId}>
         Six public rosters normalized into one directory that reconciles itself weekly
       </title>
       <defs>
         <marker
-          id="rl-arrow"
+          id={arrow}
           viewBox="0 0 10 10"
           refX="8"
           refY="5"
@@ -38,7 +42,7 @@ export default function ReconcileLoop() {
         stroke="currentColor"
         strokeWidth="2"
         strokeLinejoin="round"
-        markerEnd="url(#rl-arrow)"
+        markerEnd={`url(#${arrow})`}
       >
         {rosterY.map((y, i) => (
           <line key={i} x1="74" y1={y + 10} x2="168" y2="110" />

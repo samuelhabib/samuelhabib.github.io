@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import styles from './diagram.module.css'
 
 /**
@@ -8,20 +9,23 @@ import styles from './diagram.module.css'
 export default function ReferralPipeline() {
   const stages = ['Sender\nfacility', 'Send', 'Service\n+ queue', 'Track\nstate', 'Follow up']
   const states = ['Sent', 'Received', 'Actioned', 'Closed']
+  const uid = useId().replace(/:/g, '')
+  const titleId = `${uid}-title`
+  const arrow = `${uid}-arrow`
   return (
     <svg
       className={styles.svg}
       viewBox="0 0 520 240"
       role="img"
-      aria-labelledby="referralPipeline-title"
+      aria-labelledby={titleId}
       focusable="false"
     >
-      <title id="referralPipeline-title">
+      <title id={titleId}>
         Outbound referral flow: sender facility, send, service and queue, tracked state, follow up
       </title>
       <defs>
         <marker
-          id="rp-arrow"
+          id={arrow}
           viewBox="0 0 10 10"
           refX="8"
           refY="5"
@@ -38,7 +42,7 @@ export default function ReferralPipeline() {
           <rect key={i} x={8 + i * 102} y="40" width="86" height="52" rx="1" />
         ))}
       </g>
-      <g fill="none" stroke="currentColor" strokeWidth="2" markerEnd="url(#rp-arrow)">
+      <g fill="none" stroke="currentColor" strokeWidth="2" markerEnd={`url(#${arrow})`}>
         {stages.slice(1).map((_, i) => (
           <line key={i} x1={94 + i * 102} y1="66" x2={110 + i * 102} y2="66" />
         ))}
@@ -67,7 +71,7 @@ export default function ReferralPipeline() {
           <rect key={i} x={70 + i * 96} y="176" width="80" height="30" rx="1" />
         ))}
       </g>
-      <g fill="none" stroke="currentColor" strokeWidth="2" markerEnd="url(#rp-arrow)">
+      <g fill="none" stroke="currentColor" strokeWidth="2" markerEnd={`url(#${arrow})`}>
         {states.slice(1).map((_, i) => (
           <line key={i} x1={150 + i * 96} y1="191" x2={166 + i * 96} y2="191" />
         ))}
