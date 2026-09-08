@@ -43,6 +43,15 @@
   text-align: center;
   background: var(--white);
 }
-.flash {
-  filter: invert(1);
+/* Konami flash: a viewport overlay, not a filter on .desktop. A `filter` on
+   .desktop would make it the containing block for its position:fixed children
+   (MenuBar, ShutDown), shifting the menu bar down by --menubar-h for the
+   duration. backdrop-filter on a non-laying-out sibling inverts the same
+   pixels with zero layout effect. */
+.flashOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  pointer-events: none;
+  backdrop-filter: invert(1);
 }

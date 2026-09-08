@@ -195,7 +195,8 @@ export default function Desktop() {
   const openWindows = (Object.keys(content) as WindowId[]).filter((id) => state.windows[id].open)
 
   return (
-    <div className={`${styles.desktop} desktop ${flash ? styles.flash : ''}`}>
+    <div className={`${styles.desktop} desktop`}>
+      {flash && <div className={styles.flashOverlay} aria-hidden />}
       <MenuBar {...menuActions} />
       <DesktopIcons onOpen={open} />
       <Trash />
