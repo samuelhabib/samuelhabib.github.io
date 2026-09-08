@@ -201,6 +201,21 @@ export default function Desktop() {
 
   const [shutdown, setShutdown] = useState(false)
 
+  // ⌘I → Get Info on the front window (the menu shows the equivalent; wire the
+  // one that isn't already claimed by the browser).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'i') {
+        if (!front) return
+        e.preventDefault()
+        setInfoSubject(front)
+        dispatch({ type: 'open', id: 'getinfo' })
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [front])
+
   const [isFullScreen, setFullScreen] = useState(false)
   useEffect(() => {
     const h = () => setFullScreen(!!document.fullscreenElement)

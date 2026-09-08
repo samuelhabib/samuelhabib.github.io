@@ -23,6 +23,13 @@ test('File ▸ Get Info describes the front window', async ({ page }) => {
   await expect(info.getByText(/arrow keys/i)).toBeVisible()
 })
 
+test('Cmd-I opens Get Info for the front window', async ({ page }) => {
+  await ready(page)
+  await page.keyboard.press('Meta+i')
+  const info = page.getByRole('dialog', { name: 'Info' })
+  await expect(info.getByText('Read Me Info')).toBeVisible()
+})
+
 test('Get Info follows whichever window is front', async ({ page }) => {
   await ready(page)
   await page.getByRole('button', { name: 'File' }).click()

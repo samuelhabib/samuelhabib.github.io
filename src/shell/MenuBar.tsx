@@ -70,12 +70,14 @@ export default function MenuBar(props: MenuBarActions) {
     { label: 'Terminal', onSelect: () => props.openWindow('terminal') },
     {
       label: 'Get Info',
+      shortcut: '⌘I',
       separatorBefore: true,
       disabled: !props.hasFront,
       onSelect: props.hasFront ? props.getInfoFront : undefined,
     },
     {
       label: 'Close',
+      shortcut: '⌘W',
       separatorBefore: true,
       disabled: !props.hasFront,
       onSelect: props.hasFront ? props.closeFront : undefined,
@@ -86,14 +88,14 @@ export default function MenuBar(props: MenuBarActions) {
       onSelect: props.hasFront ? props.zoomFront : undefined,
     },
     { label: 'Save as PDF…', separatorBefore: true, onSelect: props.print },
-    { label: 'Print…', onSelect: props.print },
+    { label: 'Print…', shortcut: '⌘P', onSelect: props.print },
   ]
   const edit: MenuItemSpec[] = [
-    { label: 'Undo', disabled: true },
-    { label: 'Cut', separatorBefore: true, disabled: true },
-    { label: 'Copy', disabled: true },
-    { label: 'Paste', disabled: true },
-    { label: 'Select All', separatorBefore: true, onSelect: props.selectAllInFront },
+    { label: 'Undo', shortcut: '⌘Z', disabled: true },
+    { label: 'Cut', shortcut: '⌘X', separatorBefore: true, disabled: true },
+    { label: 'Copy', shortcut: '⌘C', disabled: true },
+    { label: 'Paste', shortcut: '⌘V', disabled: true },
+    { label: 'Select All', shortcut: '⌘A', separatorBefore: true, onSelect: props.selectAllInFront },
   ]
   const view: MenuItemSpec[] = [
     { label: 'Outline dragging', checked: props.outlineDrag, onSelect: props.toggleOutlineDrag },

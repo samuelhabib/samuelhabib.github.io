@@ -8,6 +8,8 @@ export interface MenuItemSpec {
   separatorBefore?: boolean
   /** when defined, the item is a menuitemcheckbox reflecting this value */
   checked?: boolean
+  /** display-only command equivalent, e.g. "⌘I" — shown flush-right */
+  shortcut?: string
 }
 
 interface MenuProps {
@@ -153,6 +155,11 @@ export default function Menu({
                   <span aria-hidden>{it.checked ? '✓ ' : '  '}</span>
                 )}
                 {it.label}
+                {it.shortcut && (
+                  <span className={styles.shortcut} aria-hidden>
+                    {it.shortcut}
+                  </span>
+                )}
               </button>
             </Fragment>
           ))}

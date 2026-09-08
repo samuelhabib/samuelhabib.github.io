@@ -71,6 +71,13 @@ test('a checked item is a menuitemcheckbox and toggles via onSelect', async () =
   expect(pick).toHaveBeenCalledOnce()
 })
 
+test('a command-key shortcut renders without polluting the item name', async () => {
+  render(<One items={[{ label: 'Get Info', shortcut: '⌘I', onSelect: () => {} }]} />)
+  await userEvent.click(screen.getByRole('button', { name: 'File' }))
+  const item = screen.getByRole('menuitem', { name: 'Get Info' })
+  expect(item).toHaveTextContent('⌘I')
+})
+
 test('ArrowRight on an open menu calls onCycle(1)', async () => {
   const cycle = vi.fn()
   function Harness() {

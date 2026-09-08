@@ -30,12 +30,17 @@
   right: 0;
 }
 .item {
-  display: block;
+  display: flex;
+  align-items: baseline;
   width: 100%;
   text-align: left;
   font-family: var(--chrome-font);
   font-size: 12px;
   padding: 2px 20px 2px 14px;
+}
+.shortcut {
+  margin-left: auto;
+  padding-left: 28px;
 }
 .item:hover:not([aria-disabled='true']),
 .item:focus-visible {
