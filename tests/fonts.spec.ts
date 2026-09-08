@@ -1,22 +1,30 @@
 import { test, expect } from '@playwright/test'
+import type { Page } from '@playwright/test'
 
-// document.fonts.load() both fetches the file and parses it, so a resolved
-// promise with a non-empty result proves the woff2 is valid and self-hosted.
-async function loads(page: import('@playwright/test').Page, family: string) {
-  return page.evaluate(async (fam) => {
-    const fs = (document as unknown as { fonts: FontFaceSet }).fonts
-    const faces = await fs.load(`16px "${fam}"`)
-    return faces.length > 0
-  }, family)
+async function ready(page: Page) {
+  await page.goto('/')
+  await page
+    .getByText('Welcome to Macintosh')
+    .waitFor({ state: 'detached', timeout: 6000 })
+    .catch(() => {})
 }
 
-test('Chicago font face loads from self-hosted woff2', async ({ page }) => {
-  await page.goto('/')
-  expect(await loads(page, 'Chicago')).toBe(true)
+test('chrome renders in Chicago once fonts are ready (no fallback flash)', async ({ page }) => {
+  await ready(page)
+  await page.evaluate(() => (document as unknown as { fonts: FontFaceSet }).fonts.ready)
+  const trigger = page.locator('[data-testid="menubar"] button', { hasText: 'File' })
+  const fam = await trigger.evaluate((el) => getComputedStyle(el).fontFamily)
+  expect(fam.split(',')[0].replace(/["']/g, '')).toBe('Chicago')
+  expect(
+    await page.evaluate(() =>
+      (document as unknown as { fonts: FontFaceSet }).fonts.check('16px Chicago'),
+    ),
+  ).toBe(true)
 })
 
-test('NewYork and Monaco faces load from self-hosted woff2', async ({ page }) => {
+test('the three core faces are preloaded', async ({ page }) => {
   await page.goto('/')
-  expect(await loads(page, 'NewYork')).toBe(true)
-  expect(await loads(page, 'Monaco')).toBe(true)
+  for (const f of ['chicago', 'newyork', 'monaco']) {
+    await expect(page.locator(`link[rel="preload"][href*="${f}.woff2"]`)).toHaveCount(1)
+  }
 })

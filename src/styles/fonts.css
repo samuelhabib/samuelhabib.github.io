@@ -10,7 +10,7 @@
   src: url('/fonts/chicago.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
@@ -34,5 +34,5 @@
   src: url('/fonts/monaco.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
