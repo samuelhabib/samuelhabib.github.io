@@ -5,7 +5,18 @@ import { projects, findProject } from '../content/projects'
 import type { WindowId } from '../shell/windows'
 import type { Command } from './types'
 
-const OPENABLE: WindowId[] = ['resume', 'readme', 'terminal', 'projects']
+// Every window a visitor can meaningfully open cold. Excludes `getinfo` (needs a
+// subject) and `writeup` (needs a slug) — those open via their own affordances.
+const OPENABLE: WindowId[] = [
+  'resume',
+  'readme',
+  'terminal',
+  'projects',
+  'skills',
+  'puzzle',
+  'about',
+  'appearance',
+]
 
 // Deterministic 7-hex pseudo-hash so `experience` reads like `git log --oneline`
 // without pulling in a real hash.
@@ -120,7 +131,7 @@ export const commands: Command[] = [
   {
     name: 'open',
     description: 'open a window',
-    usage: 'open <resume | readme | terminal | projects>',
+    usage: 'open <resume | skills | readme | projects | terminal | puzzle | about | appearance>',
     run: (args, ctx) => {
       const target = args[0] as WindowId
       if (!OPENABLE.includes(target)) {

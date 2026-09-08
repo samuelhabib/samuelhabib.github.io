@@ -50,6 +50,14 @@ test('open dispatches through the bridge', () => {
   expect(open).toHaveBeenCalledWith('resume')
 })
 
+test('open reaches the desk accessories and control panels, not just the docs', () => {
+  for (const id of ['puzzle', 'about', 'appearance', 'skills']) {
+    const open = vi.fn()
+    runCommand(`open ${id}`, makeCtx({ open }))
+    expect(open, `open ${id}`).toHaveBeenCalledWith(id)
+  }
+})
+
 test('open with an unknown target is an error, not a dispatch', () => {
   const open = vi.fn()
   const out = txt(runCommand('open trash', makeCtx({ open })))
