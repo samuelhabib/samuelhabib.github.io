@@ -14,6 +14,7 @@ import ZoomRect from './ZoomRectLayer'
 import MenuBar from './MenuBar'
 import DesktopIcons from './DesktopIcons'
 import { useWindowKeys } from './useWindowKeys'
+import { nextWindow } from './windowSwitch'
 import { useKonami } from './useKonami'
 import { useSound } from './useSound'
 import ResumeWindow from '../windows/ResumeWindow'
@@ -130,7 +131,14 @@ export default function Desktop() {
   }
 
   const front = frontWindow(state)
-  useWindowKeys(front, close)
+  const cycleWindow = useCallback(
+    (dir: 1 | -1) => {
+      const id = nextWindow(state, dir)
+      if (id) dispatch({ type: 'focus', id })
+    },
+    [state],
+  )
+  useWindowKeys(front, close, cycleWindow)
 
   const [shutdown, setShutdown] = useState(false)
 
