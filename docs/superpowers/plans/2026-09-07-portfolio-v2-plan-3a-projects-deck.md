@@ -97,7 +97,7 @@ Every task's requirements implicitly include these. Values copied from the spec 
   // exact slug match first, then first slug that includes the lowercased query
   ```
 
-- [ ] **Step 1: Write `content/projects/provider-directory.md`**
+- [x] **Step 1: Write `content/projects/provider-directory.md`**
 
 ```markdown
 ---
@@ -133,7 +133,7 @@ One ingestion pipeline over the public feeds, normalizing each roster into a sha
 40,000+ rows across six rosters kept current without a human in the loop. The reconciliation runs weekly and self-heals; the directory stopped being something anyone has to babysit.
 ```
 
-- [ ] **Step 2: Write `content/projects/referral-outbound-center.md`**
+- [x] **Step 2: Write `content/projects/referral-outbound-center.md`**
 
 ```markdown
 ---
@@ -166,7 +166,7 @@ Built it end to end: the sender-facing flow, the service behind it, and the trac
 Launched to a pilot of 25+ sender facilities at a 100% retention rate over the pilot window. Proof of concept to launch in roughly a month.
 ```
 
-- [ ] **Step 3: Write `content/projects/crisis-detection.md`**
+- [x] **Step 3: Write `content/projects/crisis-detection.md`**
 
 ```markdown
 ---
@@ -197,7 +197,7 @@ A text classifier built on a RoBERTa encoder, tuned for recall on the crisis cla
 ___ (Samuel to fill in: which dataset, the headline metric you'd stand behind, and one thing you'd change.)
 ```
 
-- [ ] **Step 4: Write `content/projects/fitness-bot.md`**
+- [x] **Step 4: Write `content/projects/fitness-bot.md`**
 
 ```markdown
 ---
@@ -218,7 +218,7 @@ This stack is a placeholder. The project is real, but I haven't written it up �
 ___ (Samuel to fill in: what it does, what's actually built, and why you started it.)
 ```
 
-- [ ] **Step 5: Write `public/projects/provider-directory-flow.svg`**
+- [x] **Step 5: Write `public/projects/provider-directory-flow.svg`**
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 220" role="img" aria-label="Six public rosters flow into a weekly reconciliation step and out to one directory">
@@ -251,7 +251,7 @@ ___ (Samuel to fill in: what it does, what's actually built, and why you started
 </svg>
 ```
 
-- [ ] **Step 6: Write the failing test**
+- [x] **Step 6: Write the failing test**
 
 ```ts
 // src/content/projects.test.ts
@@ -298,12 +298,12 @@ test('findProject matches an exact slug, then a partial', () => {
 })
 ```
 
-- [ ] **Step 7: Run it to verify it fails**
+- [x] **Step 7: Run it to verify it fails**
 
 Run: `npm test -- src/content/projects`
 Expected: FAIL — `Cannot find module './projects'`.
 
-- [ ] **Step 8: Implement `projectTypes.ts`**
+- [x] **Step 8: Implement `projectTypes.ts`**
 
 ```ts
 // src/content/projectTypes.ts
@@ -335,7 +335,7 @@ export interface ProjectsData {
 }
 ```
 
-- [ ] **Step 9: Implement `projects.ts`**
+- [x] **Step 9: Implement `projects.ts`**
 
 ```ts
 // src/content/projects.ts
@@ -414,17 +414,17 @@ export function findProject(data: ProjectsData, query: string): Project | undefi
 }
 ```
 
-- [ ] **Step 10: Run the test to verify it passes**
+- [x] **Step 10: Run the test to verify it passes**
 
 Run: `npm test -- src/content/projects`
 Expected: PASS (all six).
 
-- [ ] **Step 11: Typecheck**
+- [x] **Step 11: Typecheck**
 
 Run: `npx tsc --noEmit`
 Expected: no errors.
 
-- [ ] **Step 12: Commit**
+- [x] **Step 12: Commit**
 
 ```bash
 git add -A
@@ -449,7 +449,7 @@ git commit -m "feat: projects content pipeline (4 stacks parsed to typed Project
 - Consumes: `ProjectsData`, `Project` from `src/content/projectTypes.ts`; `projects` from `src/content/projects.ts`.
 - Produces: `ProjectsArticle({ data }: { data: ProjectsData })` — a pure `<article className="projects">` with a top `<h2>Projects</h2>`, then per project (work then side) a `<section>` with `<h2>` title, an optional placeholder `<p>`, a summary `<p>`, and one `<section><h3>…` per card (prose cards inject `card.html`; the tech/links card renders real `<strong>` + `<ul><li><a>`). No shell chrome, no interactivity. This is what SSG emits and `assert-prerendered.mjs` guards.
 
-- [ ] **Step 1: Write the failing content test**
+- [x] **Step 1: Write the failing content test**
 
 ```tsx
 // src/windows/projectsContent.test.tsx
@@ -482,12 +482,12 @@ test('flags the placeholder project', () => {
 })
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 Run: `npm test -- projectsContent`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement `projectsContent.tsx`**
+- [x] **Step 3: Implement `projectsContent.tsx`**
 
 ```tsx
 // src/windows/projectsContent.tsx
@@ -542,12 +542,12 @@ export function ProjectsArticle({ data }: { data: ProjectsData }) {
 }
 ```
 
-- [ ] **Step 4: Run the content test to verify it passes**
+- [x] **Step 4: Run the content test to verify it passes**
 
 Run: `npm test -- projectsContent`
 Expected: PASS.
 
-- [ ] **Step 5: Wire `ProjectsArticle` into the `#main` fallback**
+- [x] **Step 5: Wire `ProjectsArticle` into the `#main` fallback**
 
 In `src/App.tsx`: add the imports
 
@@ -576,7 +576,7 @@ Add a `#projects` block immediately after the `#readme` block:
         </div>
 ```
 
-- [ ] **Step 6: Extend `fallback.css`**
+- [x] **Step 6: Extend `fallback.css`**
 
 ```css
 .doc-fallback #resume,
@@ -594,7 +594,7 @@ Add a `#projects` block immediately after the `#readme` block:
 
 (Replace the existing two rules that name only `#resume`/`#readme`.)
 
-- [ ] **Step 7: Extend `print.css`**
+- [x] **Step 7: Extend `print.css`**
 
 Change the résumé-only rule to also drop `#projects`:
 
@@ -606,7 +606,7 @@ Change the résumé-only rule to also drop `#projects`:
   }
 ```
 
-- [ ] **Step 8: Add the prerender needle**
+- [x] **Step 8: Add the prerender needle**
 
 In `scripts/assert-prerendered.mjs`, add `'Provider Directory'` to the `needles` array:
 
@@ -622,7 +622,7 @@ const needles = [
 ]
 ```
 
-- [ ] **Step 9: Write the no-JS e2e test**
+- [x] **Step 9: Write the no-JS e2e test**
 
 ```ts
 // tests/projects.spec.ts
@@ -638,7 +638,7 @@ test('projects content is in the served HTML (no-JS view)', async ({ browser }) 
 })
 ```
 
-- [ ] **Step 10: Extend `tests/mobile.spec.ts`**
+- [x] **Step 10: Extend `tests/mobile.spec.ts`**
 
 Add:
 
@@ -650,7 +650,7 @@ test('mobile shows the projects section and no projects window', async ({ page }
 })
 ```
 
-- [ ] **Step 11: Verify — this is the real SSG check for the content pipeline**
+- [x] **Step 11: Verify — this is the real SSG check for the content pipeline**
 
 Run: `npm test && npm run build && npm run prerender:assert`
 Expected: all green; the `Provider Directory` needle passes, meaning `src/content/projects.ts`'s `?raw` imports and `marked` calls survived the `vite-react-ssg` Node prerender. If the build fails inside `projects.ts`, the fix is contained there (the parser and exports do not change).
@@ -658,7 +658,7 @@ Expected: all green; the `Provider Directory` needle passes, meaning `src/conten
 Run: `npm run test:e2e -- projects mobile`
 Expected: PASS.
 
-- [ ] **Step 12: Commit**
+- [x] **Step 12: Commit**
 
 ```bash
 git add -A
@@ -695,7 +695,7 @@ git commit -m "feat: pre-rendered ProjectsArticle in #main; no-JS / mobile / pri
   - Root `<div role="group" aria-label="Projects deck" tabIndex={0}>` with `onKeyDown`: `ArrowRight`/`PageDown` → next, `ArrowLeft`/`PageUp` → prev, `Home` → home. (Escape is left to `useWindowKeys`; arrows do not collide with the Terminal because this handler is local to the focused deck.)
   - `useEffect` keyed on `target?.nonce`: when `target` is set, find the stack slide whose `project.slug` exactly equals or includes `target.slug` and set `si` to it, `ci` to `0`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```tsx
 // src/windows/ProjectsDeck.test.tsx
@@ -774,12 +774,12 @@ test('Prev is disabled on the contents slide', () => {
 })
 ```
 
-- [ ] **Step 2: Run to verify they fail**
+- [x] **Step 2: Run to verify they fail**
 
 Run: `npm test -- ProjectsDeck`
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement `ProjectsDeck.tsx`**
+- [x] **Step 3: Implement `ProjectsDeck.tsx`**
 
 ```tsx
 // src/windows/ProjectsDeck.tsx
@@ -950,7 +950,7 @@ export default function ProjectsDeck({
 }
 ```
 
-- [ ] **Step 4: Implement `ProjectsDeck.module.css`**
+- [x] **Step 4: Implement `ProjectsDeck.module.css`**
 
 ```css
 /* src/windows/ProjectsDeck.module.css */
@@ -1038,17 +1038,17 @@ export default function ProjectsDeck({
 }
 ```
 
-- [ ] **Step 5: Run the deck tests to verify they pass**
+- [x] **Step 5: Run the deck tests to verify they pass**
 
 Run: `npm test -- ProjectsDeck`
 Expected: PASS (all eight). If `card 1 of 5` fails, re-check `provider-directory.md` has exactly Overview + Problem + Approach + Result + Tech & Links = 5 cards; adjust the assertion to the real count rather than the content.
 
-- [ ] **Step 6: Full unit run + typecheck**
+- [x] **Step 6: Full unit run + typecheck**
 
 Run: `npm test && npx tsc --noEmit`
 Expected: all green.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add -A
@@ -1076,7 +1076,7 @@ git commit -m "feat: ProjectsDeck — contents / dividers / stacks with Prev-Nex
   - `Desktop` mounts a real `projects` window, reads `?open=projects&stack=<slug>` once on mount, and wires `bridge.openStack` to open the window + set a `{ slug, nonce }` target.
   - Terminal `projects` command: no arg → a clickable list of stack slugs; `projects <slug>` → `ctx.openStack(<matched slug>)`; unknown → an error node. `open projects` now succeeds (`projects` added to `OPENABLE`).
 
-- [ ] **Step 1: Write / adjust the failing tests**
+- [x] **Step 1: Write / adjust the failing tests**
 
 `tests/projects.spec.ts` — append:
 
@@ -1167,12 +1167,12 @@ test('projects with an unknown stack is an error', () => {
 
 (`makeCtx` in that file must gain `openStack: () => {}` in its defaults — add it.)
 
-- [ ] **Step 2: Run to verify they fail**
+- [x] **Step 2: Run to verify they fail**
 
 Run: `npm test -- src/terminal/run` then `npm run test:e2e -- projects`
 Expected: unit — the new `projects` cases fail (`openStack` undefined / no command); e2e — deck cases fail (no `projects` window renders).
 
-- [ ] **Step 3: `DesktopBridge` gains `openStack`**
+- [x] **Step 3: `DesktopBridge` gains `openStack`**
 
 `src/terminal/types.ts`:
 
@@ -1185,7 +1185,7 @@ export interface DesktopBridge {
 }
 ```
 
-- [ ] **Step 4: `useTerminal` passes `openStack` through `ctx`**
+- [x] **Step 4: `useTerminal` passes `openStack` through `ctx`**
 
 In `src/terminal/useTerminal.tsx`, add to the `ctx` `useMemo`:
 
@@ -1196,7 +1196,7 @@ In `src/terminal/useTerminal.tsx`, add to the `ctx` `useMemo`:
       openStack: (slug) => bridgeRef.current.openStack(slug),
 ```
 
-- [ ] **Step 5: Add the `projects` command and make `open projects` valid**
+- [x] **Step 5: Add the `projects` command and make `open projects` valid**
 
 `src/terminal/commands.tsx` — add the import:
 
@@ -1238,7 +1238,7 @@ Insert a `projects` command (before `date`, after `open`):
   },
 ```
 
-- [ ] **Step 6: Implement `ProjectsWindow.tsx`**
+- [x] **Step 6: Implement `ProjectsWindow.tsx`**
 
 ```tsx
 // src/windows/ProjectsWindow.tsx
@@ -1254,7 +1254,7 @@ export default function ProjectsWindow({
 }
 ```
 
-- [ ] **Step 7: Wire `Desktop.tsx`**
+- [x] **Step 7: Wire `Desktop.tsx`**
 
 Add imports:
 
@@ -1308,26 +1308,26 @@ Add `projects` to the `content` map:
   }
 ```
 
-- [ ] **Step 8: Run unit tests + typecheck**
+- [x] **Step 8: Run unit tests + typecheck**
 
 Run: `npm test && npx tsc --noEmit`
 Expected: all green (49 + Task 1–3 additions + the new `projects` command cases). If TS complains that other `DesktopBridge` literals are missing `openStack`, the only other construction site is `Desktop.tsx`'s `bridge` memo (just edited) and the test mocks — fix each mock to include `openStack: vi.fn()` / `() => {}`.
 
-- [ ] **Step 9: Run the e2e suite**
+- [x] **Step 9: Run the e2e suite**
 
 Run: `npm run test:e2e`
 Expected: all green — `tests/projects.spec.ts` (no-JS + deck + deep link + axe), `tests/mobile.spec.ts`, `tests/terminal.spec.ts`, `tests/a11y.spec.ts` all pass. If the deep-link test is flaky because the boot overlay is still up when the effect runs, note that the effect runs on mount regardless of boot; the assertion just needs the `waitFor` on the boot text.
 
-- [ ] **Step 10: Build + prerender assert**
+- [x] **Step 10: Build + prerender assert**
 
 Run: `npm run build && npm run prerender:assert`
 Expected: green; `Provider Directory` needle passes.
 
-- [ ] **Step 11: Manual smoke**
+- [x] **Step 11: Manual smoke**
 
 Run: `npm run dev`, skip boot. Double-click **Projects**: contents slide, Next → "Work" divider → Provider Directory card 1 of 5, arrow keys page through, the SVG shows on the Approach card, "card N of M" tracks, Home returns, Prev is struck-through on the contents slide. Open **Terminal**, run `projects` (clickable slug list) then `projects crisis` (deck jumps to Mental Health Crisis Detection). Load `/?open=projects&stack=referral-outbound-center` in a fresh tab → deck opens on that stack.
 
-- [ ] **Step 12: Commit**
+- [x] **Step 12: Commit**
 
 ```bash
 git add -A
