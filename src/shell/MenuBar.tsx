@@ -30,6 +30,12 @@ export interface MenuBarActions {
 const NAMES = ['apple', 'file', 'edit', 'view', 'special', 'windows'] as const
 type MenuName = (typeof NAMES)[number]
 
+// ms until the top of the next minute (plus a hair), so the clock flips exactly
+// when the minute rolls over instead of lagging behind a fixed interval.
+export function msToNextMinute(now: Date): number {
+  return 60_000 - (now.getSeconds() * 1000 + now.getMilliseconds()) + 50
+}
+
 export default function MenuBar(props: MenuBarActions) {
   const [open, setOpen] = useState<MenuName | null>(null)
   const [clock, setClock] = useState('')
@@ -37,11 +43,14 @@ export default function MenuBar(props: MenuBarActions) {
   const barRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const tick = () =>
-      setClock(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }))
+    let timer: ReturnType<typeof setTimeout>
+    const tick = () => {
+      const now = new Date()
+      setClock(now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }))
+      timer = setTimeout(tick, msToNextMinute(now))
+    }
     tick()
-    const id = setInterval(tick, 10_000)
-    return () => clearInterval(id)
+    return () => clearTimeout(timer)
   }, [])
 
   useEffect(() => {
