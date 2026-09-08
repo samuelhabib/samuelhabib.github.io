@@ -32,6 +32,7 @@ export default function Window(p: WindowProps) {
   return (
     <section
       ref={ref}
+      id={`win-${state.id}`}
       role="dialog"
       aria-label={p.title}
       tabIndex={-1}

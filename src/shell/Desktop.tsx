@@ -18,6 +18,9 @@ import ResumeWindow from '../windows/ResumeWindow'
 import ReadMeWindow from '../windows/ReadMeWindow'
 import TerminalWindow from '../windows/TerminalWindow'
 import ProjectsWindow from '../windows/ProjectsWindow'
+import AboutDialog from '../windows/AboutDialog'
+import ShutDown from './ShutDown'
+import type { MenuBarActions } from './MenuBar'
 import type { DesktopBridge } from '../terminal/types'
 import styles from './Desktop.module.css'
 
@@ -102,16 +105,47 @@ export default function Desktop() {
     readme: <ReadMeWindow />,
     terminal: <TerminalWindow bridge={bridge} />,
     projects: <ProjectsWindow target={stackTarget} />,
+    about: <AboutDialog />,
   }
 
   const front = frontWindow(state)
   useWindowKeys(front, close)
 
+  const [shutdown, setShutdown] = useState(false)
+
+  const restart = useCallback(() => {
+    try {
+      sessionStorage.removeItem('booted')
+    } catch {
+      /* ignore */
+    }
+    window.location.reload()
+  }, [])
+
+  const menuActions: MenuBarActions = {
+    openWindow: (id) => dispatch({ type: 'open', id }),
+    closeFront: () => front && close(front),
+    hasFront: front !== null,
+    print: () => window.print(),
+    selectAllInFront: () => {
+      if (!front) return
+      const el = document.getElementById(`win-${front}`)
+      if (!el) return
+      const sel = window.getSelection()
+      sel?.removeAllRanges()
+      const range = document.createRange()
+      range.selectNodeContents(el)
+      sel?.addRange(range)
+    },
+    restart,
+    shutDown: () => setShutdown(true),
+  }
+
   const openWindows = (Object.keys(content) as WindowId[]).filter((id) => state.windows[id].open)
 
   return (
     <div className={`${styles.desktop} desktop`}>
-      <MenuBar />
+      <MenuBar {...menuActions} />
       <DesktopIcons onOpen={open} />
       {zoom && (
         <ZoomRect
@@ -140,6 +174,7 @@ export default function Desktop() {
           {content[id]}
         </Window>
       ))}
+      {shutdown && <ShutDown onStartup={restart} />}
     </div>
   )
 }
