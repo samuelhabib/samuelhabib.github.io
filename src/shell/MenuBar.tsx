@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSound } from './useSound'
 import Menu, { type MenuItemSpec } from './Menu'
+import { THEMES } from './useTheme'
 import type { WindowId } from './windows'
 import styles from './MenuBar.module.css'
 
@@ -21,6 +22,8 @@ export interface MenuBarActions {
   openWindowsList: { id: WindowId; title: string }[]
   frontId: WindowId | null
   focusWindow(id: WindowId): void
+  theme: string
+  setTheme(id: string): void
 }
 
 const NAMES = ['apple', 'file', 'edit', 'view', 'special', 'windows'] as const
@@ -94,6 +97,12 @@ export default function MenuBar(props: MenuBarActions) {
       onSelect:
         props.hasFront || props.isFullScreen ? props.toggleFullScreen : undefined,
     },
+    ...THEMES.map((t, i) => ({
+      label: t.label,
+      checked: props.theme === t.id,
+      separatorBefore: i === 0,
+      onSelect: () => props.setTheme(t.id),
+    })),
   ]
   const special: MenuItemSpec[] = [
     { label: 'Clean Up', onSelect: props.cleanUpIcons },
@@ -108,6 +117,11 @@ export default function MenuBar(props: MenuBarActions) {
         title="Apple menu"
         items={[
           { label: 'About This Portfolio', onSelect: () => props.openWindow('about') },
+          {
+            label: 'Appearance…',
+            separatorBefore: true,
+            onSelect: () => props.openWindow('appearance'),
+          },
           { label: 'Puzzle', separatorBefore: true, onSelect: () => props.openWindow('puzzle') },
         ]}
         {...menuProps('apple')}

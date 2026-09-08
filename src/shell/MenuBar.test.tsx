@@ -24,6 +24,8 @@ function mount(over: Partial<MenuBarActions> = {}) {
     ],
     frontId: 'resume',
     focusWindow: vi.fn(),
+    theme: 'system7',
+    setTheme: vi.fn(),
     ...over,
   }
   render(
@@ -132,6 +134,24 @@ test('View shows Exit Full Screen while full screen', async () => {
   mount({ isFullScreen: true })
   await userEvent.click(screen.getByRole('button', { name: 'View' }))
   expect(screen.getByRole('menuitem', { name: 'Exit Full Screen' })).toBeInTheDocument()
+})
+
+test('Apple ▸ Appearance… opens the appearance window', async () => {
+  const a = mount()
+  await userEvent.click(screen.getByRole('button', { name: 'Apple menu' }))
+  await userEvent.click(screen.getByRole('menuitem', { name: 'Appearance…' }))
+  expect(a.openWindow).toHaveBeenCalledWith('appearance')
+})
+
+test('View ▸ Theme quick list checks the active theme and switches on select', async () => {
+  const a = mount({ theme: 'system7' })
+  await userEvent.click(screen.getByRole('button', { name: 'View' }))
+  expect(screen.getByRole('menuitemcheckbox', { name: 'System 7' })).toHaveAttribute(
+    'aria-checked',
+    'true',
+  )
+  await userEvent.click(screen.getByRole('menuitemcheckbox', { name: 'Dark' }))
+  expect(a.setTheme).toHaveBeenCalledWith('dark')
 })
 
 test('the Sound toggle still flips', async () => {

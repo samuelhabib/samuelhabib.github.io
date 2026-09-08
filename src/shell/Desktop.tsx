@@ -282,6 +282,8 @@ export default function Desktop() {
     isFullScreen,
     frontId: front,
     focusWindow: (id) => dispatch({ type: 'focus', id }),
+    theme,
+    setTheme,
     openWindowsList: (Object.keys(TITLES) as WindowId[])
       .filter((id) => state.windows[id].open)
       .sort((a, b) => state.windows[b].z - state.windows[a].z)
