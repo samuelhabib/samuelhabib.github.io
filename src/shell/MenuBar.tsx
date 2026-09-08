@@ -81,7 +81,10 @@ export default function MenuBar(props: MenuBarActions) {
       <Menu
         label={<span className={styles.apple} aria-hidden />}
         title="Apple menu"
-        items={[{ label: 'About This Portfolio', onSelect: () => props.openWindow('about') }]}
+        items={[
+          { label: 'About This Portfolio', onSelect: () => props.openWindow('about') },
+          { label: 'Puzzle', separatorBefore: true, onSelect: () => props.openWindow('puzzle') },
+        ]}
         {...menuProps('apple')}
       />
       <Menu label="File" title="File" items={file} {...menuProps('file')} />

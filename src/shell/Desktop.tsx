@@ -19,6 +19,7 @@ import ReadMeWindow from '../windows/ReadMeWindow'
 import TerminalWindow from '../windows/TerminalWindow'
 import ProjectsWindow from '../windows/ProjectsWindow'
 import AboutDialog from '../windows/AboutDialog'
+import PuzzleWindow from '../windows/PuzzleWindow'
 import ShutDown from './ShutDown'
 import type { MenuBarActions } from './MenuBar'
 import type { DesktopBridge } from '../terminal/types'
@@ -106,6 +107,7 @@ export default function Desktop() {
     terminal: <TerminalWindow bridge={bridge} />,
     projects: <ProjectsWindow target={stackTarget} />,
     about: <AboutDialog />,
+    puzzle: <PuzzleWindow />,
   }
 
   const front = frontWindow(state)
