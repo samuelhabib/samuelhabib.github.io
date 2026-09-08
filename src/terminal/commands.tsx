@@ -33,6 +33,48 @@ function Doc({ children }: { children: string }): ReactNode {
   return <pre className="term-pre">{children}</pre>
 }
 
+// A `neofetch`-style card: a 1-bit compact Mac beside career facts as "specs",
+// all pulled from the parsed résumé so it can't drift.
+function neofetchText(): string {
+  const r = resume
+  const group = (name: string) => r.skills.find((g) => g.group === name)?.items ?? []
+  const cur = r.experience[0]
+  const firstStart = r.experience[r.experience.length - 1]?.start ?? ''
+  const startYear = Number(firstStart.match(/\d{4}/)?.[0]) || new Date().getFullYear()
+  const years = Math.max(1, new Date().getFullYear() - startYear)
+  const companies = new Set(r.experience.map((j) => j.company))
+
+  const specs = [
+    `${r.name.toLowerCase().replace(/\s+/g, '')}@portfolio`,
+    '------------------',
+    `Host: ${cur.company} — ${cur.role}`,
+    `Kernel: ${group('Languages').slice(0, 5).join(' · ')}`,
+    `Uptime: ~${years} yrs of healthcare data systems`,
+    `Shell: Claude Code + the Superpowers workflow`,
+    `Packages: ${r.experience.length} roles across ${companies.size} companies`,
+    `Memory: ${group('Backend and data').slice(0, 5).join(' · ')}`,
+    `Display: ${r.location}`,
+    `Theme: System 7 (1-bit)`,
+  ]
+  const logo = [
+    '  _______________ ',
+    ' /               \\',
+    '|  _____________  |',
+    '| |             | |',
+    '| |             | |',
+    '| |_____________| |',
+    '|      _____      |',
+    '|     |     |     |',
+    '|_____|_____|_____|',
+    ' |___|     |___|  ',
+  ]
+  const width = Math.max(...logo.map((l) => l.length)) + 3
+  const rows = Math.max(logo.length, specs.length)
+  return Array.from({ length: rows }, (_, i) =>
+    (logo[i] ?? '').padEnd(width) + (specs[i] ?? ''),
+  ).join('\n')
+}
+
 export const commands: Command[] = [
   {
     name: 'help',
@@ -94,6 +136,11 @@ export const commands: Command[] = [
       })
       return <Doc>{['$ git log --oneline --decorate', ...rows].join('\n')}</Doc>
     },
+  },
+  {
+    name: 'neofetch',
+    description: 'the career, as system specs',
+    run: () => <Doc>{neofetchText()}</Doc>,
   },
   {
     name: 'skills',

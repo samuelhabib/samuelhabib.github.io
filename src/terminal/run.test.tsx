@@ -95,6 +95,15 @@ test('hidden commands still run when typed explicitly', () => {
   expect(txt(runCommand('echo hi there', makeCtx()))).toBe('hi there')
 })
 
+test('neofetch renders career facts drawn from the résumé', () => {
+  const out = txt(runCommand('neofetch', makeCtx()))
+  expect(out).toMatch(/samuelhabib@portfolio/)
+  expect(out).toMatch(/Host: ExaCare/)
+  expect(out).toMatch(/Superpowers workflow/)
+  expect(out).toMatch(/System 7 \(1-bit\)/)
+  expect(completions('n')).toContain('neofetch')
+})
+
 test('sysbeep calls the bridge beep', () => {
   const beep = vi.fn()
   runCommand('sysbeep', makeCtx({ beep }))
