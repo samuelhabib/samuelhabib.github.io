@@ -5,6 +5,7 @@
 @import './dither.css';
 @import './fallback.css';
 @import './print.css';
+@import './cursors.css';
 
 .doc-fallback {
   max-width: 720px;

@@ -79,7 +79,7 @@ export default function Window(p: WindowProps) {
         </div>
         {!state.shaded && (
           <button
-            className={styles.grow}
+            className={`${styles.grow} grow-box`}
             aria-label={`Resize ${p.title}`}
             onPointerDown={grow.onPointerDown}
           />

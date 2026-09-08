@@ -1,0 +1,38 @@
+/* Plan 4-B: the pointer names the affordance.
+   These live in global.css's import chain (loaded last). Every rule here is
+   at least a class/attribute selector so it beats the element-level
+   `button { cursor: default }` in reset.css regardless of CSS-module
+   injection order. */
+
+button,
+a[href],
+summary,
+label,
+[role='menuitem'],
+[role='menuitemcheckbox'],
+[role='radio'] {
+  cursor: pointer;
+}
+
+[data-testid='titlebar'],
+.desktop-icon {
+  cursor: grab;
+}
+
+:root[data-dragging],
+:root[data-dragging] * {
+  cursor: grabbing !important;
+}
+
+.grow-box {
+  cursor: nwse-resize;
+}
+
+[data-terminal] {
+  cursor: text;
+}
+
+[aria-disabled='true'],
+:disabled {
+  cursor: default;
+}
