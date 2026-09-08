@@ -28,6 +28,14 @@
   background: var(--c-accent);
   color: var(--c-accent-fg);
 }
+/* Single-click selection — the System 7 invert. */
+.iconSelected .iconLabel {
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
+}
+.iconSelected .glyph {
+  background: var(--c-accent);
+}
 .glyph {
   width: 32px;
   height: 32px;

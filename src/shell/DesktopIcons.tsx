@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import styles from './Desktop.module.css'
 import type { WindowId } from './windows'
 import IconGlyph, { type GlyphKind } from './IconGlyph'
@@ -17,12 +18,16 @@ function Icon({
   id,
   label,
   pos,
+  selected,
+  onSelect,
   onOpen,
   onMoveIcon,
 }: {
   id: Extract<WindowId, GlyphKind>
   label: string
   pos: IconPos
+  selected: boolean
+  onSelect: () => void
   onOpen: (id: WindowId, from: { x: number; y: number }) => void
   onMoveIcon: MoveIcon
 }) {
@@ -34,9 +39,10 @@ function Icon({
   return (
     <button
       data-window={id}
-      className={`${styles.icon} desktop-icon`}
+      className={`${styles.icon} desktop-icon ${selected ? styles.iconSelected : ''}`}
       style={{ position: 'absolute', left: pos.x, top: pos.y }}
       onPointerDown={drag.onPointerDown}
+      onClick={onSelect}
       onDoubleClick={(e) => onOpen(id, { x: e.clientX, y: e.clientY })}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -63,6 +69,18 @@ export default function DesktopIcons({
   positions: Record<string, IconPos>
   onMoveIcon: MoveIcon
 }) {
+  const [selected, setSelected] = useState<string | null>(null)
+
+  // Single click selects (System 7 invert); clicking anywhere off an icon
+  // clears the selection.
+  useEffect(() => {
+    const clear = (e: PointerEvent) => {
+      if (!(e.target as HTMLElement).closest?.('.desktop-icon')) setSelected(null)
+    }
+    window.addEventListener('pointerdown', clear)
+    return () => window.removeEventListener('pointerdown', clear)
+  }, [])
+
   return (
     <div className={styles.icons}>
       {ICONS.map((ic) => (
@@ -71,6 +89,8 @@ export default function DesktopIcons({
           id={ic.id}
           label={ic.label}
           pos={positions[ic.id]}
+          selected={selected === ic.id}
+          onSelect={() => setSelected(ic.id)}
           onOpen={onOpen}
           onMoveIcon={onMoveIcon}
         />
