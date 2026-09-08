@@ -13,6 +13,7 @@ import ZoomRect from './ZoomRectLayer'
 import MenuBar from './MenuBar'
 import DesktopIcons from './DesktopIcons'
 import { useWindowKeys } from './useWindowKeys'
+import { useKonami } from './useKonami'
 import { useSound } from './useSound'
 import ResumeWindow from '../windows/ResumeWindow'
 import ReadMeWindow from '../windows/ReadMeWindow'
@@ -116,6 +117,13 @@ export default function Desktop() {
 
   const [shutdown, setShutdown] = useState(false)
 
+  const [flash, setFlash] = useState(false)
+  useKonami(() => {
+    sound.beep()
+    setFlash(true)
+    setTimeout(() => setFlash(false), 1200)
+  })
+
   const restart = useCallback(() => {
     try {
       sessionStorage.removeItem('booted')
@@ -159,7 +167,7 @@ export default function Desktop() {
   const openWindows = (Object.keys(content) as WindowId[]).filter((id) => state.windows[id].open)
 
   return (
-    <div className={`${styles.desktop} desktop`}>
+    <div className={`${styles.desktop} desktop ${flash ? styles.flash : ''}`}>
       <MenuBar {...menuActions} />
       <DesktopIcons onOpen={open} />
       <Trash />

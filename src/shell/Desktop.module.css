@@ -43,3 +43,6 @@
   text-align: center;
   background: var(--white);
 }
+.flash {
+  filter: invert(1);
+}
