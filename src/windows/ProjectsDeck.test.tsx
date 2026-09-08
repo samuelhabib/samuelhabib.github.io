@@ -78,3 +78,10 @@ test('Prev is disabled on the contents slide', () => {
   render(<ProjectsDeck data={projects} target={null} />)
   expect(screen.getByRole('button', { name: '◀ Prev' })).toBeDisabled()
 })
+
+test('Next is disabled on the last card of the last stack', async () => {
+  render(<ProjectsDeck data={projects} target={{ slug: 'fitness-bot', nonce: 1 }} />)
+  // fitness-bot is the last slide and has a single card
+  expect(screen.getByRole('heading', { level: 2, name: 'AI Fitness & Calorie Bot' })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Next ▶' })).toBeDisabled()
+})

@@ -15,6 +15,13 @@ test.describe('mobile viewport', () => {
     await expect(page.getByRole('heading', { level: 2, name: 'Provider Directory' })).toBeVisible()
     await expect(page.getByRole('dialog', { name: /projects/i })).toHaveCount(0)
   })
+
+  test('deep link scrolls the stacked document to the requested stack', async ({ page }) => {
+    await page.goto('/?open=projects&stack=crisis-detection')
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'Mental Health Crisis Detection' }),
+    ).toBeInViewport()
+  })
 })
 
 test('desktop shows the windowed shell', async ({ page }) => {

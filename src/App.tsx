@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { resume } from './content/resume'
-import { projects } from './content/projects'
+import { projects, findProject } from './content/projects'
 import { ResumeArticle } from './windows/resumeContent'
 import { ReadMeArticle } from './windows/readmeContent'
 import { ProjectsArticle } from './windows/projectsContent'
@@ -41,6 +41,17 @@ function AppInner() {
   }, [sound])
 
   const shell = hydrated && isDesktop
+
+  // On mobile / no-desktop, the Desktop deep-link handler never mounts. Honour
+  // ?open=projects[&stack=…] by scrolling the stacked document to that section.
+  useEffect(() => {
+    if (shell) return
+    const p = new URLSearchParams(window.location.search)
+    if (p.get('open') !== 'projects') return
+    const stack = p.get('stack')
+    const match = stack ? findProject(projects, stack) : undefined
+    document.getElementById(match ? `project-${match.slug}` : 'projects')?.scrollIntoView()
+  }, [shell])
 
   return (
     <>
