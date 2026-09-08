@@ -56,6 +56,38 @@ test.describe('deck', () => {
     ).toBeVisible()
   })
 
+  test('under reduced motion the deck advances with an instant swap (no dissolve overlay)', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto('/')
+    await page
+      .getByText('Welcome to Macintosh')
+      .waitFor({ state: 'detached', timeout: 6000 })
+      .catch(() => {})
+    await page.getByRole('button', { name: 'Projects' }).dblclick()
+    const deck = page.getByRole('dialog', { name: /projects/i })
+    await deck.getByRole('button', { name: 'Next ▶' }).click()
+    await expect(deck.getByRole('heading', { level: 2, name: 'Work' })).toBeVisible()
+    expect(await deck.locator('[data-transitioning]').count()).toBe(0)
+  })
+
+  test('with motion, the dissolve overlay appears then clears (no stranded slide)', async ({
+    page,
+  }) => {
+    await page.goto('/')
+    await page
+      .getByText('Welcome to Macintosh')
+      .waitFor({ state: 'detached', timeout: 6000 })
+      .catch(() => {})
+    await page.getByRole('button', { name: 'Projects' }).dblclick()
+    const deck = page.getByRole('dialog', { name: /projects/i })
+    await deck.getByRole('button', { name: 'Next ▶' }).click()
+    await expect(deck.locator('[data-transitioning]')).toHaveCount(1)
+    await expect(deck.locator('[data-transitioning]')).toHaveCount(0, { timeout: 2000 })
+    await expect(deck.getByRole('heading', { level: 2, name: 'Work' })).toBeVisible()
+  })
+
   test('no serious axe violations with the deck open', async ({ page }) => {
     const AxeBuilder = (await import('@axe-core/playwright')).default
     await page.goto('/')
