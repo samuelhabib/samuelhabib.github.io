@@ -1,0 +1,96 @@
+.term {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.output {
+  flex: 1;
+  overflow: auto;
+  padding: var(--space-2);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.output :global(.term-pre) {
+  margin: 0;
+  font: inherit;
+  white-space: pre-wrap;
+}
+.output :global(.term-err) {
+  background: var(--black);
+  color: var(--white);
+  padding: 0 2px;
+}
+.output :global(.term-dim) {
+  opacity: 0.75;
+}
+.output :global(.term-prompt) {
+  font-weight: bold;
+}
+.output :global(.term-ls) {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.output :global(.term-file) {
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.output :global(a) {
+  text-decoration: underline;
+}
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: var(--space-2);
+  border-top: 1px solid var(--black);
+}
+.prompt {
+  font-weight: bold;
+  white-space: nowrap;
+}
+.field {
+  position: relative;
+  flex: 1;
+}
+.ghost {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--black);
+  opacity: 0.4;
+  pointer-events: none;
+}
+.input {
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  outline: none;
+  padding: 0;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: var(--space-1) var(--space-2) var(--space-2);
+  border-top: 1px solid var(--black);
+}
+.chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border: 1px solid var(--black);
+  padding: 1px 6px;
+}
+.chip:active,
+.chip:focus-visible {
+  background: var(--black);
+  color: var(--white);
+}

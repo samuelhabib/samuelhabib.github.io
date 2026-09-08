@@ -22,7 +22,9 @@ export default function Window(p: WindowProps) {
   const ref = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    if (p.autoFocus) ref.current?.focus()
+    // Focus the window on a user-initiated open, but never yank focus away from
+    // content that already claimed it (e.g. the Terminal's input).
+    if (p.autoFocus && !ref.current?.contains(document.activeElement)) ref.current?.focus()
     // only when this window is first shown as a user-initiated open
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

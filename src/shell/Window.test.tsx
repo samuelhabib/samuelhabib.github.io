@@ -60,3 +60,24 @@ test('shaded window hides its body', () => {
   )
   expect(screen.queryByText('body text')).not.toBeVisible()
 })
+
+test('does not steal focus from content that focused itself', () => {
+  function SelfFocuser() {
+    return <input aria-label="inner" autoFocus />
+  }
+  render(
+    <Window
+      state={{ ...base }}
+      title="Terminal"
+      autoFocus
+      onFocus={() => {}}
+      onClose={() => {}}
+      onMove={() => {}}
+      onResize={() => {}}
+      onToggleShade={() => {}}
+    >
+      <SelfFocuser />
+    </Window>,
+  )
+  expect(screen.getByLabelText('inner')).toHaveFocus()
+})
