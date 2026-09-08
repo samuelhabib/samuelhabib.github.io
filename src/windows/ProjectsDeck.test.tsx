@@ -26,16 +26,16 @@ test('Next walks contents → "Work" divider → the first work deck at slide 1 
   expect(screen.getByText(/slide 2 of 5/i)).toBeInTheDocument()
 })
 
-test('Next steps through a stack card by card, then to the next slide', async () => {
+test('Next walks through the Provider deck, then into the Referral deck', async () => {
   render(<ProjectsDeck data={projects} target={null} />)
-  await userEvent.click(screen.getByRole('button', { name: 'Next ▶' }))
-  await userEvent.click(screen.getByRole('button', { name: 'Next ▶' }))
-  // Provider Directory has 5 cards (index 0..4); from card 1 that is 5 more Nexts
-  for (let i = 0; i < 5; i++) await userEvent.click(screen.getByRole('button', { name: 'Next ▶' }))
+  await userEvent.click(screen.getByRole('button', { name: 'Next ▶' })) // Work divider
+  await userEvent.click(screen.getByRole('button', { name: 'Next ▶' })) // Provider slide 1
+  for (let i = 0; i < 4; i++) await userEvent.click(screen.getByRole('button', { name: 'Next ▶' })) // slides 2..5
+  await userEvent.click(screen.getByRole('button', { name: 'Next ▶' })) // -> Referral slide 1
   expect(
     screen.getByRole('heading', { level: 2, name: 'Referral Outbound Center' }),
   ).toBeInTheDocument()
-  expect(screen.getByText(/card 1 of/i)).toBeInTheDocument()
+  expect(screen.getByText(/slide 1 of/i)).toBeInTheDocument()
 })
 
 test('Home returns to the contents slide', async () => {
