@@ -2,19 +2,19 @@
   position: fixed;
   inset: 0;
   z-index: 5000;
-  background: var(--white);
-  color: var(--black);
+  background: var(--c-chrome-bg);
+  color: var(--c-chrome-fg);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 14px;
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
 }
 .mac {
   width: 48px;
   height: 44px;
-  border: 2px solid var(--black);
+  border: 2px solid var(--c-chrome-fg);
   border-radius: 4px;
 }
 .welcome {
@@ -24,13 +24,13 @@
 .bar {
   width: 220px;
   height: 12px;
-  border: 1px solid var(--black);
+  border: 1px solid var(--c-chrome-fg);
   overflow: hidden;
 }
 .bar span {
   display: block;
   height: 100%;
-  background-image: repeating-linear-gradient(45deg, var(--black) 0 4px, var(--white) 4px 8px);
+  background-image: repeating-linear-gradient(45deg, var(--c-chrome-fg) 0 4px, var(--c-chrome-bg) 4px 8px);
   animation: fill 1.4s steps(20) forwards;
 }
 @keyframes fill {

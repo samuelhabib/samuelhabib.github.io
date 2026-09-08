@@ -4,8 +4,8 @@
   overflow: hidden;
   /* Authentic System 6 desktop: a 50% stipple of pure black / white pixels.
      Hard conic stops only — no soft gradient that antialiases into grey. */
-  background-color: var(--white);
-  background-image: repeating-conic-gradient(var(--black) 0 25%, var(--white) 0 50%);
+  background-color: var(--c-bg);
+  background-image: repeating-conic-gradient(var(--dither-ink) 0 25%, var(--c-bg) 0 50%);
   background-size: 2px 2px;
 }
 .icons {
@@ -24,8 +24,8 @@
   gap: 4px;
 }
 .icon:focus-visible .iconLabel {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
 }
 .glyph {
   width: 32px;
@@ -37,11 +37,11 @@
   display: block;
 }
 .iconLabel {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: 11px;
   padding: 0 3px;
   text-align: center;
-  background: var(--white);
+  background: var(--c-bg);
 }
 /* Konami flash: a viewport overlay, not a filter on .desktop. A `filter` on
    .desktop would make it the containing block for its position:fixed children

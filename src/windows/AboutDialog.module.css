@@ -1,6 +1,6 @@
 .about {
   padding: var(--space-4);
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: 12px;
   text-align: center;
 }
@@ -18,11 +18,11 @@
 .bar {
   display: flex;
   height: 16px;
-  border: 1px solid var(--black);
+  border: 1px solid var(--c-fg);
 }
 .seg {
   flex: 1;
-  border-right: 1px solid var(--black);
+  border-right: 1px solid var(--c-fg);
 }
 .seg:last-child {
   border-right: 0;

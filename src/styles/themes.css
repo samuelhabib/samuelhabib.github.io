@@ -20,7 +20,7 @@
 .theme-system6 {
   --chrome-font: 'Geneva', system-ui, sans-serif;
   --window-border-w: 2px;
-  --titlebar-lines: 0;
+  --titlebar-lines: transparent;
 }
 
 /* CRT: tint comes from a fixed overlay Desktop renders (see 4-E); these

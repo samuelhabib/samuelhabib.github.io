@@ -2,12 +2,12 @@
   position: fixed;
   inset: 0;
   z-index: 9000;
-  background: var(--black);
+  background: var(--c-fg);
 }
 .crt {
   position: absolute;
   inset: 0;
-  background: var(--white);
+  background: var(--c-bg);
   transform-origin: 50% 50%;
 }
 .safe {
@@ -20,9 +20,9 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: var(--black);
-  color: var(--white);
-  font-family: var(--font-chrome);
+  background: var(--c-fg);
+  color: var(--c-bg);
+  font-family: var(--chrome-font);
   font-size: 14px;
 }
 .hint {

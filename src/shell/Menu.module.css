@@ -2,7 +2,7 @@
   position: relative;
 }
 .trigger {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: 12px;
   padding: 0 6px;
   height: var(--menubar-h);
@@ -11,17 +11,17 @@
 }
 .trigger[aria-expanded='true'],
 .trigger:hover {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
 }
 .drop {
   position: absolute;
   left: 0;
   top: 100%;
   min-width: 180px;
-  background: var(--white);
-  border: 1px solid var(--black);
-  box-shadow: 3px 3px 0 var(--black);
+  background: var(--c-chrome-bg);
+  border: 1px solid var(--c-chrome-fg);
+  box-shadow: 3px 3px 0 var(--c-chrome-fg);
   padding: 2px 0;
   z-index: 1;
 }
@@ -29,14 +29,14 @@
   display: block;
   width: 100%;
   text-align: left;
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: 12px;
   padding: 2px 20px 2px 14px;
 }
 .item:hover:not([aria-disabled='true']),
 .item:focus-visible {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
   outline: none;
 }
 .item[aria-disabled='true'] {
@@ -44,6 +44,6 @@
   cursor: default;
 }
 .sep {
-  border-top: 1px solid var(--black);
+  border-top: 1px solid var(--c-chrome-fg);
   margin: 3px 0;
 }

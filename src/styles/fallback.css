@@ -1,8 +1,8 @@
 .doc-nav {
   position: sticky;
   top: 0;
-  background: var(--white);
-  border-bottom: 1px solid var(--black);
+  background: var(--c-bg);
+  border-bottom: 1px solid var(--c-fg);
   padding: 8px 0;
   margin-bottom: 24px;
   font-family: var(--font-chrome);
@@ -16,7 +16,7 @@
 .doc-fallback #readme,
 .doc-fallback #projects {
   margin-top: 48px;
-  border-top: 1px solid var(--black);
+  border-top: 1px solid var(--c-fg);
   padding-top: 24px;
 }
 @media (max-width: 767px) {

@@ -13,27 +13,27 @@
   padding: var(--space-4);
 }
 .stage :global(h3) {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: var(--fs-h2);
   margin: 16px 0 4px;
-  border-bottom: 1px solid var(--black);
+  border-bottom: 1px solid var(--c-fg);
 }
 .stage :global(img) {
-  border: 1px solid var(--black);
+  border: 1px solid var(--c-fg);
   margin: 12px 0;
 }
 .summary {
   font-style: italic;
 }
 .flag {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: var(--fs-ui);
-  border: 1px solid var(--black);
+  border: 1px solid var(--c-fg);
   display: inline-block;
   padding: 1px 6px;
 }
 .divider {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: 40px;
   text-align: center;
   margin-top: 22%;
@@ -43,9 +43,9 @@
   padding: 0;
 }
 .contents button {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: var(--fs-ui);
-  border: 1px solid var(--black);
+  border: 1px solid var(--c-fg);
   padding: 4px 10px;
   margin: 3px 0;
   display: block;
@@ -54,26 +54,26 @@
 }
 .contents button:hover,
 .contents button:focus-visible {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
 }
 .nav {
   display: flex;
   align-items: center;
   gap: 8px;
-  border-top: 1px solid var(--black);
+  border-top: 1px solid var(--c-fg);
   padding: var(--space-2);
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: 12px;
 }
 .nav button {
-  font-family: var(--font-chrome);
-  border: 1px solid var(--black);
+  font-family: var(--chrome-font);
+  border: 1px solid var(--c-fg);
   padding: 2px 8px;
 }
 .nav button:disabled {
-  color: var(--black);
-  border-color: var(--black);
+  color: var(--c-fg);
+  border-color: var(--c-fg);
   text-decoration: line-through;
 }
 .count {

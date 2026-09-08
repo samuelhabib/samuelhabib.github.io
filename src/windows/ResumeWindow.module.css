@@ -5,15 +5,15 @@
   line-height: 1.55;
 }
 .scroll :global(h1) {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: var(--fs-h1);
   margin: 0 0 4px;
 }
 .scroll :global(h2) {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: var(--fs-h2);
   margin: 20px 0 4px;
-  border-bottom: 1px solid var(--black);
+  border-bottom: 1px solid var(--c-fg);
 }
 .scroll :global(.resume-links) {
   list-style: none;
@@ -28,12 +28,12 @@
   padding-left: 20px;
 }
 .pdfBtn {
-  font-family: var(--font-chrome);
-  border: 1px solid var(--black);
+  font-family: var(--chrome-font);
+  border: 1px solid var(--c-fg);
   padding: 3px 10px;
   margin-bottom: 12px;
 }
 .pdfBtn:active {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
 }

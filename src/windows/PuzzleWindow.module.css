@@ -3,7 +3,7 @@
   flex-direction: column;
   height: 100%;
   padding: var(--space-3);
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: 12px;
 }
 .grid {
@@ -12,26 +12,26 @@
   gap: 2px;
   flex: 1;
   aspect-ratio: 1;
-  border: 1px solid var(--black);
-  background: var(--black);
+  border: 1px solid var(--c-fg);
+  background: var(--c-fg);
 }
 .tile,
 .gap {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--white);
-  font-family: var(--font-chrome);
+  background: var(--c-bg);
+  font-family: var(--chrome-font);
   font-size: 18px;
 }
 .tile:hover,
 .tile:focus-visible {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
   outline: none;
 }
 .gap {
-  background: var(--white);
+  background: var(--c-bg);
 }
 .foot {
   display: flex;
@@ -40,14 +40,14 @@
   margin-top: var(--space-3);
 }
 .shuffle {
-  font-family: var(--font-chrome);
-  border: 1px solid var(--black);
+  font-family: var(--chrome-font);
+  border: 1px solid var(--c-fg);
   padding: 2px 10px;
 }
 .shuffle:active {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
 }
 .solved {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
 }

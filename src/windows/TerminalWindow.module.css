@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: var(--white);
-  color: var(--black);
+  background: var(--c-bg);
+  color: var(--c-fg);
   font-family: var(--font-mono);
   font-size: 13px;
   line-height: 1.5;
@@ -21,8 +21,8 @@
   white-space: pre-wrap;
 }
 .output :global(.term-err) {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
   padding: 0 2px;
 }
 .output :global(.term-dim) {
@@ -49,7 +49,7 @@
   align-items: baseline;
   gap: 6px;
   padding: var(--space-2);
-  border-top: 1px solid var(--black);
+  border-top: 1px solid var(--c-fg);
 }
 .prompt {
   font-weight: bold;
@@ -62,7 +62,7 @@
 .ghost {
   position: absolute;
   top: 0;
-  color: var(--black);
+  color: var(--c-fg);
   text-decoration: underline;
   pointer-events: none;
 }
@@ -80,16 +80,16 @@
   flex-wrap: wrap;
   gap: 4px;
   padding: var(--space-1) var(--space-2) var(--space-2);
-  border-top: 1px solid var(--black);
+  border-top: 1px solid var(--c-fg);
 }
 .chip {
   font-family: var(--font-mono);
   font-size: 11px;
-  border: 1px solid var(--black);
+  border: 1px solid var(--c-fg);
   padding: 1px 6px;
 }
 .chip:active,
 .chip:focus-visible {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
 }

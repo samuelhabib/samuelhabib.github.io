@@ -6,28 +6,28 @@
   align-items: center;
   gap: 4px;
   padding: 0 8px;
-  background: var(--white);
-  border-bottom: 1px solid var(--black);
-  font-family: var(--font-chrome);
+  background: var(--c-chrome-bg);
+  border-bottom: 1px solid var(--c-chrome-fg);
+  font-family: var(--chrome-font);
   font-size: 12px;
   z-index: 1000;
 }
 .apple {
   width: 14px;
   height: 14px;
-  background: var(--black);
+  background: var(--c-chrome-fg);
   -webkit-mask: radial-gradient(circle at 50% 55%, #000 42%, transparent 43%);
   mask: radial-gradient(circle at 50% 55%, #000 42%, transparent 43%);
 }
 .toggle {
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: 12px;
   padding: 0 6px;
   margin-left: 12px;
 }
 .toggle:active {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
 }
 .clock {
   margin-left: auto;

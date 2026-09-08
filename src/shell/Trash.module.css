@@ -7,7 +7,7 @@
   align-items: center;
   gap: 3px;
   width: 64px;
-  font-family: var(--font-chrome);
+  font-family: var(--chrome-font);
   font-size: 11px;
 }
 .glyph {
@@ -15,7 +15,7 @@
   height: 28px;
 }
 .trash:focus-visible .caption {
-  background: var(--black);
-  color: var(--white);
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
   outline: none;
 }

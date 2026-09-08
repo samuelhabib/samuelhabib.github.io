@@ -4,18 +4,18 @@
  * These stand in for the classic Mac 25% / 50% / 75% desktop patterns.
  */
 .dither-50 {
-  background-color: var(--white);
-  background-image: repeating-conic-gradient(var(--black) 0 25%, var(--white) 0 50%);
+  background-color: var(--c-bg);
+  background-image: repeating-conic-gradient(var(--dither-ink) 0 25%, var(--c-bg) 0 50%);
   background-size: 2px 2px;
 }
 .dither-25 {
-  background-color: var(--white);
-  background-image: conic-gradient(var(--black) 0 25%, var(--white) 0);
+  background-color: var(--c-bg);
+  background-image: conic-gradient(var(--dither-ink) 0 25%, var(--c-bg) 0);
   background-size: 2px 2px;
 }
 .dither-75 {
-  background-color: var(--black);
-  background-image: conic-gradient(var(--white) 0 25%, var(--black) 0);
+  background-color: var(--dither-ink);
+  background-image: conic-gradient(var(--c-bg) 0 25%, var(--dither-ink) 0);
   background-size: 2px 2px;
 }
-.invert { background: var(--black) !important; color: var(--white) !important; }
+.invert { background: var(--c-fg) !important; color: var(--c-bg) !important; }
