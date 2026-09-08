@@ -9,6 +9,12 @@ test.describe('mobile viewport', () => {
     await expect(page.getByRole('heading', { level: 1, name: /samuel habib/i })).toBeVisible()
     await expect(page.getByRole('dialog', { name: /résumé/i })).toHaveCount(0)
   })
+
+  test('mobile shows the projects section and no projects window', async ({ page }) => {
+    await page.goto('/')
+    await expect(page.getByRole('heading', { level: 2, name: 'Provider Directory' })).toBeVisible()
+    await expect(page.getByRole('dialog', { name: /projects/i })).toHaveCount(0)
+  })
 })
 
 test('desktop shows the windowed shell', async ({ page }) => {

@@ -28,7 +28,8 @@
     page-break-inside: avoid;
   }
   /* the PDF is the résumé only */
-  #readme {
+  #readme,
+  #projects {
     display: none;
   }
 }
