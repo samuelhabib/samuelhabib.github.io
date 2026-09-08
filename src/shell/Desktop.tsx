@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from 'react'
 import { windowsReducer, initialDesktop, frontWindow, type WindowId } from './windows'
+import { defaultGrid, clampIcon, isValidLayout, type IconPos } from './iconLayout'
 import Window from './Window'
 import ZoomRect from './ZoomRectLayer'
 import MenuBar from './MenuBar'
@@ -38,6 +39,16 @@ const TITLES: Record<WindowId, string> = {
 
 function focusIcon(id: WindowId) {
   document.querySelector<HTMLElement>(`[data-window="${id}"]`)?.focus()
+}
+
+function menubarH() {
+  return (
+    parseInt(getComputedStyle(document.documentElement).getPropertyValue('--menubar-h'), 10) || 22
+  )
+}
+
+function iconViewport() {
+  return { w: window.innerWidth, h: window.innerHeight - menubarH() }
 }
 
 export default function Desktop() {
@@ -152,8 +163,59 @@ export default function Desktop() {
     })
   }, [])
 
+  // Desktop icon positions. Session-only: dragged icons stay put while the tab
+  // lives, but a brand-new visit (or Special ▸ Clean Up) gets the default grid.
+  const [iconPos, setIconPos] = useState<Record<string, IconPos>>(() => {
+    const fresh = () => defaultGrid(typeof window !== 'undefined' ? window.innerWidth : 1024)
+    try {
+      const raw = sessionStorage.getItem('iconPos')
+      if (!raw) return fresh()
+      const parsed: unknown = JSON.parse(raw)
+      if (!isValidLayout(parsed)) return fresh()
+      const vp = iconViewport()
+      const clamped: Record<string, IconPos> = {}
+      for (const [k, p] of Object.entries(parsed)) clamped[k] = clampIcon(p, vp)
+      return clamped
+    } catch {
+      return fresh()
+    }
+  })
+  const dragScratch = useRef<Record<string, IconPos> | null>(null)
+  const persistIcons = (next: Record<string, IconPos>) => {
+    setIconPos(next)
+    try {
+      sessionStorage.setItem('iconPos', JSON.stringify(next))
+    } catch {
+      /* ignore */
+    }
+  }
+  const onMoveIcon = (id: WindowId, dx: number, dy: number, commit: boolean) => {
+    if (commit) {
+      if (dragScratch.current) persistIcons(dragScratch.current)
+      dragScratch.current = null
+      return
+    }
+    const base = dragScratch.current ?? iconPos
+    const next = {
+      ...base,
+      [id]: clampIcon({ x: base[id].x + dx, y: base[id].y + dy }, iconViewport()),
+    }
+    dragScratch.current = next
+    setIconPos(next)
+  }
+  const cleanUpIcons = () => {
+    dragScratch.current = null
+    try {
+      sessionStorage.removeItem('iconPos')
+    } catch {
+      /* ignore */
+    }
+    setIconPos(defaultGrid(window.innerWidth))
+  }
+
   const menuActions: MenuBarActions = {
     openWindow: (id) => dispatch({ type: 'open', id }),
+    cleanUpIcons,
     closeFront: () => front && close(front),
     hasFront: front !== null,
     print: () => window.print(),
@@ -180,10 +242,8 @@ export default function Desktop() {
     const trashEl = document.querySelector<HTMLElement>('[data-trash]')
     if (!trashEl) return
     const t = trashEl.getBoundingClientRect()
-    const menubarH =
-      parseInt(getComputedStyle(document.documentElement).getPropertyValue('--menubar-h'), 10) || 22
     const w = state.windows[id].w
-    const barTop = y + menubarH
+    const barTop = y + menubarH()
     const bar = { left: x, right: x + w, top: barTop, bottom: barTop + 22 }
     const overlap =
       bar.left < t.right && bar.right > t.left && bar.top < t.bottom && bar.bottom > t.top
@@ -198,7 +258,7 @@ export default function Desktop() {
     <div className={`${styles.desktop} desktop`}>
       {flash && <div className={styles.flashOverlay} aria-hidden />}
       <MenuBar {...menuActions} />
-      <DesktopIcons onOpen={open} />
+      <DesktopIcons onOpen={open} positions={iconPos} onMoveIcon={onMoveIcon} />
       <Trash />
       {zoom && (
         <ZoomRect

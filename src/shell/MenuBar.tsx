@@ -6,6 +6,7 @@ import styles from './MenuBar.module.css'
 
 export interface MenuBarActions {
   openWindow(id: WindowId): void
+  cleanUpIcons(): void
   closeFront(): void
   hasFront: boolean
   print(): void
@@ -77,7 +78,8 @@ export default function MenuBar(props: MenuBarActions) {
     { label: 'Outline dragging', checked: props.outlineDrag, onSelect: props.toggleOutlineDrag },
   ]
   const special: MenuItemSpec[] = [
-    { label: 'Restart', onSelect: props.restart },
+    { label: 'Clean Up', onSelect: props.cleanUpIcons },
+    { label: 'Restart', separatorBefore: true, onSelect: props.restart },
     { label: 'Shut Down', onSelect: props.shutDown },
   ]
 

@@ -6,6 +6,7 @@ import { SoundProvider } from './useSound'
 function mount(over: Partial<MenuBarActions> = {}) {
   const actions: MenuBarActions = {
     openWindow: vi.fn(),
+    cleanUpIcons: vi.fn(),
     closeFront: vi.fn(),
     hasFront: true,
     print: vi.fn(),
@@ -51,6 +52,13 @@ test('Special ▸ Shut Down calls shutDown', async () => {
   await userEvent.click(screen.getByRole('button', { name: 'Special' }))
   await userEvent.click(screen.getByRole('menuitem', { name: 'Shut Down' }))
   expect(a.shutDown).toHaveBeenCalledOnce()
+})
+
+test('Special ▸ Clean Up re-grids the desktop icons', async () => {
+  const a = mount()
+  await userEvent.click(screen.getByRole('button', { name: 'Special' }))
+  await userEvent.click(screen.getByRole('menuitem', { name: 'Clean Up' }))
+  expect(a.cleanUpIcons).toHaveBeenCalledOnce()
 })
 
 test('only one menu is open at a time', async () => {
