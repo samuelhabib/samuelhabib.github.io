@@ -16,3 +16,14 @@ test('pre-renders the résumé as the no-JS fallback, then mounts the desktop', 
   )
   expect(main).toHaveAttribute('hidden')
 })
+
+test('ships the skills as their own semantic section in the no-JS fallback', () => {
+  render(<App />)
+  const section = document.querySelector('main#main #skills') as HTMLElement
+  expect(section).toBeInTheDocument()
+  expect(section.querySelector('dl')).toBeInTheDocument()
+  expect(section).toHaveTextContent('Languages')
+  expect(section).toHaveTextContent('RoBERTa')
+  const nav = document.querySelector('main#main .doc-nav') as HTMLElement
+  expect(nav.querySelector('a[href="#skills"]')).toBeInTheDocument()
+})

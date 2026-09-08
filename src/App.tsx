@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { resume } from './content/resume'
 import { projects, findProject } from './content/projects'
 import { ResumeArticle } from './windows/resumeContent'
+import { SkillsArticle } from './windows/skillsContent'
 import { ReadMeArticle } from './windows/readmeContent'
 import { ProjectsArticle } from './windows/projectsContent'
 import { THEMES } from './shell/useTheme'
@@ -68,11 +69,14 @@ function AppInner() {
       {/* Always in the DOM and in the SSG output — the no-JS / mobile / screen-reader / ATS view */}
       <main id="main" className="doc-fallback" hidden={shell}>
         <nav className="doc-nav">
-          <a href="#resume">Résumé</a> · <a href="#readme">Read Me</a> ·{' '}
-          <a href="#projects">Projects</a>
+          <a href="#resume">Résumé</a> · <a href="#skills">Skills</a> ·{' '}
+          <a href="#readme">Read Me</a> · <a href="#projects">Projects</a>
         </nav>
         <div id="resume">
           <ResumeArticle data={resume} />
+        </div>
+        <div id="skills">
+          <SkillsArticle groups={resume.skills} />
         </div>
         <div id="readme">
           <ReadMeArticle />

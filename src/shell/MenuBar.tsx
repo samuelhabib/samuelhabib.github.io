@@ -74,6 +74,7 @@ export default function MenuBar(props: MenuBarActions) {
 
   const file: MenuItemSpec[] = [
     { label: 'Résumé', onSelect: () => props.openWindow('resume') },
+    { label: 'Skills', onSelect: () => props.openWindow('skills') },
     { label: 'Read Me', onSelect: () => props.openWindow('readme') },
     { label: 'Projects', onSelect: () => props.openWindow('projects') },
     { label: 'Terminal', onSelect: () => props.openWindow('terminal') },

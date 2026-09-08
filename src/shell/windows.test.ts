@@ -22,6 +22,12 @@ test('close hides the window but keeps its geometry', () => {
   expect(s.windows.resume.x).toBe(120)
 })
 
+test('open works for the skills window and brings it to front', () => {
+  const s = windowsReducer(initialDesktop, { type: 'open', id: 'skills' })
+  expect(s.windows.skills.open).toBe(true)
+  expect(frontWindow(s)).toBe('skills')
+})
+
 test('toggleShade flips shaded', () => {
   let s = windowsReducer(initialDesktop, { type: 'open', id: 'resume' })
   s = windowsReducer(s, { type: 'toggleShade', id: 'resume' })
