@@ -24,6 +24,9 @@ export class ChimeEngine {
 
   private ac(): AudioContext {
     if (!this.ctx) this.ctx = this.ctxFactory()
+    // A context created outside a gesture starts suspended; resuming here (we're
+    // called from a gesture handler) trims the first-sound latency.
+    if (this.ctx.state === 'suspended') void this.ctx.resume()
     return this.ctx
   }
 

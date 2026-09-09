@@ -35,11 +35,14 @@ function AppInner() {
     typeof sessionStorage === 'undefined' || sessionStorage.getItem('booted') !== '1',
   )
 
-  // Play the startup chime on the first user gesture (autoplay policy), once.
+  // Play the startup chime on the first user gesture (autoplay policy blocks it
+  // before one), but only if that gesture comes while startup still feels like
+  // startup — a chime that fires a minute later, unprompted, is just uncanny.
   useEffect(() => {
     if (!freshLoad.current) return
+    const armedAt = performance.now()
     const once = () => {
-      sound.chime()
+      if (performance.now() - armedAt < 4000) sound.chime()
       window.removeEventListener('pointerdown', once)
       window.removeEventListener('keydown', once)
     }
