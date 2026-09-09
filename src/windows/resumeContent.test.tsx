@@ -19,11 +19,6 @@ test('without a handler, project names are anchors to the pre-rendered section',
   )
 })
 
-test('surfaces the availability line in the header', () => {
-  render(<ResumeArticle data={resume} />)
-  expect(screen.getByText(/open to backend .* data engineering roles/i)).toBeInTheDocument()
-})
-
 test('renders a semantic résumé article with correct heading order', () => {
   render(<ResumeArticle data={resume} />)
   expect(screen.getByRole('heading', { level: 1, name: /samuel habib/i }).tagName).toBe('H1')

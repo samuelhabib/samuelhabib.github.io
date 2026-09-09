@@ -14,9 +14,6 @@ links:
 summary: >
   I build data systems for healthcare that have to stay correct without anyone
   watching them.
-availability: >
-  Open to backend / data engineering roles — US-based or remote. Based in
-  New York.
 experience:
   - company: ExaCare
     role: Full Stack Software Engineer
@@ -95,8 +92,6 @@ education:
 
 I build data systems for healthcare that have to stay correct without anyone
 watching them. New York, NY.
-
-Open to backend / data engineering roles — US-based or remote.
 
 ### ExaCare — Full Stack Software Engineer (Feb 2026 – Present)
 
