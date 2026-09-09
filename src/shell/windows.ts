@@ -9,6 +9,7 @@ export type WindowId =
   | 'getinfo'
   | 'writeup'
   | 'skills'
+  | 'calculator'
 
 export interface WindowState {
   id: WindowId
@@ -40,6 +41,7 @@ const DEFAULTS: Record<WindowId, Pick<WindowState, 'x' | 'y' | 'w' | 'h'>> = {
   getinfo: { x: 300, y: 180, w: 300, h: 300 },
   writeup: { x: 200, y: 90, w: 540, h: 520 },
   skills: { x: 300, y: 100, w: 420, h: 320 },
+  calculator: { x: 320, y: 150, w: 240, h: 300 },
 }
 
 function make(id: WindowId): WindowState {
@@ -58,6 +60,7 @@ export const initialDesktop: DesktopState = {
     getinfo: make('getinfo'),
     writeup: make('writeup'),
     skills: make('skills'),
+    calculator: make('calculator'),
   },
   nextZ: 1,
 }

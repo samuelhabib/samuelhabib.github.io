@@ -1,0 +1,56 @@
+.calc {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-3);
+  gap: var(--space-3);
+  font-family: var(--chrome-font);
+  outline: none;
+}
+.readout {
+  display: block;
+  border: 1px solid var(--c-fg);
+  padding: 6px 10px;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.keys {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.key {
+  font-family: var(--chrome-font);
+  font-size: 16px;
+  border: 1px solid var(--c-fg);
+  background: var(--c-bg);
+  color: var(--c-fg);
+}
+.key:hover,
+.key:focus-visible {
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
+  outline: none;
+}
+.key:active {
+  background: var(--c-fg);
+  color: var(--c-bg);
+}
+/* operator column reads as pressed-in: filled by a dither, not a flat grey */
+.op {
+  background-color: var(--c-bg);
+  background-image: repeating-conic-gradient(var(--c-fg) 0 25%, var(--c-bg) 0 50%);
+  background-size: 4px 4px;
+}
+.op:hover,
+.op:focus-visible,
+.op:active {
+  background-image: none;
+}
+.wide {
+  grid-column: span 2;
+}

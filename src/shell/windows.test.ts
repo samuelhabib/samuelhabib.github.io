@@ -28,6 +28,12 @@ test('open works for the skills window and brings it to front', () => {
   expect(frontWindow(s)).toBe('skills')
 })
 
+test('open works for the calculator desk accessory', () => {
+  const s = windowsReducer(initialDesktop, { type: 'open', id: 'calculator' })
+  expect(s.windows.calculator.open).toBe(true)
+  expect(frontWindow(s)).toBe('calculator')
+})
+
 test('toggleShade flips shaded', () => {
   let s = windowsReducer(initialDesktop, { type: 'open', id: 'resume' })
   s = windowsReducer(s, { type: 'toggleShade', id: 'resume' })

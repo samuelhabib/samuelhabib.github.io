@@ -94,6 +94,15 @@ export const INFO: Record<WindowId, InfoCard> = {
     where: 'samuelhabib.github.io',
     comment: 'Pick a category on the left. No ratings, no bars — just the tools.',
   },
+  calculator: {
+    subject: 'Calculator',
+    kind: 'Desk accessory',
+    created: 'March 2003',
+    modified: built,
+    size: '10K on disk',
+    where: 'samuelhabib.github.io',
+    comment: 'Four functions. The keyboard works too.',
+  },
   writeup: {
     subject: 'Project Notes',
     kind: 'SimpleText document',

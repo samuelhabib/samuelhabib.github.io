@@ -19,6 +19,18 @@ test('Apple ▸ Puzzle opens the Puzzle window', async ({ page }) => {
   await expect(puzzle.getByRole('button', { name: 'Shuffle' })).toBeVisible()
 })
 
+test('Apple ▸ Calculator opens and adds up', async ({ page }) => {
+  await boot(page)
+  await page.getByRole('button', { name: 'Apple menu' }).click()
+  await page.getByRole('menuitem', { name: 'Calculator' }).click()
+  const calc = page.getByRole('dialog', { name: /calculator/i })
+  await expect(calc).toBeVisible()
+  for (const label of ['9', '+', '9', '=']) {
+    await calc.getByRole('button', { name: label }).click()
+  }
+  await expect(calc.getByRole('status')).toHaveText('18')
+})
+
 test('no serious axe violations with the Puzzle open', async ({ page }) => {
   await boot(page)
   await page.getByRole('button', { name: 'Apple menu' }).click()

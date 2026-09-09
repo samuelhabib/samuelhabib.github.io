@@ -141,7 +141,8 @@ export default function MenuBar(props: MenuBarActions) {
             separatorBefore: true,
             onSelect: () => props.openWindow('appearance'),
           },
-          { label: 'Puzzle', separatorBefore: true, onSelect: () => props.openWindow('puzzle') },
+          { label: 'Calculator', separatorBefore: true, onSelect: () => props.openWindow('calculator') },
+          { label: 'Puzzle', onSelect: () => props.openWindow('puzzle') },
         ]}
         {...menuProps('apple')}
       />
