@@ -7,6 +7,7 @@ import styles from './MenuBar.module.css'
 
 export interface MenuBarActions {
   openWindow(id: WindowId): void
+  goHome(): void
   cleanUpIcons(): void
   closeFront(): void
   zoomFront(): void
@@ -142,6 +143,7 @@ export default function MenuBar(props: MenuBarActions) {
         title="Apple menu"
         items={[
           { label: 'About This Portfolio', onSelect: () => props.openWindow('about') },
+          { label: 'Home', separatorBefore: true, onSelect: props.goHome },
           {
             label: 'Appearance…',
             separatorBefore: true,

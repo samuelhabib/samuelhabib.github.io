@@ -73,8 +73,22 @@ export type WindowAction =
   | { type: 'resize'; id: WindowId; w: number; h: number }
   | { type: 'toggleShade'; id: WindowId }
   | { type: 'zoom'; id: WindowId; desktop: { w: number; h: number } }
+  | { type: 'home' }
 
 export function windowsReducer(state: DesktopState, action: WindowAction): DesktopState {
+  if (action.type === 'home') {
+    // Back to the first-run arrangement: every window reset to DEFAULTS and
+    // closed, then Résumé and Read Me reopened on their cascade.
+    return {
+      ...state,
+      windows: {
+        ...initialDesktop.windows,
+        resume: { ...initialDesktop.windows.resume, open: true, z: 1 },
+        readme: { ...initialDesktop.windows.readme, open: true, z: 2 },
+      },
+      nextZ: 3,
+    }
+  }
   const w = state.windows[action.id]
   switch (action.type) {
     case 'open':

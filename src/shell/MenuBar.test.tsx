@@ -6,6 +6,7 @@ import { SoundProvider } from './useSound'
 function mount(over: Partial<MenuBarActions> = {}) {
   const actions: MenuBarActions = {
     openWindow: vi.fn(),
+    goHome: vi.fn(),
     cleanUpIcons: vi.fn(),
     closeFront: vi.fn(),
     zoomFront: vi.fn(),

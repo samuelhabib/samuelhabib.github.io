@@ -44,6 +44,19 @@ test('open works for the calculator desk accessory', () => {
   expect(frontWindow(s)).toBe('calculator')
 })
 
+test('home resets to the first-run arrangement (résumé + read me)', () => {
+  let s = windowsReducer(initialDesktop, { type: 'open', id: 'puzzle' })
+  s = windowsReducer(s, { type: 'move', id: 'puzzle', x: 500, y: 500 })
+  s = windowsReducer(s, { type: 'toggleShade', id: 'resume' })
+  s = windowsReducer(s, { type: 'home' })
+  expect(s.windows.puzzle.open).toBe(false)
+  expect(s.windows.puzzle.x).toBe(initialDesktop.windows.puzzle.x)
+  expect(s.windows.resume.open).toBe(true)
+  expect(s.windows.readme.open).toBe(true)
+  expect(s.windows.resume.shaded).toBe(false)
+  expect(frontWindow(s)).toBe('readme')
+})
+
 test('toggleShade flips shaded', () => {
   let s = windowsReducer(initialDesktop, { type: 'open', id: 'resume' })
   s = windowsReducer(s, { type: 'toggleShade', id: 'resume' })

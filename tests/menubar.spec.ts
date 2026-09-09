@@ -10,6 +10,26 @@ async function boot(page: Page) {
     .catch(() => {})
 }
 
+test('Apple ▸ Home returns to the landing arrangement', async ({ page }) => {
+  await boot(page)
+  // make a mess: close Read Me, then open Puzzle
+  await page
+    .getByRole('dialog', { name: /read me/i })
+    .getByRole('button', { name: /close read me/i })
+    .click()
+  await expect(page.getByRole('dialog', { name: /read me/i })).toHaveCount(0)
+  await page.getByRole('button', { name: 'Apple menu' }).click()
+  await page.getByRole('menuitem', { name: 'Puzzle' }).click()
+  await expect(page.getByRole('dialog', { name: /puzzle/i })).toBeVisible()
+
+  await page.getByRole('button', { name: 'Apple menu' }).click()
+  await page.getByRole('menuitem', { name: 'Home' }).click()
+
+  await expect(page.getByRole('dialog', { name: /puzzle/i })).toHaveCount(0)
+  await expect(page.getByRole('dialog', { name: /read me/i })).toBeVisible()
+  await expect(page.getByRole('dialog', { name: /résumé/i })).toBeVisible()
+})
+
 test('File ▸ Terminal opens the Terminal window', async ({ page }) => {
   await boot(page)
   await page.getByRole('button', { name: 'File' }).click()

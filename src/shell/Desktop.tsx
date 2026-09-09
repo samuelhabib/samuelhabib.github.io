@@ -325,8 +325,27 @@ export default function Desktop() {
     setIconPos(defaultGrid(window.innerWidth))
   }
 
+  // Apple ▸ Home: back to the first-run desktop. Windows and icons reset;
+  // deep-link state and the URL cleared; theme / sound / desktop pattern left
+  // alone (those are deliberate preferences).
+  const goHome = () => {
+    dispatch({ type: 'home' })
+    setZoom(null)
+    setStackTarget(null)
+    setWriteupSlug('provider-directory')
+    setInfoSubject('resume')
+    cleanUpIcons()
+    try {
+      const u = new URL(window.location.href)
+      if (u.search) window.history.replaceState(null, '', u.pathname)
+    } catch {
+      /* ignore */
+    }
+  }
+
   const menuActions: MenuBarActions = {
     openWindow: (id) => openAnimated(id),
+    goHome,
     cleanUpIcons,
     closeFront: () => front && close(front),
     zoomFront: () => front && dispatch({ type: 'zoom', id: front, desktop: desktopSize() }),
