@@ -238,8 +238,8 @@ export default function ProjectsDeck({
             }}
           >
             <div className={styles.showStage}>{stage}</div>
-            <button className={styles.showExit} onClick={stopPresenting}>
-              ✕ End show
+            <button className={styles.showExit} onClick={stopPresenting} aria-label="End show">
+              ✕
             </button>
             <p className={styles.showCount}>
               {si + 1} / {slides.length}
