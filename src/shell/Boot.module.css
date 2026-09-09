@@ -45,3 +45,20 @@
     width: 100%;
   }
 }
+.tray {
+  display: flex;
+  gap: 10px;
+  height: 16px;
+}
+.ext {
+  width: 16px;
+  height: 16px;
+  color: var(--c-chrome-fg);
+  transform: scale(0);
+  animation: march 0.18s steps(3, end) forwards;
+}
+@keyframes march {
+  to {
+    transform: scale(1);
+  }
+}
