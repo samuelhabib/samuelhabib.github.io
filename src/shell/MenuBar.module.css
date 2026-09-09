@@ -13,11 +13,13 @@
   z-index: 1000;
 }
 .apple {
-  width: 14px;
-  height: 14px;
-  background: var(--c-chrome-fg);
-  -webkit-mask: radial-gradient(circle at 50% 55%, #000 42%, transparent 43%);
-  mask: radial-gradient(circle at 50% 55%, #000 42%, transparent 43%);
+  display: flex;
+  align-items: center;
+}
+.apple svg {
+  display: block;
+  width: 15px;
+  height: 15px;
 }
 .toggle {
   font-family: var(--chrome-font);

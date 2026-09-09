@@ -132,7 +132,13 @@ export default function MenuBar(props: MenuBarActions) {
   return (
     <div className={styles.bar} ref={barRef} data-testid="menubar">
       <Menu
-        label={<span className={styles.apple} aria-hidden />}
+        label={
+          <span className={styles.apple} aria-hidden>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 14.25 3.51 5.4 9.05 5.12c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.53 4.27M12.03 5.03C11.88 2.72 13.74.85 15.9.66c.29 2.55-2.31 4.53-3.87 4.37" />
+            </svg>
+          </span>
+        }
         title="Apple menu"
         items={[
           { label: 'About This Portfolio', onSelect: () => props.openWindow('about') },
