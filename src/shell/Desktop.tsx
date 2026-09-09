@@ -6,12 +6,14 @@ import {
   useEffect,
   useRef,
   type ReactNode,
+  type MouseEvent as ReactMouseEvent,
 } from 'react'
 import { windowsReducer, initialDesktop, frontWindow, type WindowId } from './windows'
 import { defaultGrid, clampIcon, isValidLayout, type IconPos } from './iconLayout'
 import Window from './Window'
 import ZoomRect from './ZoomRectLayer'
 import MenuBar from './MenuBar'
+import DesktopMenu from './DesktopMenu'
 import DesktopIcons from './DesktopIcons'
 import { useWindowKeys } from './useWindowKeys'
 import { nextWindow } from './windowSwitch'
@@ -380,8 +382,25 @@ export default function Desktop() {
 
   const openWindows = (Object.keys(content) as WindowId[]).filter((id) => state.windows[id].open)
 
+  const [ctxMenu, setCtxMenu] = useState<{ x: number; y: number } | null>(null)
+  const onDesktopContextMenu = (e: ReactMouseEvent) => {
+    // Only the bare desktop — windows (role=dialog), icons ([data-window]),
+    // the Trash and the menu bar keep the browser's own menu.
+    if (
+      (e.target as HTMLElement).closest(
+        '[role="dialog"],[data-window],[data-trash],[data-testid="menubar"]',
+      )
+    )
+      return
+    e.preventDefault()
+    setCtxMenu({ x: e.clientX, y: e.clientY })
+  }
+
   return (
-    <div className={`${styles.desktop} desktop`}>
+    <div
+      className={`${styles.desktop} desktop`}
+      onContextMenu={onDesktopContextMenu}
+    >
       {flash && <div className={styles.flashOverlay} aria-hidden />}
       {(theme === 'crtAmber' || theme === 'crtGreen') && (
         <div className={styles.crt} aria-hidden />
@@ -420,6 +439,18 @@ export default function Desktop() {
           {content[id]}
         </Window>
       ))}
+      {ctxMenu && (
+        <DesktopMenu
+          x={ctxMenu.x}
+          y={ctxMenu.y}
+          onClose={() => setCtxMenu(null)}
+          items={[
+            { label: 'Clean Up', onSelect: cleanUpIcons },
+            { label: 'Change Desktop Pattern…', onSelect: () => openAnimated('appearance') },
+            { label: 'About This Portfolio', onSelect: () => openAnimated('about') },
+          ]}
+        />
+      )}
       {shutdown && <ShutDown onStartup={restart} />}
     </div>
   )

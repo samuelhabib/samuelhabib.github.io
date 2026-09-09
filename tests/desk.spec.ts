@@ -31,6 +31,24 @@ test('Apple ▸ Calculator opens and adds up', async ({ page }) => {
   await expect(calc.getByRole('status')).toHaveText('18')
 })
 
+test('right-clicking the bare desktop opens a contextual menu', async ({ page }) => {
+  await boot(page)
+  await page.mouse.click(900, 150, { button: 'right' })
+  const menu = page.getByRole('menu', { name: 'Desktop' })
+  await expect(menu).toBeVisible()
+  await menu.getByRole('menuitem', { name: 'About This Portfolio' }).click()
+  await expect(page.getByRole('dialog', { name: /about this portfolio/i })).toBeVisible()
+  await expect(menu).toBeHidden()
+})
+
+test('the desktop context menu is not offered over a window', async ({ page }) => {
+  await boot(page)
+  const resume = page.getByRole('dialog', { name: /résumé/i })
+  const box = await resume.boundingBox()
+  await page.mouse.click(box!.x + 40, box!.y + 60, { button: 'right' })
+  await expect(page.getByRole('menu', { name: 'Desktop' })).toHaveCount(0)
+})
+
 test('no serious axe violations with the Puzzle open', async ({ page }) => {
   await boot(page)
   await page.getByRole('button', { name: 'Apple menu' }).click()

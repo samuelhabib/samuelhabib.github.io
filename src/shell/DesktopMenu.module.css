@@ -1,0 +1,28 @@
+.menu {
+  position: fixed;
+  z-index: 3000;
+  min-width: 168px;
+  background: var(--c-chrome-bg);
+  color: var(--c-chrome-fg);
+  border: 1px solid var(--c-chrome-fg);
+  box-shadow: 2px 2px 0 var(--c-chrome-fg);
+  padding: 2px 0;
+  font-family: var(--chrome-font);
+  font-size: 12px;
+}
+.item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 3px 16px;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+}
+.item:hover,
+.item:focus-visible {
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
+  outline: none;
+}
