@@ -27,6 +27,7 @@ import TerminalWindow from '../windows/TerminalWindow'
 import ProjectsWindow from '../windows/ProjectsWindow'
 import SkillsWindow from '../windows/SkillsWindow'
 import CalculatorWindow from '../windows/CalculatorWindow'
+import ScrapbookWindow from '../windows/ScrapbookWindow'
 import WriteupWindow from '../windows/WriteupWindow'
 import AboutDialog from '../windows/AboutDialog'
 import PuzzleWindow from '../windows/PuzzleWindow'
@@ -50,6 +51,7 @@ const TITLES: Record<WindowId, string> = {
   writeup: 'Project Notes',
   skills: 'Skills',
   calculator: 'Calculator',
+  scrapbook: 'Scrapbook',
 }
 
 function focusIcon(id: WindowId) {
@@ -181,6 +183,7 @@ export default function Desktop() {
     readme: <ReadMeWindow />,
     skills: <SkillsWindow />,
     calculator: <CalculatorWindow />,
+    scrapbook: <ScrapbookWindow />,
     terminal: <TerminalWindow bridge={bridge} />,
     projects: <ProjectsWindow target={stackTarget} onOpenWriteup={openWriteup} />,
     about: <AboutDialog />,

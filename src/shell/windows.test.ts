@@ -44,6 +44,12 @@ test('open works for the calculator desk accessory', () => {
   expect(frontWindow(s)).toBe('calculator')
 })
 
+test('open works for the scrapbook desk accessory', () => {
+  const s = windowsReducer(initialDesktop, { type: 'open', id: 'scrapbook' })
+  expect(s.windows.scrapbook.open).toBe(true)
+  expect(frontWindow(s)).toBe('scrapbook')
+})
+
 test('home resets to the first-run arrangement (résumé + read me)', () => {
   let s = windowsReducer(initialDesktop, { type: 'open', id: 'puzzle' })
   s = windowsReducer(s, { type: 'move', id: 'puzzle', x: 500, y: 500 })

@@ -1,0 +1,54 @@
+.book {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-3);
+  gap: var(--space-2);
+  font-family: var(--chrome-font);
+  font-size: 12px;
+  outline: none;
+}
+.clipping {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--c-fg);
+  padding: var(--space-3);
+  overflow: auto;
+}
+.clipping svg {
+  max-width: 100%;
+  height: auto;
+}
+.title {
+  margin: 0;
+  font-weight: bold;
+}
+.caption {
+  margin: 0;
+  font-family: var(--font-read);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.foot button {
+  font-family: var(--chrome-font);
+  border: 1px solid var(--c-fg);
+  padding: 2px 10px;
+}
+.foot button:hover,
+.foot button:focus-visible {
+  background: var(--c-accent);
+  color: var(--c-accent-fg);
+  outline: none;
+}
+.count {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}

@@ -31,6 +31,18 @@ test('Apple ▸ Calculator opens and adds up', async ({ page }) => {
   await expect(calc.getByRole('status')).toHaveText('18')
 })
 
+test('Apple ▸ Scrapbook pages through the project diagrams', async ({ page }) => {
+  await boot(page)
+  await page.getByRole('button', { name: 'Apple menu' }).click()
+  await page.getByRole('menuitem', { name: 'Scrapbook' }).click()
+  const book = page.getByRole('dialog', { name: /scrapbook/i })
+  await expect(book).toBeVisible()
+  await expect(book.getByText('1 of 3')).toBeVisible()
+  await expect(book.locator('svg[role="img"]')).toBeVisible()
+  await book.getByRole('button', { name: 'Next clipping' }).click()
+  await expect(book.getByText('2 of 3')).toBeVisible()
+})
+
 test('right-clicking the bare desktop opens a contextual menu', async ({ page }) => {
   await boot(page)
   await page.mouse.click(900, 150, { button: 'right' })

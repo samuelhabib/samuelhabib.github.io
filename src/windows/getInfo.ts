@@ -103,6 +103,15 @@ export const INFO: Record<WindowId, InfoCard> = {
     where: 'samuelhabib.github.io',
     comment: 'Four functions. The keyboard works too.',
   },
+  scrapbook: {
+    subject: 'Scrapbook',
+    kind: 'Desk accessory',
+    created: 'March 2003',
+    modified: built,
+    size: '28K on disk',
+    where: 'samuelhabib.github.io',
+    comment: 'The project diagrams, kept as clippings. Arrow keys page through.',
+  },
   writeup: {
     subject: 'Project Notes',
     kind: 'SimpleText document',
