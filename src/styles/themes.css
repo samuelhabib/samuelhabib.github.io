@@ -11,7 +11,7 @@
   --c-fg: var(--white);
   --c-chrome-bg: var(--black);
   --c-chrome-fg: var(--white);
-  --c-accent: var(--white);
+  --c-accent: #3dd7a8;
   --c-accent-fg: var(--black);
   --dither-ink: var(--white);
   color-scheme: dark;
@@ -21,6 +21,37 @@
   --chrome-font: 'Geneva', system-ui, sans-serif;
   --window-border-w: 2px;
   --titlebar-lines: transparent;
+}
+
+/* Mac OS 8 "Platinum": grey chrome, flat title bars, white window bodies. */
+.theme-platinum {
+  --c-chrome-bg: #cccccc;
+  --c-chrome-fg: #000000;
+  --titlebar-lines: transparent;
+  --window-border-w: 2px;
+}
+
+/* Warm paper and ink — a reading light. */
+.theme-parchment {
+  --c-bg: #f2e9d0;
+  --c-fg: #40331f;
+  --c-chrome-bg: #efe4c6;
+  --c-chrome-fg: #40331f;
+  --c-accent: #40331f;
+  --c-accent-fg: #f2e9d0;
+  --dither-ink: #40331f;
+}
+
+/* Cyanotype: pale lines on deep blue. */
+.theme-blueprint {
+  --c-bg: #14324f;
+  --c-fg: #dbe8f4;
+  --c-chrome-bg: #14324f;
+  --c-chrome-fg: #dbe8f4;
+  --c-accent: #dbe8f4;
+  --c-accent-fg: #14324f;
+  --dither-ink: #dbe8f4;
+  color-scheme: dark;
 }
 
 /* CRT: tint comes from a fixed overlay Desktop renders (see 4-E); these

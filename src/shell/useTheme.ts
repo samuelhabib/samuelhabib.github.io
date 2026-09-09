@@ -10,6 +10,9 @@ export const THEMES: ThemeDef[] = [
   { id: 'system7', label: 'System 7', className: 'theme-system7' },
   { id: 'dark', label: 'Dark', className: 'theme-dark' },
   { id: 'system6', label: 'System 6', className: 'theme-system6' },
+  { id: 'platinum', label: 'Platinum', className: 'theme-platinum' },
+  { id: 'parchment', label: 'Parchment', className: 'theme-parchment' },
+  { id: 'blueprint', label: 'Blueprint', className: 'theme-blueprint' },
   { id: 'crtAmber', label: 'CRT Amber', className: 'theme-crt-amber' },
   { id: 'crtGreen', label: 'CRT Green', className: 'theme-crt-green' },
 ]

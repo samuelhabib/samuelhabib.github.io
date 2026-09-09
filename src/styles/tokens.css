@@ -19,11 +19,14 @@
   --fs-meta: 11px;
 
   /* --- semantic layer (Plan 4-A): components read THESE, not the primitives --- */
+  /* the one hint of colour: the classic Mac desktop teal-green, used only for
+     selection / highlight — everything else stays pure black on white */
+  --mac-green: #1f7a5c;
   --c-bg: var(--white);
   --c-fg: var(--black);
   --c-chrome-bg: var(--white);
   --c-chrome-fg: var(--black);
-  --c-accent: var(--black);
+  --c-accent: var(--mac-green);
   --c-accent-fg: var(--white);
   --dither-ink: var(--black);
   --chrome-font: 'Chicago', 'Geneva', system-ui, sans-serif;
