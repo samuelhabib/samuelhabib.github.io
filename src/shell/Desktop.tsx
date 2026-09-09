@@ -8,7 +8,7 @@ import {
   type ReactNode,
   type MouseEvent as ReactMouseEvent,
 } from 'react'
-import { windowsReducer, initialDesktop, frontWindow, type WindowId } from './windows'
+import { windowsReducer, initialDesktop, frontWindow, clampWindow, type WindowId } from './windows'
 import { defaultGrid, clampIcon, isValidLayout, type IconPos } from './iconLayout'
 import Window from './Window'
 import ZoomRect from './ZoomRectLayer'
@@ -429,7 +429,10 @@ export default function Desktop() {
           autoFocus={justOpened === id}
           onFocus={() => dispatch({ type: 'focus', id })}
           onClose={() => close(id)}
-          onMove={(x, y) => dispatch({ type: 'move', id, x, y })}
+          onMove={(x, y) => {
+            const c = clampWindow(x, y, state.windows[id].w, desktopSize())
+            dispatch({ type: 'move', id, x: c.x, y: c.y })
+          }}
           onResize={(w, h) => dispatch({ type: 'resize', id, w, h })}
           onToggleShade={() => dispatch({ type: 'toggleShade', id })}
           onZoom={() => dispatch({ type: 'zoom', id, desktop: desktopSize() })}

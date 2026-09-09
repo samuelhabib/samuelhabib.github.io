@@ -26,6 +26,25 @@ test('résumé window drags with the pointer across many move events', async ({ 
   expect(after!.y - before!.y).toBeGreaterThan(60)
 })
 
+test('a window cannot be dragged off the desktop', async ({ page }) => {
+  await ready(page)
+  const dialog = page.getByRole('dialog', { name: /résumé/i })
+  const bar = dialog.getByTestId('titlebar')
+  const grip = await bar.boundingBox()
+  await page.mouse.move(grip!.x + 40, grip!.y + grip!.height / 2)
+  await page.mouse.down()
+  // yank hard toward the top-left, past the origin
+  await page.mouse.move(-800, -800, { steps: 20 })
+  await page.mouse.up()
+
+  const after = await dialog.boundingBox()
+  const vp = page.viewportSize()!
+  // title bar still on screen and a usable strip of the window still visible
+  expect(after!.y).toBeGreaterThanOrEqual(0)
+  expect(after!.x + after!.width).toBeGreaterThan(40)
+  expect(after!.y).toBeLessThan(vp.height)
+})
+
 test('résumé window resizes from the grow box', async ({ page }) => {
   await ready(page)
   const dialog = page.getByRole('dialog', { name: /résumé/i })

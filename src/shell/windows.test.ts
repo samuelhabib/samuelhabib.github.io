@@ -1,4 +1,14 @@
-import { initialDesktop, windowsReducer, frontWindow } from './windows'
+import { initialDesktop, windowsReducer, frontWindow, clampWindow } from './windows'
+
+test('clampWindow keeps the title bar and a strip of the window on screen', () => {
+  const desk = { w: 1000, h: 700 }
+  // dragged far off the top-left
+  expect(clampWindow(-500, -80, 400, desk)).toEqual({ x: 72 - 400, y: 0 })
+  // dragged off the bottom-right
+  expect(clampWindow(2000, 2000, 400, desk)).toEqual({ x: 1000 - 72, y: 700 - 22 })
+  // a normal position is untouched
+  expect(clampWindow(120, 90, 400, desk)).toEqual({ x: 120, y: 90 })
+})
 
 test('open marks a window open and brings it to front', () => {
   const s = windowsReducer(initialDesktop, { type: 'open', id: 'resume' })

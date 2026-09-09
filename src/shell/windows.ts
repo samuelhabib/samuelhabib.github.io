@@ -133,6 +133,24 @@ export function windowsReducer(state: DesktopState, action: WindowAction): Deskt
   }
 }
 
+/**
+ * Keep a dragged window reachable: its title bar can't leave the desktop, and
+ * at least KEEP px of the window stays on screen on every side.
+ */
+export function clampWindow(
+  x: number,
+  y: number,
+  w: number,
+  desk: { w: number; h: number },
+): { x: number; y: number } {
+  const KEEP = 72
+  const TITLEBAR = 22
+  return {
+    x: Math.max(KEEP - w, Math.min(x, desk.w - KEEP)),
+    y: Math.max(0, Math.min(y, desk.h - TITLEBAR)),
+  }
+}
+
 export function frontWindow(state: DesktopState): WindowId | null {
   const open = Object.values(state.windows).filter((w) => w.open)
   if (!open.length) return null
