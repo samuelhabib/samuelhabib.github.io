@@ -65,3 +65,11 @@ test('a plain double-click still opens the window', async ({ page }) => {
   await page.locator('[data-window="resume"]').dblclick()
   await expect(page.getByRole('dialog', { name: 'Résumé' })).toBeVisible()
 })
+
+test('the "Samuel Habib" hard-disk icon opens About This Portfolio', async ({ page }) => {
+  await ready(page)
+  const disk = page.locator('[data-window="about"]')
+  await expect(disk).toContainText('Samuel Habib')
+  await disk.dblclick()
+  await expect(page.getByRole('dialog', { name: /about this portfolio/i })).toBeVisible()
+})

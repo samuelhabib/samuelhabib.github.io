@@ -4,7 +4,9 @@ export interface IconPos {
 }
 
 /** Order matches DesktopIcons' ICONS list. */
-export const ICON_IDS = ['resume', 'projects', 'terminal', 'readme', 'skills'] as const
+// 'about' leads the column as the hard-disk volume ("Samuel Habib"), the way a
+// real System 7 desktop always had a drive icon top-right.
+export const ICON_IDS = ['about', 'resume', 'projects', 'terminal', 'readme', 'skills'] as const
 export type IconId = (typeof ICON_IDS)[number]
 
 const CELL_W = 76

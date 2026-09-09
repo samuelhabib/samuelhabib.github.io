@@ -1,9 +1,19 @@
-export type GlyphKind = 'resume' | 'projects' | 'terminal' | 'readme' | 'skills'
+export type GlyphKind = 'about' | 'resume' | 'projects' | 'terminal' | 'readme' | 'skills'
 
 const stroke = { fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinejoin: 'round' as const }
 
 export default function IconGlyph({ kind }: { kind: GlyphKind }) {
   switch (kind) {
+    case 'about':
+      // a compact-Mac hard disk: a stout box with a slot and a status LED
+      return (
+        <svg viewBox="0 0 32 32" role="img" aria-hidden>
+          <rect {...stroke} x="4" y="8" width="24" height="16" rx="1" />
+          <path {...stroke} d="M8 14 H18" />
+          <circle cx="23" cy="14" r="1.4" fill="currentColor" stroke="none" />
+          <path {...stroke} d="M8 19 H24" />
+        </svg>
+      )
     case 'resume':
       return (
         <svg viewBox="0 0 32 32" role="img" aria-hidden>

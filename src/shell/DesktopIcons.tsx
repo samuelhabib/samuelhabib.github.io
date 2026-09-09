@@ -6,6 +6,7 @@ import { useDrag } from './useDrag'
 import type { IconPos } from './iconLayout'
 
 const ICONS: { id: Extract<WindowId, GlyphKind>; label: string }[] = [
+  { id: 'about', label: 'Samuel Habib' },
   { id: 'resume', label: 'Résumé' },
   { id: 'projects', label: 'Projects' },
   { id: 'terminal', label: 'Terminal' },
