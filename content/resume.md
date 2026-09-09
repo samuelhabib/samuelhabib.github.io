@@ -14,6 +14,9 @@ links:
 summary: >
   I build data systems for healthcare that have to stay correct without anyone
   watching them.
+availability: >
+  Open to backend / data engineering roles — US-based or remote. Based in
+  New York.
 experience:
   - company: ExaCare
     role: Full Stack Software Engineer
@@ -26,7 +29,6 @@ experience:
       - Built self-healing reconciliation via weekly cron re-ingestion, keeping directory data current and eliminating duplicate facility records.
       - Cut a core API endpoint's latency by 42% and its payload by 70%, and eliminated full-table scans behind alarms firing about 144 times a day.
       - Built an internal on-call report tool adopted team-wide, cutting weekly report prep time by 50% through faster data gathering.
-      - Became a technical reference for other engineering teams, shaping sound technical tradeoffs through hands-on design review.
       - Introduced AI-assisted engineering workflows, Claude Code and the Superpowers workflow, and presented them company-wide.
   - company: Apple
     role: Software Development Engineer
@@ -49,26 +51,18 @@ experience:
     start: June 2024
     end: Sept 2024
     bullets:
-      - Developed an internal visualization tool for FBA sellers, enabling efficient analysis of business metrics and insights.
-      - Used CDK to deploy an S3, SQS, and Lambda flow for storage, querying, and retrieval across distributed environments.
-      - Created a data system to asynchronously pull and convert S3 metrics into Java data models for real-time investigation.
+      - Built an internal visualization tool for FBA sellers to analyze business metrics and insights.
+      - Wrote a system that asynchronously pulls S3 metrics and converts them into Java data models for real-time investigation.
       - Built a scalable pipeline on S3 notifications, SQS, and Lambda, processing 70,000+ requests an hour across regions.
-      - Modified React.js components for multi-tabbed data visualization, with exception handling and fluid interaction.
-      - Improved JSON parsing with Java and Lombok, designing flexible models and interfaces for maintainability.
-      - Achieved 83% test coverage with 55 JUnit tests.
   - company: Amazon
     role: Software Development Engineer Intern
     location: Toronto, ON
     start: May 2023
     end: Sept 2023
     bullets:
-      - Designed and built an end-to-end system leveraging AWS SQS, DynamoDB, DAX, SNS, and VPC.
-      - Developed a partitioning mechanism in Kotlin to distinguish between data types, improving data accuracy by 90%.
+      - Designed and built an end-to-end system on AWS SQS, DynamoDB, DAX, SNS, and VPC.
       - Implemented DAX caching strategies that reduced costs by 45%.
-      - Managed the full project cycle, integrating it into the team's system with zero added latency.
-      - Established CloudWatch alarms and custom real-time dashboards tracking p90, max, min, and average metrics.
-      - Designed CDK infrastructure to be easily configurable for future datasets.
-      - Introduced the capability to handle 2B+ records an hour in the largest dataset using AWS services.
+      - Took the largest dataset to 2B+ records an hour using AWS services, with CloudWatch alarms and dashboards on p90/max/min.
   - company: AMD
     role: Software Engineer Full Stack Intern
     location: Toronto, ON
@@ -76,11 +70,8 @@ experience:
     end: May 2023
     bullets:
       - Built an auto-scaling, self-healing backend in Ruby and YAML running 1,000+ regression tests in parallel.
-      - Boosted workflow efficiency by 70% by automating CI/CD logging pipelines in Ruby.
-      - Built a gateway for parsing and filtering log files with regex, standardizing the logging dashboard.
-      - Applied Agile best practices that increased software delivery speed by 50%.
-      - Developed and maintained PHP front-end code relaying data to a MySQL backend over REST APIs.
-      - Used JIRA and worked with other engineers to monitor and resolve backend issues.
+      - Automated the CI/CD logging pipelines in Ruby, cutting manual effort ~70%.
+      - Built a regex gateway for parsing and filtering log files, standardizing the logging dashboard.
 skills:
   - group: Languages
     items: [Python, Java, Kotlin, TypeScript, JavaScript, Ruby, C++, C#, SQL]
@@ -105,6 +96,8 @@ education:
 I build data systems for healthcare that have to stay correct without anyone
 watching them. New York, NY.
 
+Open to backend / data engineering roles — US-based or remote.
+
 ### ExaCare — Full Stack Software Engineer (Feb 2026 – Present)
 
 - Owned the Referral Outbound Center end to end and launched it in about a month, piloting 25+ facilities at a 100% retention rate.
@@ -112,7 +105,6 @@ watching them. New York, NY.
 - Built self-healing reconciliation via weekly cron re-ingestion, keeping directory data current and eliminating duplicate facility records.
 - Cut a core API endpoint's latency by 42% and its payload by 70%, and eliminated full-table scans behind alarms firing ~144x a day.
 - Built an internal on-call report tool adopted team-wide, cutting weekly report prep time by 50% through faster data gathering.
-- Became a technical reference for other engineering teams, shaping sound technical tradeoffs through hands-on design review.
 - Introduced AI-assisted engineering workflows — Claude Code and the Superpowers workflow — and presented them company-wide.
 
 ### Apple — Software Development Engineer (Sept 2023 – Feb 2026)
@@ -129,32 +121,21 @@ watching them. New York, NY.
 
 ### Amazon — SDE Intern (June 2024 – Sept 2024, Toronto)
 
-- Internal visualization tool for FBA sellers, for efficient analysis of business metrics and insights.
-- CDK-deployed S3 / SQS / Lambda flow for storage, querying, and retrieval across distributed environments.
-- Data system to asynchronously pull and convert S3 metrics into Java data models for real-time investigation.
+- Internal visualization tool for FBA sellers to analyze business metrics and insights.
+- System that asynchronously pulls S3 metrics and converts them into Java data models for real-time investigation.
 - Scalable pipeline on S3 notifications, SQS, and Lambda processing 70,000+ requests an hour across regions.
-- React.js components for multi-tabbed data visualization, with exception handling and fluid interaction.
-- Improved JSON parsing with Java and Lombok; flexible models and interfaces for maintainability.
-- 83% test coverage with 55 JUnit tests.
 
 ### Amazon — SDE Intern (May 2023 – Sept 2023, Toronto)
 
-- End-to-end system leveraging AWS SQS, DynamoDB, DAX, SNS, and VPC.
-- Partitioning mechanism in Kotlin to distinguish between data types, improving data accuracy 90%.
+- End-to-end system on AWS SQS, DynamoDB, DAX, SNS, and VPC.
 - DAX caching strategies that reduced costs 45%.
-- Managed the full project cycle, integrating it into the team's system with zero added latency.
-- CloudWatch alarms and custom real-time dashboards tracking p90, max, min, and average metrics.
-- CDK infrastructure built to be easily configurable for future datasets.
-- Introduced the capability to handle 2B+ records an hour in the largest dataset using AWS services.
+- Took the largest dataset to 2B+ records an hour using AWS services, with CloudWatch alarms and dashboards on p90/max/min.
 
 ### AMD — Full Stack SW Engineer Intern (May 2022 – May 2023, Toronto)
 
 - Auto-scaling, self-healing Ruby/YAML backend running 1,000+ regression tests in parallel.
-- Automated the CI/CD logging pipelines in Ruby, boosting workflow efficiency 70%.
-- Gateway for parsing and filtering log files with regex, standardizing the logging dashboard.
-- Agile best practices that increased software delivery speed 50%.
-- PHP front-end code relaying data to a MySQL backend over REST APIs.
-- Used JIRA and worked with other engineers to monitor and resolve backend issues.
+- Automated the CI/CD logging pipelines in Ruby, cutting manual effort ~70%.
+- Regex gateway for parsing and filtering log files, standardizing the logging dashboard.
 
 ### Education
 

@@ -58,6 +58,7 @@ export function ResumeArticle({
           {data.title} · {data.location}
         </p>
         <p>{data.summary}</p>
+        {data.availability && <p className="resume-availability">{data.availability}</p>}
         <ul className="resume-links">
           {data.links.map((l) => (
             <li key={l.href}>

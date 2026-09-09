@@ -31,6 +31,8 @@ export interface ResumeData {
   location: string
   links: ResumeLink[]
   summary: string
+  /** one line on what roles he's after — rendered right under the summary */
+  availability: string
   experience: ResumeJob[]
   skills: ResumeSkillGroup[]
   education: ResumeSchool[]

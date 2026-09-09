@@ -18,6 +18,11 @@
 .doc-fallback h1 {
   font-family: var(--font-chrome);
 }
+/* the availability line — the one thing a recruiter needs to see */
+.resume-availability {
+  font-weight: bold;
+  color: var(--c-accent);
+}
 .doc-fallback[hidden] {
   display: none;
 }

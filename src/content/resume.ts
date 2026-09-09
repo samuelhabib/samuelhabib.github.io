@@ -10,6 +10,7 @@ export function parseResume(fileContents: string): ResumeData {
     location: String(data.location ?? ''),
     links: (data.links ?? []) as ResumeData['links'],
     summary: String(data.summary ?? '').trim(),
+    availability: String(data.availability ?? '').trim(),
     experience: (data.experience ?? []) as ResumeData['experience'],
     skills: (data.skills ?? []) as ResumeData['skills'],
     education: (data.education ?? []) as ResumeData['education'],
