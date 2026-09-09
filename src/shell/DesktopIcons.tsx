@@ -10,6 +10,7 @@ const ICONS: { id: Extract<WindowId, GlyphKind>; label: string }[] = [
   { id: 'projects', label: 'Projects' },
   { id: 'terminal', label: 'Terminal' },
   { id: 'readme', label: 'Read Me' },
+  { id: 'skills', label: 'Skills' },
 ]
 
 type MoveIcon = (id: WindowId, dx: number, dy: number, commit: boolean) => void

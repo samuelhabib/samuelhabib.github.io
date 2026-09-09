@@ -90,6 +90,8 @@ skills:
     items: [AWS, GCP, Docker, Jenkins, CI/CD, Git]
   - group: Search and AI
     items: [Solr, LLM integration, NLP, RoBERTa]
+  - group: AI-assisted development
+    items: [Claude Code, OpenAI Codex, Cursor, Devin, spec-driven agent workflows, MCP]
 education:
   - school: Toronto Metropolitan University
     degree: B.Eng, Computer Engineering

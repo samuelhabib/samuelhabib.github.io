@@ -4,7 +4,7 @@ export interface IconPos {
 }
 
 /** Order matches DesktopIcons' ICONS list. */
-export const ICON_IDS = ['resume', 'projects', 'terminal', 'readme'] as const
+export const ICON_IDS = ['resume', 'projects', 'terminal', 'readme', 'skills'] as const
 export type IconId = (typeof ICON_IDS)[number]
 
 const CELL_W = 76

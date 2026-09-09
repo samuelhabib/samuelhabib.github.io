@@ -11,6 +11,12 @@ async function ready(page: Page) {
   await expect(page.getByRole('dialog', { name: /résumé/i })).toBeVisible()
 }
 
+test('the Skills desktop icon opens the window on double-click', async ({ page }) => {
+  await ready(page)
+  await page.locator('.desktop-icon[data-window="skills"]').dblclick()
+  await expect(page.getByRole('dialog', { name: 'Skills' })).toBeVisible()
+})
+
 test('File ▸ Skills opens the Chooser-style skills window', async ({ page }) => {
   await ready(page)
   await page.getByRole('button', { name: 'File' }).click()

@@ -1,4 +1,4 @@
-export type GlyphKind = 'resume' | 'projects' | 'terminal' | 'readme'
+export type GlyphKind = 'resume' | 'projects' | 'terminal' | 'readme' | 'skills'
 
 const stroke = { fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinejoin: 'round' as const }
 
@@ -34,6 +34,15 @@ export default function IconGlyph({ kind }: { kind: GlyphKind }) {
           <path {...stroke} d="M20 3 V8 H25" />
           <path {...stroke} d="M12 6 H16" />
           <path {...stroke} d="M12 15 H21 M12 20 H21 M12 25 H18" />
+        </svg>
+      )
+    case 'skills':
+      return (
+        <svg viewBox="0 0 32 32" role="img" aria-hidden>
+          <path {...stroke} d="M4 12 H28 V27 H4 Z" />
+          <path {...stroke} d="M12 12 V9 A2 2 0 0 1 14 7 H18 A2 2 0 0 1 20 9 V12" />
+          <path {...stroke} d="M4 19 H28" />
+          <path {...stroke} d="M14 17 H18 V22 H14 Z" />
         </svg>
       )
   }
